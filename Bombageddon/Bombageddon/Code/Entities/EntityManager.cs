@@ -58,11 +58,11 @@ namespace Bombageddon.Code.Entities
         {
             PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 9, 128, 
                 new Vector2(500f, Bombageddon.GROUND - 15f), 10);
-            availablePlatforms.Add(platform); 
+            availablePlatforms.Add(platform);
 
-            //platform = new PlatformData(game, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", 0, 128, 
-            //    new Vector2(100f, Bombageddon.GROUND - 15f), 10);
-            //availablePlatforms.Add(platform);
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 8, 128,
+                new Vector2(100f, Bombageddon.GROUND - 15f), 10);
+            availablePlatforms.Add(platform);
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
