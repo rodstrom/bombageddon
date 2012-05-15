@@ -50,13 +50,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\Skyline1.png">
-      <Name>Skyline1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Configs\config.ini">
       <Name>config</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -89,126 +82,26 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Platforms\hus1.png">
-      <Name>hus1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Platforms\hus2.png">
-      <Name>hus2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Platforms\hus3.png">
-      <Name>hus3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Platforms\hus4.png">
-      <Name>hus4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Platforms\hus5.png">
-      <Name>hus5</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Platforms\hus6.png">
-      <Name>hus6</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Platforms\hus7.png">
-      <Name>hus7</Name>
+    <Compile Include="Graphics\Bomb.png">
+      <Name>Bomb</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\Sky1.png">
-      <Name>Sky1</Name>
+    <Compile Include="Graphics\Collision\Bomb_collision.png">
+      <Name>Bomb_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\hus1.png">
-      <Name>hus1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Backgrounds\hus2.png">
-      <Name>hus2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
+    <Folder Include="Graphics\Platforms\" />
+    <Folder Include="Graphics\Spritesheets\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\Clouds\10.png">
-      <Name>10</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Backgrounds\Clouds\11.png">
-      <Name>11</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Backgrounds\Clouds\9.png">
-      <Name>9</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Collision\Platforms\Hus1_collision.png">
-      <Name>Hus1_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Collision\Platforms\hus2_collision.png">
-      <Name>hus2_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Collision\Platforms\hus3_collision.png">
-      <Name>hus3_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Collision\Platforms\Hus4_collision.png">
-      <Name>Hus4_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Collision\Platforms\hus5_collision.png">
-      <Name>hus5_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Collision\Platforms\hus6_collision.png">
-      <Name>hus6_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Collision\Platforms\hus7_collision.png">
-      <Name>hus7_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\RunningSheet.PNG">
-      <Name>RunningSheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Compile Include="Graphics\Collision\Spritesheets\RunningCollision.PNG">
-      <Name>RunningCollision</Name>
+    <Compile Include="Graphics\Backgrounds\Main.jpg">
+      <Name>Main</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

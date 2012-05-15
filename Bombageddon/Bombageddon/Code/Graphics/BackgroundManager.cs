@@ -20,7 +20,7 @@ namespace Bombageddon.Code.Graphics
         private enum Layers
         {
             SKY = 0,
-            MOON,
+            MAIN,
             SKYLINE,
             BUILDINGS,
             CLOUDS,
@@ -35,43 +35,36 @@ namespace Bombageddon.Code.Graphics
 
         public void Initialize()
         {
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.SKY, @"Graphics\Backgrounds\Sky1"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MOON, @"Graphics\Backgrounds\Moon"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.SKYLINE, @"Graphics\Backgrounds\Skyline1"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.BUILDINGS, @"Graphics\Backgrounds\hus1"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.BUILDINGS, @"Graphics\Backgrounds\hus2"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.CLOUDS, @"Graphics\Backgrounds\Clouds\9"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.CLOUDS, @"Graphics\Backgrounds\Clouds\10"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.CLOUDS, @"Graphics\Backgrounds\Clouds\11"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MAIN, @"Graphics\Backgrounds\Main"));
 
-            KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.SKY, 
-                new Background(@"Graphics\Backgrounds\Sky1", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
+            KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.MAIN, 
+                new Background(@"Graphics\Backgrounds\Main", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
-            backgroundList.AddLast(addBackground((int)Layers.SKY));
-            backgroundList.AddLast(addBackground((int)Layers.SKY));
-            //background = new KeyValuePair<int, Background>((int)Layers.MOON, 
-            //    new Background(@"Graphics\Backgrounds\Moon", spriteBatch, game, new Vector2(-300f, Runner.HEIGHT)));
+            backgroundList.AddLast(addBackground((int)Layers.MAIN));
+            backgroundList.AddLast(addBackground((int)Layers.MAIN));
+            ////background = new KeyValuePair<int, Background>((int)Layers.MOON, 
+            ////    new Background(@"Graphics\Backgrounds\Moon", spriteBatch, game, new Vector2(-300f, Runner.HEIGHT)));
+            ////background.Value.Initialize();
+            ////backgroundList.AddLast(background);
+            //background = new KeyValuePair<int, Background>((int)Layers.SKYLINE, 
+            //    new Background(@"Graphics\Backgrounds\Skyline1", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
             //background.Value.Initialize();
             //backgroundList.AddLast(background);
-            background = new KeyValuePair<int, Background>((int)Layers.SKYLINE, 
-                new Background(@"Graphics\Backgrounds\Skyline1", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
-            background.Value.Initialize();
-            backgroundList.AddLast(background);
-            backgroundList.AddLast(addBackground((int)Layers.SKYLINE));
-            backgroundList.AddLast(addBackground((int)Layers.SKYLINE));
-            background = new KeyValuePair<int, Background>((int)Layers.BUILDINGS, 
-                new Background(@"Graphics\Backgrounds\hus1", spriteBatch, game, new Vector2(600f, Bombageddon.HEIGHT)));
-            background.Value.Initialize();
-            backgroundList.AddLast(background);
-            backgroundList.AddLast(addBackground((int)Layers.BUILDINGS));
-            backgroundList.AddLast(addBackground((int)Layers.BUILDINGS));
-            background = new KeyValuePair<int, Background>((int)Layers.CLOUDS,
-                new Background(@"Graphics\Backgrounds\Clouds\9", spriteBatch, game, new Vector2(300f, Bombageddon.HEIGHT / 2)));
-            background.Value.Initialize();
-            backgroundList.AddLast(background);
-            backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
-            backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
+            //backgroundList.AddLast(addBackground((int)Layers.SKYLINE));
+            //backgroundList.AddLast(addBackground((int)Layers.SKYLINE));
+            //background = new KeyValuePair<int, Background>((int)Layers.BUILDINGS, 
+            //    new Background(@"Graphics\Backgrounds\hus1", spriteBatch, game, new Vector2(600f, Bombageddon.HEIGHT)));
+            //background.Value.Initialize();
+            //backgroundList.AddLast(background);
+            //backgroundList.AddLast(addBackground((int)Layers.BUILDINGS));
+            //backgroundList.AddLast(addBackground((int)Layers.BUILDINGS));
+            //background = new KeyValuePair<int, Background>((int)Layers.CLOUDS,
+            //    new Background(@"Graphics\Backgrounds\Clouds\9", spriteBatch, game, new Vector2(300f, Bombageddon.HEIGHT / 2)));
+            //background.Value.Initialize();
+            //backgroundList.AddLast(background);
+            //backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
+            //backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
 
             rand = new Random();
         }

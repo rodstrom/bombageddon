@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Bombageddon.Code.Entities
 {
-    class Player : Animation
+    class Player : Sprite
     {
         InputManager input;
         KineticVector kineticVector;
@@ -25,13 +25,12 @@ namespace Bombageddon.Code.Entities
         int snapShotIndex = 0;
 
         public bool falling;
-        public bool running;
 
         public bool win = false;
         public bool lose = false;
 
         public Player(Bombageddon game, SpriteBatch spriteBatch, Vector2 position)
-            : base(game, spriteBatch)
+            : base(spriteBatch, game)
         {
             this.input = new InputManager(game);
             kineticVector = new KineticVector();
@@ -43,25 +42,34 @@ namespace Bombageddon.Code.Entities
 
         protected override void LoadContent()
         {
-            AnimationStrip _runningAnim = new AnimationStrip();            
-            Texture2D _tmpSource = Game.Content.Load<Texture2D>(@"Graphics\Spritesheets\RunningSheet");
-            Texture2D _tmpCol = Game.Content.Load<Texture2D>(@"Graphics\Collision\Spritesheets\RunningCollision");
+            ////AnimationStrip _runningAnim = new AnimationStrip();            
+            //Texture2D _tmpSource = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
+            //Texture2D _tmpCol = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
 
-            for (int x = 0; x < 14; x++)
-            {
-                _runningAnim.AddFrame(new AnimationFrame(_tmpSource, new Rectangle(64 * x, 0, 64, 64), _tmpCol));
-            }
+            SourceTexture = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
+
+            hitTexture = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
+            GetColorData(hitTexture);
+            CollisionRectangle = SourceRectangle;
+            GetHeight();
+
+            Origin = new Vector2(SourceTexture.Bounds.Center.X, SourceTexture.Bounds.Center.Y);
+
+            //for (int x = 0; x < 14; x++)
+            //{
+            //    _runningAnim.AddFrame(new AnimationFrame(_tmpSource, new Rectangle(64 * x, 0, 64, 64), _tmpCol));
+            //}
             
-            _runningAnim.TimeOnChange = 50;
-            this.AddAnimation("Running", _runningAnim);
+            //_runningAnim.TimeOnChange = 50;
+            //this.AddAnimation("Running", _runningAnim);
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (this.AnimationName != "Running")
-            {
-                this.AnimationName = "Running";
-            }
+            //if (this.AnimationName != "Running")
+            //{
+            //    this.AnimationName = "Running";
+            //}
 
             if (input.CurrentMouse != input.MouseOriginal)
             {
@@ -78,8 +86,8 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y -= kineticVector.FinalVector.Y * 5;
-                        kinetics.X -= kineticVector.FinalVector.X * 4;
+                        kinetics.Y -= kineticVector.FinalVector.Y * 2;
+                        kinetics.X -= kineticVector.FinalVector.X * 1;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;
@@ -134,6 +142,7 @@ namespace Bombageddon.Code.Entities
         {
             position.X += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            Rotation += 0.1f;
         }
     }
 }

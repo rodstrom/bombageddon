@@ -30,8 +30,7 @@ namespace Bombageddon.Code.Graphics
         protected override void LoadContent()
         {
             SourceTexture = Game.Content.Load<Texture2D>(_filename);
-            Origin = new Vector2(SourceRectangle.Left, SourceRectangle.Center.Y * 1.5f);
-            Scale *= 2f;
+            Origin = new Vector2(SourceRectangle.Left, SourceRectangle.Bottom);
         }
 
         public override void Update(GameTime gameTime)

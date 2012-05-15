@@ -39,26 +39,20 @@ namespace Bombageddon.Code.Entities
             backgroundManager = new BackgroundManager(game, spriteBatch);
             backgroundManager.Initialize();
 
-            player = new Player(game, spriteBatch, new Vector2(300f, -500f));
+            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 64f));
             player.Initialize();
             entityList.AddLast(player);
 
-            platform = new Platform(game, spriteBatch, @"Graphics\Platforms\hus3", @"Graphics\Collision\Platforms\hus3_collision", new Vector2(-100f, Bombageddon.HEIGHT + 600f));
-            platform.Initialize();
-            entityList.AddLast(platform);
+            //platform = new Platform(game, spriteBatch, @"Graphics\Platforms\hus3", @"Graphics\Collision\Platforms\hus3_collision", new Vector2(-100f, Bombageddon.HEIGHT + 600f));
+            //platform.Initialize();
+            //entityList.AddLast(platform);
 
             //platformFiles.Add(@"Graphics\Platforms\hus1", @"Graphics\Collision\Platforms\Hus1_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus3", @"Graphics\Collision\Platforms\hus3_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus4", @"Graphics\Collision\Platforms\Hus4_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus6", @"Graphics\Collision\Platforms\hus6_collision");
-            //platformFiles.Add(@"Graphics\Platforms\hus2", @"Graphics\Collision\Platforms\hus2_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus5", @"Graphics\Collision\Platforms\hus5_collision");
-            //platformFiles.Add(@"Graphics\Platforms\hus7", @"Graphics\Collision\Platforms\hus7_collision");
 
-            for (int i = 0; i < 5; i++)
-            {
-                entityList.AddLast(addPlatform());
-            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    entityList.AddLast(addPlatform());
+            //}
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -139,11 +133,11 @@ namespace Bombageddon.Code.Entities
                 entity.Update(gameTime);
             }
 
-            Platform tempPlatform = (Platform)findFirstOfType("Platform").Next.Value;
-            if (tempPlatform.SourceRectangle.Right < player.position.X - Bombageddon.WIDTH)
-            {
-                refreshPlatforms();
-            }
+            //Platform tempPlatform = (Platform)findFirstOfType("Platform").Next.Value;
+            //if (tempPlatform.SourceRectangle.Right < player.position.X - Bombageddon.WIDTH)
+            //{
+            //    refreshPlatforms();
+            //}
 
             CollisionCheck();
         }
@@ -161,7 +155,7 @@ namespace Bombageddon.Code.Entities
 
             Texture2D t = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
             t.SetData(new[] { Color.White }); 
-            spriteBatch.Draw(t, new Rectangle((int)player.position.X - Bombageddon.WIDTH, Bombageddon.HEIGHT, Bombageddon.WIDTH * 4, 4), Color.Red); // Bottom
+            spriteBatch.Draw(t, new Rectangle((int)player.position.X - Bombageddon.WIDTH, Bombageddon.GROUND, Bombageddon.WIDTH * 4, 4), Color.Red); // Bottom
         }
 
         //private void CollisionCheck()
@@ -228,9 +222,11 @@ namespace Bombageddon.Code.Entities
 
         private void CollisionCheck()
         {
-            if (player.SourceRectangle.Bottom > Bombageddon.HEIGHT)
+            if (player.SourceRectangle.Bottom > Bombageddon.GROUND)
             {
-                player.lose = true;
+                player.lose = false;
+                player.position.Y = Bombageddon.GROUND - player.SourceRectangle.Center.X;
+                player.falling = false;
             }
 
             foreach (Entity entity in entityList)
