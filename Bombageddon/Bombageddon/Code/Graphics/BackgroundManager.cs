@@ -21,7 +21,7 @@ namespace Bombageddon.Code.Graphics
         {
             SKY = 0,
             MAIN,
-            SKYLINE,
+            GRASS,
             BUILDINGS,
             CLOUDS,
             FADER
@@ -36,6 +36,7 @@ namespace Bombageddon.Code.Graphics
         public void Initialize()
         {
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MAIN, @"Graphics\Backgrounds\Main"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.GRASS, @"Graphics\Backgrounds\Ground"));
 
             KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.MAIN, 
                 new Background(@"Graphics\Backgrounds\Main", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
@@ -43,10 +44,14 @@ namespace Bombageddon.Code.Graphics
             backgroundList.AddLast(background);
             backgroundList.AddLast(addBackground((int)Layers.MAIN));
             backgroundList.AddLast(addBackground((int)Layers.MAIN));
-            ////background = new KeyValuePair<int, Background>((int)Layers.MOON, 
-            ////    new Background(@"Graphics\Backgrounds\Moon", spriteBatch, game, new Vector2(-300f, Runner.HEIGHT)));
-            ////background.Value.Initialize();
-            ////backgroundList.AddLast(background);
+            background = new KeyValuePair<int, Background>((int)Layers.GRASS,
+                new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
+            background.Value.Initialize();
+            backgroundList.AddLast(background);
+            for (int i = 0; i < 10; i++)
+            {
+                backgroundList.AddLast(addBackground((int)Layers.GRASS));
+            }
             //background = new KeyValuePair<int, Background>((int)Layers.SKYLINE, 
             //    new Background(@"Graphics\Backgrounds\Skyline1", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
             //background.Value.Initialize();

@@ -39,11 +39,11 @@ namespace Bombageddon.Code.Entities
             backgroundManager = new BackgroundManager(game, spriteBatch);
             backgroundManager.Initialize();
 
-            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 64f));
+            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 256f));
             player.Initialize();
             entityList.AddLast(player);
 
-            platform = new Platform(game, spriteBatch, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", new Vector2(100f, Bombageddon.GROUND));
+            platform = new Platform(game, spriteBatch, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", new Vector2(100f, Bombageddon.GROUND), 10);
             platform.Initialize();
             entityList.AddLast(platform);
 
@@ -59,7 +59,6 @@ namespace Bombageddon.Code.Entities
         private LinkedListNode<Entity> findFirstOfType(String type)
         {
             LinkedListNode<Entity> temp = entityList.First;
-            bool foundFirstPlatform = false;
             do
             {
                 if (temp.Value.GetType().Name.Equals(type))
@@ -70,14 +69,12 @@ namespace Bombageddon.Code.Entities
                 {
                     temp = temp.Next;
                 }
-            } while (!foundFirstPlatform);
-            return null;
+            } while (true);
         }
 
         private LinkedListNode<Entity> findLastOfType(String type)
         {
             LinkedListNode<Entity> temp = entityList.Last;
-            bool foundLastPlatform = false;
             do
             {
                 if (temp.Value.GetType().Name.Equals(type))
@@ -88,8 +85,7 @@ namespace Bombageddon.Code.Entities
                 {
                     temp = temp.Previous;
                 }
-            } while (!foundLastPlatform);
-            return null;
+            } while (true);
         }
 
         private void refreshPlatforms()
@@ -108,7 +104,7 @@ namespace Bombageddon.Code.Entities
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
             float posX = lastPlatform.position.X + lastPlatform.SourceRectangle.Width + random.Next(400, 700);
             Vector2 position = new Vector2(posX, Bombageddon.GROUND);
-            platform = new Platform(game, spriteBatch, filename, collisionname, position);
+            platform = new Platform(game, spriteBatch, filename, collisionname, position, 10);
             platform.Initialize();
 
             return platform;
@@ -246,6 +242,8 @@ namespace Bombageddon.Code.Entities
                     else
                     {
                         tmpPlat.KillMe = true;
+                        player.kinetics *= 0.1f;
+                        player.points += tmpPlat.pointsWorth;
 
                         //Side sides = collision.GetSidesCollided(player, tmpPlat);
 
@@ -270,10 +268,14 @@ namespace Bombageddon.Code.Entities
                 }
             }
 
-            if (player.SourceRectangle.Bottom > Bombageddon.GROUND)
+            if (player.position.Y + 64 > Bombageddon.GROUND)
             {
-                player.position.Y = Bombageddon.GROUND - player.SourceRectangle.Center.X - 2;
-                //player.Falling = false;
+                player.position.Y = Bombageddon.GROUND - 64 - 2;
+                player.Falling = false;
+            }
+            else
+            {
+                player.Falling = true;
             }
         }
 

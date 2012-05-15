@@ -13,6 +13,8 @@ namespace Bombageddon.Code.Entities
         string textureName;
         string collisionName;
 
+        public int pointsWorth = 0;
+
         //private Rectangle _hitRectangle;
         //public Rectangle HitRectangle
         //{
@@ -46,12 +48,13 @@ namespace Bombageddon.Code.Entities
         //    }
         //}
 
-        public Platform(Bombageddon game, SpriteBatch spriteBatch, string filename, string collisionfile, Vector2 position)
+        public Platform(Bombageddon game, SpriteBatch spriteBatch, string filename, string collisionfile, Vector2 position, int pointsWorth)
             : base(spriteBatch, game)
         {
             this.position = position;
             textureName = filename;
             collisionName = collisionfile;
+            this.pointsWorth = pointsWorth;
             //this._hitRectangle = hitRectangle;
             //this._hitRectangle2 = new Rectangle(0, 0, 0, 0);
             //this.hitRect2Enabled = false;

@@ -94,7 +94,8 @@ namespace Bombageddon.Code.States
             {
                 game.Timer.Update(gameTime);
                 //score = game.Timer.ToInteger("s_total");
-                score = (int)(entityManager.player.position.X - 300f) / 100;
+                //score = (int)(entityManager.player.position.X - 300f) / 100;
+                score = entityManager.player.points;
 
                 entityManager.Update(gameTime);
             }

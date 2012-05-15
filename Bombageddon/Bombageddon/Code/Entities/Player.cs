@@ -24,6 +24,8 @@ namespace Bombageddon.Code.Entities
         float snapShotTimer = 0.0f;
         int snapShotIndex = 0;
 
+        public int points = 0;
+
         private bool _falling;
         public bool Falling
         {
@@ -34,7 +36,7 @@ namespace Bombageddon.Code.Entities
             set
             {
                 _falling = value;
-                if (!Falling)
+                if (!_falling)
                 {
                     fallTime = 0;
                     kinetics.Y = 0;
@@ -78,6 +80,8 @@ namespace Bombageddon.Code.Entities
             
             //_runningAnim.TimeOnChange = 50;
             //this.AddAnimation("Running", _runningAnim);
+
+            Falling = true;
         }
 
         public override void Terminate()
@@ -109,7 +113,7 @@ namespace Bombageddon.Code.Entities
                     else
                     {
                         kinetics.Y -= kineticVector.FinalVector.Y * 2;
-                        kinetics.X -= kineticVector.FinalVector.X * 1;
+                        kinetics.X -= kineticVector.FinalVector.X * 2;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;
@@ -124,15 +128,15 @@ namespace Bombageddon.Code.Entities
             MathHelper.Clamp(runTime, 0, 5000);
             MathHelper.Clamp(fallTime, 0, 5000);
 
-            if (kinetics.X < 300f)
+            if (kinetics.X < 200f)
             {
                 kinetics.X += ((runTime / 1000) * (runTime / 1000) * 2);
             }
-            if (kinetics.X < 900f)
+            if (kinetics.X < 600f)
             {
                 kinetics.X += ((runTime / 1000) * (runTime /  1000));
             }
-            if (kinetics.X > 1050f)
+            if (kinetics.X > 1200f)
             {
                 kinetics.X -= ((runTime / 1000) * (runTime / 1000) * 0.5f);
             }
@@ -160,15 +164,6 @@ namespace Bombageddon.Code.Entities
             position.X += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
             Rotation += 0.1f;
-
-            if (position.Y > Bombageddon.HEIGHT - SourceRectangle.Center.X)
-            {
-                Falling = false;
-            }
-            else
-            {
-                Falling = true;
-            }
         }
     }
 }
