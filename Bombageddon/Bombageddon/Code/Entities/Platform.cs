@@ -81,6 +81,8 @@ namespace Bombageddon.Code.Entities
             GetHeight();
 
             Origin = new Vector2(SourceTexture.Bounds.Left, SourceTexture.Bounds.Bottom);
+
+            Scale *= 2f;
         }
     }
 }

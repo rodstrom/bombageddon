@@ -103,7 +103,7 @@ namespace Bombageddon.Code.Entities
             string collisionname = platformFiles.ElementAt(rand).Value;
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
             float posX = lastPlatform.position.X + lastPlatform.SourceRectangle.Width + random.Next(400, 700);
-            Vector2 position = new Vector2(posX, Bombageddon.GROUND);
+            Vector2 position = new Vector2(posX, Bombageddon.GROUND - 10f);
             platform = new Platform(game, spriteBatch, filename, collisionname, position, 10);
             platform.Initialize();
 
@@ -152,14 +152,16 @@ namespace Bombageddon.Code.Entities
 
         public void Draw(GameTime gameTime)
         {
-            backgroundManager.Draw(gameTime);
+            backgroundManager.Draw(gameTime, false);
 
             foreach (Entity entity in entityList)
             {
                 entity.Draw(gameTime);
             }
 
-            player.Draw(gameTime);
+            //player.Draw(gameTime);
+
+            backgroundManager.Draw(gameTime, true);
 
             //Texture2D t = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
             //t.SetData(new[] { Color.White }); 
@@ -242,7 +244,7 @@ namespace Bombageddon.Code.Entities
                     else
                     {
                         tmpPlat.KillMe = true;
-                        player.kinetics *= 0.1f;
+                        //player.kinetics *= 0.1f;
                         player.points += tmpPlat.pointsWorth;
 
                         //Side sides = collision.GetSidesCollided(player, tmpPlat);

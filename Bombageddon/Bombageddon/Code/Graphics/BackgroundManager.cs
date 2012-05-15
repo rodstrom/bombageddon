@@ -124,6 +124,25 @@ namespace Bombageddon.Code.Graphics
                 }
             }
         }
+
+        public void Draw(GameTime gameTime, bool front)
+        {
+            int start = 0;
+            int end = 2;
+            if (front)
+            {
+                start = 2;
+                end = 6;
+            }
+
+            for (int i = start; i < end; i++)
+            {
+                foreach (Background background in getBackgroundsByLayer(i))
+                {
+                    background.Draw(gameTime);
+                }
+            }
+        }
         
         private void refreshBackgrounds(int playerPosX)
         {
