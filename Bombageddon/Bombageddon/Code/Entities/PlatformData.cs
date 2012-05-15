@@ -25,8 +25,8 @@ namespace Bombageddon.Code.Entities
 
         public void Terminate()
         {
-            Texture.Dispose();
-            HitTexture.Dispose();
+            Texture = null;
+            HitTexture = null;
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Bombageddon.Code.Entities
 {
     class Platform : Sprite
     {
-        string textureName;
-        string collisionName;
+        //string textureName;
+        //string collisionName;
 
         public int pointsWorth = 0;
 

@@ -16,8 +16,8 @@ namespace Bombageddon.Code.Graphics
 
         public override void Terminate()
         {
-            sourceTexture.Dispose();
-            hitTexture.Dispose();
+            sourceTexture = null;
+            hitTexture = null;
             ColorData = null;
         }
 

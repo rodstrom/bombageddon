@@ -57,11 +57,11 @@ namespace Bombageddon.Code.Entities
         private void CreateListOfAvailablePlatforms()
         {
             PlatformData platform = new PlatformData(game, @"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision", 
-                new Vector2(100f, Bombageddon.GROUND), 10);
+                new Vector2(100f, Bombageddon.GROUND - 15f), 10);
             availablePlatforms.Add(platform); 
 
-            platform = new PlatformData(game, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", 
-                new Vector2(100f, Bombageddon.GROUND), 10);
+            platform = new PlatformData(game, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision",
+                new Vector2(100f, Bombageddon.GROUND - 15f), 10);
             availablePlatforms.Add(platform);
         }
 
@@ -108,10 +108,11 @@ namespace Bombageddon.Code.Entities
         private Platform addPlatform()
         {
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
-            float posX = lastPlatform.position.X + random.Next(400, 700);
+            float posX = lastPlatform.position.X + random.Next(600, 1000);
             PlatformData r = availablePlatforms[random.Next(availablePlatforms.Count)];
             Platform platform = new Platform(game, spriteBatch, r.Texture, r.HitTexture, r.position, r.points);
             platform.position.X = posX;
+            platform.Initialize();
 
             return platform;
         }
@@ -254,7 +255,7 @@ namespace Bombageddon.Code.Entities
                     else
                     {
                         tmpPlat.KillMe = true;
-                        //player.kinetics *= 0.1f;
+                        player.kinetics *= 0.1f;
                         player.points += tmpPlat.pointsWorth;
 
                         //Side sides = collision.GetSidesCollided(player, tmpPlat);
