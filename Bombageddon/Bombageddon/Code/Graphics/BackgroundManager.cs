@@ -125,7 +125,7 @@ namespace Bombageddon.Code.Graphics
             List<int> newBackgrounds = new List<int>();
             foreach (KeyValuePair<int, Background> background in backgroundList)
             {
-                if (background.Value.SourceRectangle.Right < playerPosX - Bombageddon.WIDTH)
+                if (background.Value.SourceRectangle.Right < playerPosX - Bombageddon.WIDTH / 2)
                 {
                     background.Value.KillMe = true;
                     newBackgrounds.Add(background.Key);
@@ -144,7 +144,7 @@ namespace Bombageddon.Code.Graphics
             {
                 offset = rand.Next(100, 600);
             }
-            Vector2 position = new Vector2(getBackgroundsByLayer(layer).Last().SourceRectangle.Right + offset, Bombageddon.HEIGHT);
+            Vector2 position = new Vector2(getBackgroundsByLayer(layer).Last().position.X + getBackgroundsByLayer(layer).Last().SourceRectangle.Width + offset, Bombageddon.HEIGHT);
 
             string filename = "";
             bool keepTrying = true;

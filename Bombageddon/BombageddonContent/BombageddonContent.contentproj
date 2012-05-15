@@ -96,12 +96,35 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Graphics\Platforms\" />
     <Folder Include="Graphics\Spritesheets\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\Backgrounds\Main.jpg">
       <Name>Main</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Buildings\Hus1.png">
+      <Name>Hus1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Buildings\Hus2.png">
+      <Name>Hus2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Collision\Hus1_collision.png">
+      <Name>Hus1_collision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Collision\Hus2_collision.png">
+      <Name>Hus2_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

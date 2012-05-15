@@ -30,6 +30,11 @@ namespace Bombageddon.Code.Physics
             K1.Y = OriginalMouseState.Y;
         }
 
+        public void Terminate()
+        {
+            finalVector = Vector2.Zero;
+        }
+
         public Vector2 CalculateKineticVector()
         {
             //D = Vector2.Distance(K1, K2);

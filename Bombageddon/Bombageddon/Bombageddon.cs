@@ -96,7 +96,7 @@ namespace Bombageddon
                 int.Parse(config.getValue("Video", "Height"))
                 );
             //Viewport view = new Viewport(0, 0, Bombageddon.WIDTH, Bombageddon.HEIGHT);
-            camera = new Camera2D(view, 1f, 0f, this);
+            camera = new Camera2D(view, 0.7f, 0f, this);
 
             this.IsMouseVisible = false;
 

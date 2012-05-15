@@ -24,7 +24,23 @@ namespace Bombageddon.Code.Entities
         float snapShotTimer = 0.0f;
         int snapShotIndex = 0;
 
-        public bool falling;
+        private bool _falling;
+        public bool Falling
+        {
+            get
+            {
+                return _falling;
+            }
+            set
+            {
+                _falling = value;
+                if (!Falling)
+                {
+                    fallTime = 0;
+                    kinetics.Y = 0;
+                }
+            }
+        }
 
         public bool win = false;
         public bool lose = false;
@@ -62,6 +78,12 @@ namespace Bombageddon.Code.Entities
             
             //_runningAnim.TimeOnChange = 50;
             //this.AddAnimation("Running", _runningAnim);
+        }
+
+        public override void Terminate()
+        {
+            kineticVector.Terminate();
+            base.Terminate();
         }
 
         public override void Update(GameTime gameTime)
@@ -115,15 +137,10 @@ namespace Bombageddon.Code.Entities
                 kinetics.X -= ((runTime / 1000) * (runTime / 1000) * 0.5f);
             }
 
-            if (falling)
+            if (Falling)
             {
                 fallTime += gameTime.ElapsedGameTime.Milliseconds;
                 kinetics.Y += ((fallTime / 1000) * (fallTime / 1000) * 500);
-            }
-            else
-            {
-                fallTime = 0;
-                kinetics.Y = 0;
             }
 
             //if (input.MouseRelative.Y < 0 && !falling)
@@ -132,7 +149,7 @@ namespace Bombageddon.Code.Entities
 
             //    //Runner.AudioManager.PlayEffect("Jump");
             //}
-
+            
             input.Update();
             Move(gameTime);
             base.Update(gameTime);
@@ -143,6 +160,15 @@ namespace Bombageddon.Code.Entities
             position.X += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
             Rotation += 0.1f;
+
+            if (position.Y > Bombageddon.HEIGHT - SourceRectangle.Center.X)
+            {
+                Falling = false;
+            }
+            else
+            {
+                Falling = true;
+            }
         }
     }
 }
