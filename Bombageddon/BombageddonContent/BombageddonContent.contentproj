@@ -95,9 +95,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\Spritesheets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Graphics\Buildings\Hus1.png">
       <Name>Hus1</Name>
@@ -132,6 +130,13 @@
   <ItemGroup>
     <Compile Include="Graphics\Backgrounds\Main.png">
       <Name>Main</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\Hus1_sheet.PNG">
+      <Name>Hus1_sheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

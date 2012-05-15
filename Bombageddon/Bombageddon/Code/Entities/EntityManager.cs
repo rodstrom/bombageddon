@@ -21,10 +21,11 @@ namespace Bombageddon.Code.Entities
         public LinkedList<Entity> entityList = new LinkedList<Entity>();
         Random random = new Random();
 
-        Dictionary<String, String> platformFiles = new Dictionary<String, String>();
+        //Dictionary<String, String> platformFiles = new Dictionary<String, String>();
         //Dictionary<String, Rectangle[]> platformFiles = new Dictionary<String, Rectangle[]>();
 
-        public Platform platform = null;
+        //public Platform platform = null;
+        List<PlatformData> availablePlatforms = new List<PlatformData>();
         
         public EntityManager(Bombageddon game, SpriteBatch spriteBatch)
         {
@@ -43,17 +44,25 @@ namespace Bombageddon.Code.Entities
             player.Initialize();
             entityList.AddLast(player);
 
-            platform = new Platform(game, spriteBatch, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", new Vector2(100f, Bombageddon.GROUND), 10);
-            platform.Initialize();
-            entityList.AddLast(platform);
-
-            platformFiles.Add(@"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision");
-            platformFiles.Add(@"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision");
+            CreateListOfAvailablePlatforms();
+            PlatformData temp = availablePlatforms[0];
+            entityList.AddLast(new Platform(game, spriteBatch, temp.Texture, temp.HitTexture, temp.position, temp.points));
 
             for (int i = 0; i < 5; i++)
             {
                 entityList.AddLast(addPlatform());
             }
+        }
+
+        private void CreateListOfAvailablePlatforms()
+        {
+            PlatformData platform = new PlatformData(game, @"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision", 
+                new Vector2(100f, Bombageddon.GROUND), 10);
+            availablePlatforms.Add(platform); 
+
+            platform = new PlatformData(game, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", 
+                new Vector2(100f, Bombageddon.GROUND), 10);
+            availablePlatforms.Add(platform);
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -98,14 +107,11 @@ namespace Bombageddon.Code.Entities
 
         private Platform addPlatform()
         {
-            int rand = random.Next(platformFiles.Count);
-            string filename = platformFiles.ElementAt(rand).Key;
-            string collisionname = platformFiles.ElementAt(rand).Value;
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
-            float posX = lastPlatform.position.X + lastPlatform.SourceRectangle.Width + random.Next(400, 700);
-            Vector2 position = new Vector2(posX, Bombageddon.GROUND - 10f);
-            platform = new Platform(game, spriteBatch, filename, collisionname, position, 10);
-            platform.Initialize();
+            float posX = lastPlatform.position.X + random.Next(400, 700);
+            PlatformData r = availablePlatforms[random.Next(availablePlatforms.Count)];
+            Platform platform = new Platform(game, spriteBatch, r.Texture, r.HitTexture, r.position, r.points);
+            platform.position.X = posX;
 
             return platform;
         }
@@ -115,10 +121,14 @@ namespace Bombageddon.Code.Entities
             foreach (Entity e in entityList)
             {
                 e.Terminate();
+            } 
+            foreach (PlatformData p in availablePlatforms)
+            {
+                p.Terminate();
             }
             entityList.Clear();
+            availablePlatforms.Clear();
             player = null;
-            platform = null;
         }
 
         public void Update(GameTime gameTime)
@@ -141,8 +151,8 @@ namespace Bombageddon.Code.Entities
                 entityList.AddLast(addPlatform());
             }
 
-            Platform tempPlatform = (Platform)findFirstOfType("Platform").Next.Value;
-            if (tempPlatform.SourceRectangle.Right < player.position.X - Bombageddon.WIDTH / 2)
+            Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
+            if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH / 2)
             {
                 refreshPlatforms();
             }

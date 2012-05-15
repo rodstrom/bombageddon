@@ -112,6 +112,7 @@
     <Compile Include="Code\Entities\Entity.cs" />
     <Compile Include="Code\Entities\EntityManager.cs" />
     <Compile Include="Code\Entities\Platform.cs" />
+    <Compile Include="Code\Entities\PlatformData.cs" />
     <Compile Include="Code\Entities\Player.cs" />
     <Compile Include="Code\Graphics\Animation.cs" />
     <Compile Include="Code\Graphics\AnimationFrame.cs" />

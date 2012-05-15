@@ -48,13 +48,15 @@ namespace Bombageddon.Code.Entities
         //    }
         //}
 
-        public Platform(Bombageddon game, SpriteBatch spriteBatch, string filename, string collisionfile, Vector2 position, int pointsWorth)
+        public Platform(Bombageddon game, SpriteBatch spriteBatch, Texture2D texture, Texture2D hitTexture, Vector2 position, int pointsWorth)
             : base(spriteBatch, game)
         {
             this.position = position;
-            textureName = filename;
-            collisionName = collisionfile;
             this.pointsWorth = pointsWorth;
+
+            this.sourceTexture = texture;
+            this.hitTexture = hitTexture;
+
             //this._hitRectangle = hitRectangle;
             //this._hitRectangle2 = new Rectangle(0, 0, 0, 0);
             //this.hitRect2Enabled = false;
@@ -73,14 +75,14 @@ namespace Bombageddon.Code.Entities
 
         protected override void LoadContent()
         {
-            SourceTexture = Game.Content.Load<Texture2D>(textureName);
+            //SourceTexture = Game.Content.Load<Texture2D>(textureName);
 
-            hitTexture = Game.Content.Load<Texture2D>(collisionName);
+            //hitTexture = Game.Content.Load<Texture2D>(collisionName);
             GetColorData(hitTexture);
             CollisionRectangle = SourceRectangle;
             GetHeight();
 
-            Origin = new Vector2(SourceTexture.Bounds.Left, SourceTexture.Bounds.Bottom);
+            Origin = new Vector2(SourceTexture.Bounds.Center.X, SourceTexture.Bounds.Bottom);
 
             Scale *= 2f;
         }
