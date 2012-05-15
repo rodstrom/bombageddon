@@ -70,18 +70,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Buildings\Hus1.png">
-      <Name>Hus1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Buildings\Hus2.png">
-      <Name>Hus2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Graphics\Collision\Hus1_collision.png">
       <Name>Hus1_collision</Name>
       <Importer>TextureImporter</Importer>
@@ -139,6 +127,18 @@
   <ItemGroup>
     <Compile Include="Graphics\Backgrounds\Main.png">
       <Name>Main</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Buildings\Sten.png">
+      <Name>Sten</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Buildings\Stencollision.png">
+      <Name>Stencollision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -59,7 +59,7 @@ namespace Bombageddon.Code.States
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Resolution.getTransformationMatrix());
             
-            spriteBatch.DrawString(font, "Pusher: Highscore", new Vector2(100, 100), Color.Red, 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Bombageddon: Highscore", new Vector2(100, 100), Color.Red, 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
             spriteBatch.DrawString(font, congrats, new Vector2(100, 250), Color.Red, 0f, Vector2.Zero, 1.2f, SpriteEffects.None, 1f);
             spriteBatch.DrawString(font, hiscore, new Vector2(100, 400), Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 

@@ -16,6 +16,12 @@ namespace Bombageddon.Code.Entities
         InputManager input;
         KineticVector kineticVector;
 
+        public int FuseTimer
+        {
+            get;
+            set;
+        }
+
         public Vector2 kinetics;
 
         public float fallTime;
@@ -44,8 +50,7 @@ namespace Bombageddon.Code.Entities
             }
         }
 
-        public bool win = false;
-        public bool lose = false;
+        public bool end = false;
 
         public Player(Bombageddon game, SpriteBatch spriteBatch, Vector2 position)
             : base(spriteBatch, game)
@@ -56,6 +61,7 @@ namespace Bombageddon.Code.Entities
             this.runTime = 0f;
             this.position = position;
             kinetics = Vector2.Zero;
+            FuseTimer = 60000;
         }
 
         protected override void LoadContent()
@@ -96,6 +102,11 @@ namespace Bombageddon.Code.Entities
             //{
             //    this.AnimationName = "Running";
             //}
+            FuseTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            if (FuseTimer < 0)
+            {
+                end = true;
+            }
 
             if (input.CurrentMouse != input.MouseOriginal)
             {
