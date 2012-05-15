@@ -40,13 +40,13 @@ namespace Bombageddon.Code.Entities
             backgroundManager = new BackgroundManager(game, spriteBatch);
             backgroundManager.Initialize();
 
-            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 256f));
+            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 512f));
             player.Initialize();
             entityList.AddLast(player);
 
             CreateListOfAvailablePlatforms();
             PlatformData temp = availablePlatforms[0];
-            entityList.AddLast(new Platform(game, spriteBatch, temp.Texture, temp.HitTexture, temp.position, temp.points));
+            entityList.AddLast(new Platform(game, spriteBatch, temp.still, temp.explosion, temp.position, temp.points));
 
             for (int i = 0; i < 5; i++)
             {
@@ -56,13 +56,13 @@ namespace Bombageddon.Code.Entities
 
         private void CreateListOfAvailablePlatforms()
         {
-            PlatformData platform = new PlatformData(game, @"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision", 
-                new Vector2(100f, Bombageddon.GROUND - 15f), 10);
+            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 9, 128, 
+                new Vector2(500f, Bombageddon.GROUND - 15f), 10);
             availablePlatforms.Add(platform); 
 
-            platform = new PlatformData(game, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision",
-                new Vector2(100f, Bombageddon.GROUND - 15f), 10);
-            availablePlatforms.Add(platform);
+            //platform = new PlatformData(game, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", 0, 128, 
+            //    new Vector2(100f, Bombageddon.GROUND - 15f), 10);
+            //availablePlatforms.Add(platform);
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -110,9 +110,9 @@ namespace Bombageddon.Code.Entities
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
             float posX = lastPlatform.position.X + random.Next(600, 1000);
             PlatformData r = availablePlatforms[random.Next(availablePlatforms.Count)];
-            Platform platform = new Platform(game, spriteBatch, r.Texture, r.HitTexture, r.position, r.points);
-            platform.position.X = posX;
+            Platform platform = new Platform(game, spriteBatch, r.still, r.explosion, r.position, r.points);
             platform.Initialize();
+            platform.position.X = posX;
 
             return platform;
         }
@@ -252,10 +252,11 @@ namespace Bombageddon.Code.Entities
                     {
                         //player.Falling = true;
                     }
-                    else
+                    else if(!tmpPlat.ghost)
                     {
-                        tmpPlat.KillMe = true;
-                        player.kinetics *= 0.1f;
+                        tmpPlat.AnimationName = "Explosion";
+                        tmpPlat.ghost = true;
+                        player.kinetics *= 0f;
                         player.points += tmpPlat.pointsWorth;
 
                         //Side sides = collision.GetSidesCollided(player, tmpPlat);

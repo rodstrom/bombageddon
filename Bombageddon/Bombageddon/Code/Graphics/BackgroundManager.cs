@@ -48,7 +48,7 @@ namespace Bombageddon.Code.Graphics
                 new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 14; i++)
             {
                 backgroundList.AddLast(addBackground((int)Layers.GRASS));
             }

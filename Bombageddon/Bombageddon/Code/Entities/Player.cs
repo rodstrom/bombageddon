@@ -112,8 +112,8 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y -= kineticVector.FinalVector.Y * 1.5f;
-                        kinetics.X -= kineticVector.FinalVector.X * 3f;
+                        kinetics.Y += kineticVector.FinalVector.Y * 1.5f;
+                        kinetics.X += kineticVector.FinalVector.X * 3f;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;
