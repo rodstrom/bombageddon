@@ -30,6 +30,7 @@ namespace Bombageddon.Code.Entities
         public Platform platform = null;
 
         public Sheeple sheeple = null;
+        private int addThisManySheeples = 0;
         
         public EntityManager(Bombageddon game, SpriteBatch spriteBatch)
         {
@@ -49,7 +50,7 @@ namespace Bombageddon.Code.Entities
             entityList.AddLast(player);
 
             CreateListOfAvailablePlatforms();
-            PlatformData temp = availablePlatforms[0];
+            PlatformData temp = availablePlatforms[2];
             entityList.AddLast(new Platform(game, spriteBatch, temp));
             for (int i = 0; i < 5; i++)
             {
@@ -96,9 +97,10 @@ namespace Bombageddon.Code.Entities
 
         private void CreateCivilianData()
         {
-            CivilianData civilian = new CivilianData(game, "Man1", 2);
+            Texture2D empty = new Texture2D(game.graphics.GraphicsDevice, 256, 256);
+            CivilianData civilian = new CivilianData(game, "Man1", 2, empty);
             civilianData.Add(civilian);
-            civilian = new CivilianData(game, "Man2", 2);
+            civilian = new CivilianData(game, "Man2", 2, empty);
             civilianData.Add(civilian);
 
             game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Nej");
@@ -208,6 +210,12 @@ namespace Bombageddon.Code.Entities
                 }
             }
 
+            for (int i = addThisManySheeples; i > 0; i--)
+            {
+                entityList.AddLast(addSheeple());
+                addThisManySheeples--;
+            }
+
             Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
             if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
             {
@@ -286,16 +294,21 @@ namespace Bombageddon.Code.Entities
                 if (entity.GetType().Name == "Sheeple")
                 {
                     Sheeple tmpCiv = (Sheeple)entity;
-                    if (collision.BasicCheck(player, tmpCiv))
+                    if (!tmpCiv.ghost)
                     {
-                        if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
+                        if (collision.BasicCheck(player, tmpCiv))
                         {
-                            tmpCiv.IsKilled(true);
+                            if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
+                            {
+                                tmpCiv.IsKilled(true);
+                            }
+                            else
+                            {
+                                tmpCiv.IsKilled(false);
+                            }
                             player.points += tmpCiv.pointsWorth;
-                        }
-                        else
-                        {
-                            tmpCiv.IsKilled(false);
+                            tmpCiv.ghost = true;
+                            addThisManySheeples++;
                         }
                     }
                 }

@@ -61,8 +61,8 @@ namespace Bombageddon.Code.Physics
                 {
                     if (entity1.ColorData[x + pos1.X, y + pos1.Y].R > 200 &&
                         entity2.ColorData[x + pos2.X, y + pos2.Y].R > 200)
-                    //if (entity1.ColorData[x, y].R > 200 &&
-                    //    entity2.ColorData[x, y].R > 200)
+                        //if (entity1.ColorData[x, y].R > 200 &&
+                        //    entity2.ColorData[x, y].R > 200)
                     {
                         return true;
                     }

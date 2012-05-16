@@ -107,7 +107,7 @@ namespace Bombageddon.Code.Graphics
 
         public override void Update(GameTime gameTime)
         {
-            if (currentFrame == null)
+            if (currentFrame == null || ColorData == null || HeightMap == null)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
                 ColorData = SetColorData;

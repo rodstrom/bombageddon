@@ -69,18 +69,20 @@ namespace Bombageddon.Code.Graphics
 
         public AnimationFrame getCurrentFrame(GameTime gameTime)
         {
+            if (!looping && currentIndex > frames.Count - 2)
+            {
+                return LastFrame;
+            }
+
             int newTime = currentTime + gameTime.ElapsedGameTime.Milliseconds;
 
             if (newTime >= timeOnChange)
             {
                 currentIndex++;
-                
+
                 if (currentIndex > frames.Count - 1)
                 {
-                    if (looping)
-                        currentIndex = 0;
-                    else
-                        return LastFrame;
+                    currentIndex = 0;
                 }
 
                 currentTime = 0;

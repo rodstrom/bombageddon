@@ -11,7 +11,6 @@ namespace Bombageddon.Code.Entities
     class Platform : Animation
     {
         public int pointsWorth = 0;
-        public bool ghost = false;
 
         public Platform(Bombageddon game, SpriteBatch spriteBatch, PlatformData construct)
             : base(game, spriteBatch)
