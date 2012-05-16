@@ -137,34 +137,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\Man1sheet.PNG">
-      <Name>Man1sheet</Name>
+    <Compile Include="Graphics\Sheeples\Man1\Man1_panic.PNG">
+      <Name>Man1_panic</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Graphics\Collision\Man1_collision.png">
+    <Compile Include="Graphics\Sheeples\Man1\Man1_collision.png">
       <Name>Man1_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\man1plattningsheet.PNG">
-      <Name>man1plattningsheet</Name>
+    <Compile Include="Graphics\Sheeples\Man1\Man1_splat.PNG">
+      <Name>Man1_splat</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\man1kavlingsheet.PNG">
-      <Name>man1kavlingsheet</Name>
+    <Compile Include="Graphics\Sheeples\Man1\Man1_flatten.png">
+      <Name>Man1_flatten</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\man1explosionsheet.PNG">
-      <Name>man1explosionsheet</Name>
+    <Compile Include="Graphics\Sheeples\Man1\Man1_explosion.png">
+      <Name>Man1_explosion</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -186,6 +186,41 @@
   <ItemGroup>
     <Compile Include="Graphics\Backgrounds\Forest.png">
       <Name>Forest</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Sheeples\Man2\Man2_panic.png">
+      <Name>Man2_panic</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Sheeples\Man2\Man2_splat.png">
+      <Name>Man2_splat</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Sheeples\Man2\Man2_flatten.png">
+      <Name>Man2_flatten</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Sheeples\Man2\Man2_explosion.png">
+      <Name>Man2_explosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Sheeples\Man2\Man2_collision.png">
+      <Name>Man2_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

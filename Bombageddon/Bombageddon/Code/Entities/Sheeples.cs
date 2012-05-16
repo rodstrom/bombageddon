@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Bombageddon.Code.Entities
 {
-    class Sheeples : Animation
+    class Sheeple : Animation
     {
         enum State
         {
@@ -21,17 +21,22 @@ namespace Bombageddon.Code.Entities
         State currentState;
 
         CivilianData data;
-
         Random random = new Random(DateTime.Now.Millisecond);
         int direction;
 
         private Vector2 originalPosition;
 
-        public Sheeples(SpriteBatch spriteBatch, Bombageddon game, Vector2 spawnposition, CivilianData data)
+        public int pointsWorth
+        {
+            get { return data.pointsWorth; }
+        }
+
+        public Sheeple(SpriteBatch spriteBatch, Bombageddon game, Vector2 spawnposition, CivilianData data)
             : base(game, spriteBatch)
         {
             position = spawnposition;
             originalPosition = spawnposition;
+            position.Y -= data.panicSheet.Height / 2;
             this.data = data;
         }
 
