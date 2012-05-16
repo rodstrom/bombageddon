@@ -59,10 +59,10 @@ namespace Bombageddon.Code.Physics
             {
                 for (int y = 0; y < midRect.Height; y++)
                 {
-                    //if (entity1.ColorData[x + pos1.X, y + pos1.Y].R > 200 &&
-                    //    entity2.ColorData[x + pos2.X, y + pos2.Y].R > 200)
-                    if (entity1.ColorData[x, y].R > 200 &&
-                        entity2.ColorData[x, y].R > 200)
+                    if (entity1.ColorData[x + pos1.X, y + pos1.Y].R > 200 &&
+                        entity2.ColorData[x + pos2.X, y + pos2.Y].R > 200)
+                    //if (entity1.ColorData[x, y].R > 200 &&
+                    //    entity2.ColorData[x, y].R > 200)
                     {
                         return true;
                     }

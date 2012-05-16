@@ -13,6 +13,7 @@ namespace Bombageddon.Code.Entities
         public Texture2D Texture;
         public Texture2D HitTexture;
 
+        public AnimationStrip still;
         public AnimationStrip explosion;
 
         public int points;
@@ -22,7 +23,7 @@ namespace Bombageddon.Code.Entities
         {
             Texture = game.Content.Load<Texture2D>(textureName);
             HitTexture = game.Content.Load<Texture2D>(collisionName);
-            
+
             explosion = new AnimationStrip();
             for (int x = 0; x < Texture.Width / Texture.Height; x++)
             {

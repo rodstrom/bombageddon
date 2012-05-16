@@ -55,7 +55,7 @@ namespace Bombageddon.Code.Graphics
             if (newTime >= timeOnChange)
             {
                 currentIndex++;
-
+                
                 if (currentIndex > frames.Count - 1)
                 {
                     currentIndex = 0;

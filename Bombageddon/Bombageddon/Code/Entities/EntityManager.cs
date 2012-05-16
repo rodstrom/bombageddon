@@ -329,7 +329,14 @@ namespace Bombageddon.Code.Entities
                     Sheeples tmpCiv = (Sheeples)entity;
                     if (collision.BasicCheck(player, tmpCiv))
                     {
-                        tmpCiv.IsKilled();
+                        //if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
+                        //{
+                            tmpCiv.IsKilled(true);
+                        //}
+                        //else
+                        //{
+                        //    tmpCiv.IsKilled(false);
+                        //}
                     }
                 }
             }
@@ -344,36 +351,5 @@ namespace Bombageddon.Code.Entities
                 player.Falling = true;
             }
         }
-
-        //public static SideCollided GetSidesCollided(Rectangle sourceRect, Rectangle targetRect)
-        //{
-        //    Vector2 targetCenter = new Vector2(targetRect.Center.X, targetRect.Center.Y);
-        //    Vector2 sourceCenter = new Vector2(sourceRect.Center.X, sourceRect.Center.Y);
-
-        //    SideCollided returnVal = SideCollided.None;
-
-        //    // test left side  
-        //    if (sourceRect.Right > targetRect.Left && sourceRect.Left < targetRect.Left &&
-        //        sourceRect.Bottom > targetRect.Top && sourceRect.Top < targetRect.Bottom)
-        //        returnVal = (returnVal | SideCollided.Left);
-
-        //    // test top side  
-        //    if (sourceRect.Center.X > targetRect.Left && sourceRect.Center.X < targetRect.Right &&
-        //        sourceRect.Bottom > targetRect.Top && sourceRect.Top - 500 < targetRect.Top)
-        //        returnVal = (returnVal | SideCollided.Top);
-
-        //    //// test right side  
-        //    //if (sourcePoint.X > centerLocation.X && sourcePoint.X < targetRect.Right &&
-        //    //    sourcePoint.Y > targetRect.Top && sourcePoint.Y < targetRect.Bottom)
-        //    //    returnVal = (returnVal | SideCollided.Right);
-
-        //    //// test bottom side  
-        //    //if (sourcePoint.X > targetRect.Left && sourcePoint.X < targetRect.Right &&
-        //    //    sourcePoint.Y > centerLocation.Y && sourcePoint.Y < targetRect.Bottom)
-        //    //    returnVal = (returnVal | SideCollided.Bottom);
-
-
-        //    return returnVal;
-        //} 
     }
 }

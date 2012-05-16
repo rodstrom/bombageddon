@@ -46,12 +46,20 @@ namespace Bombageddon.Code.Graphics
             ColorData = ColorArray2D;
         }
 
+        private void SetHeight()
+        {
+            for (int x = 0; x < SourceRectangle.Width; x++)
+            {
+
+            }
+        }
+
         public AnimationFrame(Texture2D tex, Rectangle rect, Texture2D colTex)
         {
             SourceTexture = tex;
             SourceRectangle = rect;
             CollisionTexture = colTex;
-            SetColorData(colTex);
+            SetColorData(CollisionTexture);
         }
     }
 }

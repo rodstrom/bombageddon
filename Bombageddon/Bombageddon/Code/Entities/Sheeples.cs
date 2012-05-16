@@ -40,7 +40,10 @@ namespace Bombageddon.Code.Entities
 
             for (int x = 0; x < data.panicFramesCount; x++)
             {
-                _runningAnim.AddFrame(new AnimationFrame(data.panicSheet, new Rectangle((data.panicSheet.Width / data.panicFramesCount) * x, 0, (data.panicSheet.Width / data.panicFramesCount), data.panicSheet.Height), data.collisionSheet));
+                _runningAnim.AddFrame(new AnimationFrame(data.panicSheet, 
+                    new Rectangle((data.panicSheet.Width / data.panicFramesCount) * x, 0, 
+                        (data.panicSheet.Width / data.panicFramesCount), data.panicSheet.Height), 
+                    data.collisionSheet));
             }
 
             _runningAnim.TimeOnChange = 50;
@@ -103,22 +106,21 @@ namespace Bombageddon.Code.Entities
                 if (this.AnimationName != "Running")
                     this.AnimationName = "Running";
 
-                position.X = originalPosition.X - random.Next(-7, 7);
+                position.X -= random.Next(-3, 3);
             }
-            if (currentState == State.Splat)
+            else
             {
-                if (this.AnimationName != "Splat!")
+                if (currentState == State.Splat && AnimationName != "Splat!")
                     this.AnimationName = "Splat!";
-            }
-            if (currentState == State.Boom)
-            {
-                if (this.AnimationName != "Death1")
+                if (currentState == State.Boom && AnimationName != "Death1")
                     this.AnimationName = "Death1";
-            }
-            if (currentState == State.Flat)
-            {
-                if (this.AnimationName != "Death2")
+                if (currentState == State.Flat && AnimationName != "Death2")
                     this.AnimationName = "Death2";
+
+                if (CurrentIndex == AnimationFrames)
+                {
+                    pause = true;
+                }
             }
 
             base.Update(gameTime);
@@ -129,9 +131,12 @@ namespace Bombageddon.Code.Entities
             base.Draw(gameTime);
         }
 
-        public void IsKilled()
+        public void IsKilled(bool topHit)
         {
-            currentState = State.Flat;
+            if (topHit)
+                currentState = State.Splat;
+            else
+                currentState = (State.Boom | State.Flat);
         }
     }
 }
