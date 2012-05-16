@@ -151,7 +151,7 @@ namespace Bombageddon.Code.Entities
             //MathHelper.Clamp(kinetics.X, -200, 100);
             //MathHelper.Clamp(kinetics.Y, -200, 100);
 
-            kinetics.X *= 0.99f;
+            kinetics *= 0.99f;
 
             input.Update();
             Move(gameTime);
@@ -162,7 +162,7 @@ namespace Bombageddon.Code.Entities
         {
             position.X += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            Rotation += 0.1f;
+            Rotation += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds) / 100;
 
             if(position.X > furthestPointReached)
             {
