@@ -194,7 +194,14 @@ namespace Bombageddon.Code.Entities
             foreach (Entity e in removeList)
             {
                 entityList.Remove(e);
-                entityList.AddLast(addPlatform());
+                if (e.GetType().ToString().Equals("Platform"))
+                {
+                    entityList.AddLast(addPlatform());
+                }
+                else if (e.GetType().ToString().Equals("Sheeple"))
+                {
+                    entityList.AddLast(addSheeple());
+                }
             }
 
             Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;

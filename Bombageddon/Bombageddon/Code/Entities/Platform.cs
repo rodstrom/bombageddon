@@ -19,9 +19,14 @@ namespace Bombageddon.Code.Entities
             this.position = construct.position;
             this.pointsWorth = construct.points;
 
-            this.AddAnimation("Explosion", construct.explosion);
-            //this.AddAnimation("Still", construct.still);
+            AnimationStrip explosion = new AnimationStrip();
+            for (int x = 0; x < construct.Texture.Width / construct.Texture.Height; x++)
+            {
+                explosion.AddFrame(new AnimationFrame(construct.Texture, new Rectangle(construct.Texture.Height * x, 0, construct.Texture.Height, construct.Texture.Height), construct.HitTexture));
+            }
+            explosion.TimeOnChange = 50;
 
+            this.AddAnimation("Explosion", explosion);
             this.AnimationName = "Explosion";
 
             this.pause = true;
