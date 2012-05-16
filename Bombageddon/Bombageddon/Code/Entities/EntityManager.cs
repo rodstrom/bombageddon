@@ -29,7 +29,7 @@ namespace Bombageddon.Code.Entities
 
         public Platform platform = null;
 
-        public Sheeples sheeple = null;
+        public Sheeple sheeple = null;
         
         public EntityManager(Bombageddon game, SpriteBatch spriteBatch)
         {
@@ -59,20 +59,21 @@ namespace Bombageddon.Code.Entities
             CreateCivilianData();
             CivilianData civ = civilianData[0];
             Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND);
-            Sheeples tmpSheeple = new Sheeples(spriteBatch, game, pos, civ);
+            Sheeple tmpSheeple = new Sheeple(spriteBatch, game, pos, civ);
             tmpSheeple.Initialize();
             entityList.AddLast(tmpSheeple);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 20; i++)
             {
                 entityList.AddLast(addSheeple());
             }
         }
 
-        private Sheeples addSheeple()
+        private Sheeple addSheeple()
         {
-            Vector2 pos = new Vector2(player.position.X + Bombageddon.WIDTH + random.Next(100, 800), Bombageddon.GROUND);
+            Sheeple lastSheeple = (Sheeple)findLastOfType("Sheeple").Value;
+            Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(100, 300), Bombageddon.GROUND);
             CivilianData r = civilianData[random.Next(civilianData.Count)];
-            Sheeples sheeple = new Sheeples(spriteBatch, game, pos, r);
+            Sheeple sheeple = new Sheeple(spriteBatch, game, pos, r);
             sheeple.Initialize();
             
             return sheeple;
@@ -131,6 +132,14 @@ namespace Bombageddon.Code.Entities
                     temp = temp.Previous;
                 }
             } while (true);
+        }
+
+        private void refreshSheeples()
+        {
+            Sheeple s = (Sheeple)findFirstOfType("Sheeple").Value;
+            s.Terminate();
+            entityList.Remove(s);
+            entityList.AddLast(addSheeple());
         }
 
         private void refreshPlatforms()
@@ -192,6 +201,12 @@ namespace Bombageddon.Code.Entities
             if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
             {
                 refreshPlatforms();
+            }
+
+            Sheeple tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
+            if (tempSheeple.position.X < player.position.X - Bombageddon.WIDTH)
+            {
+                refreshSheeples();
             }
 
             CollisionCheck();
@@ -259,7 +274,7 @@ namespace Bombageddon.Code.Entities
                 }
                 if (entity.GetType().Name == "Sheeples")
                 {
-                    Sheeples tmpCiv = (Sheeples)entity;
+                    Sheeple tmpCiv = (Sheeple)entity;
                     if (collision.BasicCheck(player, tmpCiv))
                     {
                         if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)

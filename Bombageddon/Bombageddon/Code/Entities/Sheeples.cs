@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace Bombageddon.Code.Entities
 {
-    class Sheeples : Animation
+    class Sheeple : Animation
     {
         enum State
         {
@@ -31,7 +31,7 @@ namespace Bombageddon.Code.Entities
             get { return data.pointsWorth; }
         }
 
-        public Sheeples(SpriteBatch spriteBatch, Bombageddon game, Vector2 spawnposition, CivilianData data)
+        public Sheeple(SpriteBatch spriteBatch, Bombageddon game, Vector2 spawnposition, CivilianData data)
             : base(game, spriteBatch)
         {
             position = spawnposition;
