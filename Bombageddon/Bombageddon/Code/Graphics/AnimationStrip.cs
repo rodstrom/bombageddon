@@ -74,20 +74,21 @@ namespace Bombageddon.Code.Graphics
             if (newTime >= timeOnChange)
             {
                 currentIndex++;
-                
-                if (currentIndex > frames.Count - 1)
-                {
-                    if (looping)
-                        currentIndex = 0;
-                    else
-                        return LastFrame;
-                }
 
                 currentTime = 0;
             }
             else
             {
                 currentTime = newTime;
+            }
+
+            if (currentIndex > frames.Count - 1)
+            {
+                if (!looping)
+                {
+                    return LastFrame;
+                }
+                currentIndex = 0;
             }
 
             return frames[currentIndex];
