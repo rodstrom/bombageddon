@@ -16,6 +16,8 @@ namespace Bombageddon.Code.Entities
         InputManager input;
         KineticVector kineticVector;
 
+        Dictionary<int, Texture2D> bloodCover = new Dictionary<int, Texture2D>();
+
         public int FuseTimer
         {
             get;
@@ -30,6 +32,9 @@ namespace Bombageddon.Code.Entities
         int snapShotIndex = 0;
 
         public int points = 0;
+
+        private int currentBloodSpatter = 0;
+        private int pointsSinceUpgrade = 0;
 
         private bool _falling;
         public bool Falling
@@ -69,16 +74,7 @@ namespace Bombageddon.Code.Entities
             ////AnimationStrip _runningAnim = new AnimationStrip();            
             //Texture2D _tmpSource = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
             //Texture2D _tmpCol = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
-
-            SourceTexture = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
-
-            hitTexture = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
-            GetColorData(hitTexture);
-            CollisionRectangle = SourceRectangle;
-            GetHeight();
-
-            Origin = new Vector2(SourceTexture.Bounds.Center.X, SourceTexture.Bounds.Center.Y);
-
+            
             //for (int x = 0; x < 14; x++)
             //{
             //    _runningAnim.AddFrame(new AnimationFrame(_tmpSource, new Rectangle(64 * x, 0, 64, 64), _tmpCol));
@@ -86,6 +82,22 @@ namespace Bombageddon.Code.Entities
             
             //_runningAnim.TimeOnChange = 50;
             //this.AddAnimation("Running", _runningAnim);
+
+            bloodCover.Add(0, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\1"));
+            bloodCover.Add(1, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\2"));
+            bloodCover.Add(2, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\3"));
+            bloodCover.Add(3, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\4"));
+            bloodCover.Add(4, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\5"));
+            bloodCover.Add(5, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\6"));
+
+            SourceTexture = bloodCover[0];
+            //SourceTexture = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
+            hitTexture = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
+            GetColorData(hitTexture);
+            CollisionRectangle = SourceRectangle;
+            GetHeight();
+
+            Origin = new Vector2(SourceTexture.Bounds.Center.X, SourceTexture.Bounds.Center.Y);
 
             Falling = true;
         }
@@ -99,6 +111,12 @@ namespace Bombageddon.Code.Entities
 
         public override void Update(GameTime gameTime)
         {
+            if (currentBloodSpatter < 6 && points - pointsSinceUpgrade > 150)
+            {
+                SourceTexture = bloodCover[currentBloodSpatter++];
+                pointsSinceUpgrade = points;
+            }
+
             //if (this.AnimationName != "Running")
             //{
             //    this.AnimationName = "Running";
