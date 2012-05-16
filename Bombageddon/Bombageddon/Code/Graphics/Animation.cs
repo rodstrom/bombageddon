@@ -41,6 +41,10 @@ namespace Bombageddon.Code.Graphics
             {
                 return animationList[AnimationName].CurrentIndex;
             }
+            set
+            {
+                animationList[AnimationName].CurrentIndex = value;
+            }
         }
 
         public AnimationFrame CurrentFrame

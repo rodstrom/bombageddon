@@ -25,6 +25,7 @@ namespace Bombageddon.Code.Entities
             this.AnimationName = "Explosion";
 
             this.pause = true;
+            CurrentIndex = 0;
 
 
             //this.Scale *= 2f;

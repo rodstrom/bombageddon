@@ -177,15 +177,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\Main.png">
-      <Name>Main</Name>
+    <Compile Include="Graphics\Backgrounds\Mountains.png">
+      <Name>Mountains</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\Mountains.png">
-      <Name>Mountains</Name>
+    <Compile Include="Graphics\Backgrounds\Forest.png">
+      <Name>Forest</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
