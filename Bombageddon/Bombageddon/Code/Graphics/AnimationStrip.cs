@@ -25,6 +25,7 @@ namespace Bombageddon.Code.Graphics
         public int CurrentIndex
         {
             get { return currentIndex; }
+            set { currentIndex = value; }
         }
 
         public int TimeOnChange

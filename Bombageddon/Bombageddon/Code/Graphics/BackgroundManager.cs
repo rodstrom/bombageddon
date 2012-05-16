@@ -36,7 +36,7 @@ namespace Bombageddon.Code.Graphics
         public void Initialize()
         {
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.SKY, @"Graphics\Backgrounds\Mountains"));
-            //backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MAIN, @"Graphics\Backgrounds\Main"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MAIN, @"Graphics\Backgrounds\Forest"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.GRASS, @"Graphics\Backgrounds\Ground"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedskelett"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedsten"));
@@ -46,15 +46,15 @@ namespace Bombageddon.Code.Graphics
                 new Background(@"Graphics\Backgrounds\Mountains", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             background.Value.stuck = true;
-            backgroundList.AddLast(background); 
-            //background = new KeyValuePair<int, Background>((int)Layers.MAIN,
-            //     new Background(@"Graphics\Backgrounds\Main", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
-            //background.Value.Initialize();
-            //backgroundList.AddLast(background);
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    backgroundList.AddLast(addBackground((int)Layers.MAIN));
-            //}
+            backgroundList.AddLast(background);
+            background = new KeyValuePair<int, Background>((int)Layers.MAIN,
+                 new Background(@"Graphics\Backgrounds\Forest", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
+            background.Value.Initialize();
+            backgroundList.AddLast(background);
+            for (int i = 0; i < 5; i++)
+            {
+                backgroundList.AddLast(addBackground((int)Layers.MAIN));
+            }
             background = new KeyValuePair<int, Background>((int)Layers.GRASS,
                 new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();

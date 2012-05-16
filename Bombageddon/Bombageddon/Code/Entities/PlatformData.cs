@@ -13,7 +13,6 @@ namespace Bombageddon.Code.Entities
         public Texture2D Texture;
         public Texture2D HitTexture;
 
-        public AnimationStrip still;
         public AnimationStrip explosion;
 
         public int points;
