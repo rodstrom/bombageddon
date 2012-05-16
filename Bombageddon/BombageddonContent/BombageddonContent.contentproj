@@ -70,13 +70,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Collision\Hus2_collision.png">
-      <Name>Hus2_collision</Name>
+    <Compile Include="Graphics\Collision\Hus1_collision.png">
+      <Name>Hus1_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Graphics\Collision\Hus1_collision.png">
-      <Name>Hus1_collision</Name>
+    <Compile Include="Graphics\Collision\Hus2_collision.png">
+      <Name>Hus2_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -84,6 +84,13 @@
   <ItemGroup>
     <Compile Include="Graphics\Backgrounds\Ground.png">
       <Name>Ground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\Hus1_sheet.PNG">
+      <Name>Hus1_sheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -137,8 +144,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\Hus1_sheet.PNG">
-      <Name>Hus1_sheet</Name>
+    <Compile Include="Graphics\Spritesheets\Man1sheet.PNG">
+      <Name>Man1sheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Collision\Man1_collision.png">
+      <Name>Man1_collision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\man1plattningsheet.PNG">
+      <Name>man1plattningsheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\man1kavlingsheet.PNG">
+      <Name>man1kavlingsheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\man1explosionsheet.PNG">
+      <Name>man1explosionsheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

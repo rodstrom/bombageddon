@@ -109,11 +109,13 @@
   <ItemGroup>
     <Compile Include="Code\Audio\AudioManager.cs" />
     <Compile Include="Code\Camera\Camera.cs" />
+    <Compile Include="Code\Entities\CivilianData.cs" />
     <Compile Include="Code\Entities\Entity.cs" />
     <Compile Include="Code\Entities\EntityManager.cs" />
     <Compile Include="Code\Entities\Platform.cs" />
     <Compile Include="Code\Entities\PlatformData.cs" />
     <Compile Include="Code\Entities\Player.cs" />
+    <Compile Include="Code\Entities\Sheeples.cs" />
     <Compile Include="Code\Graphics\Animation.cs" />
     <Compile Include="Code\Graphics\AnimationFrame.cs" />
     <Compile Include="Code\Graphics\AnimationStrip.cs" />

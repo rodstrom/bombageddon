@@ -22,10 +22,14 @@ namespace Bombageddon.Code.Entities
         Random random = new Random();
 
         //Dictionary<String, String> platformFiles = new Dictionary<String, String>();
-        //Dictionary<String, Rectangle[]> platformFiles = new Dictionary<String, Rectangle[]>();
 
         //public Platform platform = null;
         List<PlatformData> availablePlatforms = new List<PlatformData>();
+        List<CivilianData> civilianData = new List<CivilianData>();
+
+        public Platform platform = null;
+
+        public Sheeples sheeple = null;
         
         public EntityManager(Bombageddon game, SpriteBatch spriteBatch)
         {
@@ -48,10 +52,16 @@ namespace Bombageddon.Code.Entities
             PlatformData temp = availablePlatforms[0];
             entityList.AddLast(new Platform(game, spriteBatch, temp));
 
+
             for (int i = 0; i < 5; i++)
             {
                 entityList.AddLast(addPlatform());
             }
+
+            CreateCivilianData();
+            sheeple = new Sheeples(spriteBatch, game, new Vector2(500, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
+            sheeple.Initialize();
+            entityList.AddLast(sheeple);
         }
 
         private void CreateListOfAvailablePlatforms()
@@ -67,6 +77,22 @@ namespace Bombageddon.Code.Entities
             platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 
                 new Vector2(100f, Bombageddon.GROUND), -1);
             availablePlatforms.Add(platform);
+        }
+
+        private void CreateCivilianData()
+        {
+            CivilianData tmpCiv;
+            tmpCiv.civilianType = "1";
+            tmpCiv.panicSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\Man1sheet");
+            tmpCiv.collisionSheet = game.Content.Load<Texture2D>(@"Graphics\Collision\Man1_collision");
+            tmpCiv.panicFramesCount = 2;
+            tmpCiv.splatDeathSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\man1plattningsheet");
+            tmpCiv.splatDeathFramesCount = 5;
+            tmpCiv.randomDeathSheet1 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\man1explosionsheet");
+            tmpCiv.deathFramesCount1 = 5;
+            tmpCiv.randomDeathSheet2 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\man1kavlingsheet");
+            tmpCiv.deathFramesCount2 = 9;
+            civilianData.Add(tmpCiv);
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -291,6 +317,14 @@ namespace Bombageddon.Code.Entities
                         //    //player.Falling = true;
                         //}
                         return;
+                    }
+                }
+                if (entity.GetType().Name == "Sheeples")
+                {
+                    Sheeples tmpCiv = (Sheeples)entity;
+                    if (collision.BasicCheck(player, tmpCiv))
+                    {
+                        tmpCiv.IsKilled();
                     }
                 }
             }
