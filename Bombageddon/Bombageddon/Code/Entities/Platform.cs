@@ -49,16 +49,17 @@ namespace Bombageddon.Code.Entities
         //    }
         //}
 
-        public Platform(Bombageddon game, SpriteBatch spriteBatch, AnimationStrip still, AnimationStrip explosion, Vector2 position, int pointsWorth)
+        public Platform(Bombageddon game, SpriteBatch spriteBatch, PlatformData construct)
             : base(game, spriteBatch)
         {
-            this.position = position;
-            this.pointsWorth = pointsWorth;
+            this.position = construct.position;
+            this.pointsWorth = construct.points;
 
-            this.AddAnimation("Still", still);
-            this.AddAnimation("Explosion", explosion);
+            this.AddAnimation("Explosion", construct.explosion);
 
-            this.AnimationName = "Still";
+            this.AnimationName = "Explosion";
+
+            this.pause = true;
 
             //this.Scale *= 2f;
 
@@ -74,7 +75,8 @@ namespace Bombageddon.Code.Entities
         {
             if (AnimationName == "Explosion" && CurrentIndex == AnimationFrames)
             {
-                KillMe = true;
+                //KillMe = true;
+                pause = true;
             }
 
             base.Update(gameTime);

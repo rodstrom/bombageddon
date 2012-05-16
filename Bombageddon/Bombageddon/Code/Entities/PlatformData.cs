@@ -13,25 +13,20 @@ namespace Bombageddon.Code.Entities
         public Texture2D Texture;
         public Texture2D HitTexture;
 
-        public AnimationStrip still;
         public AnimationStrip explosion;
 
         public int points;
         public Vector2 position;
 
-        public PlatformData(Bombageddon game, String textureName, String collisionName, int animationFrames, int sideLength, Vector2 position, int points)
+        public PlatformData(Bombageddon game, String textureName, String collisionName, Vector2 position, int points)
         {
             Texture = game.Content.Load<Texture2D>(textureName);
             HitTexture = game.Content.Load<Texture2D>(collisionName);
-
-            still = new AnimationStrip();
-            still.AddFrame(new AnimationFrame(Texture, new Rectangle(0, 0, sideLength, sideLength), HitTexture));
-            still.TimeOnChange = 0;
-
+            
             explosion = new AnimationStrip();
-            for (int x = 0; x < animationFrames; x++)
+            for (int x = 0; x < Texture.Width / Texture.Height; x++)
             {
-                explosion.AddFrame(new AnimationFrame(Texture, new Rectangle(sideLength * x, 0, sideLength, sideLength), HitTexture));
+                explosion.AddFrame(new AnimationFrame(Texture, new Rectangle(Texture.Height * x, 0, Texture.Height, Texture.Height), HitTexture));
             }
             explosion.TimeOnChange = 50;
 

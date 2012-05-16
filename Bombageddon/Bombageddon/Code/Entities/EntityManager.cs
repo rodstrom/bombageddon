@@ -50,9 +50,8 @@ namespace Bombageddon.Code.Entities
 
             CreateListOfAvailablePlatforms();
             PlatformData temp = availablePlatforms[0];
-            entityList.AddLast(new Platform(game, spriteBatch, temp.still, temp.explosion, temp.position, temp.points));
-
-
+            entityList.AddLast(new Platform(game, spriteBatch, temp));
+            
             for (int i = 0; i < 5; i++)
             {
                 entityList.AddLast(addPlatform());
@@ -62,19 +61,25 @@ namespace Bombageddon.Code.Entities
             sheeple = new Sheeples(spriteBatch, game, new Vector2(500, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
             sheeple.Initialize();
             entityList.AddLast(sheeple);
+            sheeple = new Sheeples(spriteBatch, game, new Vector2(1000, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
+            sheeple.Initialize();
+            entityList.AddLast(sheeple);
+            sheeple = new Sheeples(spriteBatch, game, new Vector2(1200, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
+            sheeple.Initialize();
+            entityList.AddLast(sheeple);
         }
 
         private void CreateListOfAvailablePlatforms()
         {
-            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 9, 256, 
+            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 
                 new Vector2(500f, Bombageddon.GROUND - 13f), 10);
             availablePlatforms.Add(platform);
 
-            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 8, 256,
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 
                 new Vector2(100f, Bombageddon.GROUND - 13f), 10);
             availablePlatforms.Add(platform);
 
-            platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 1, 256,
+            platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 
                 new Vector2(100f, Bombageddon.GROUND), -1);
             availablePlatforms.Add(platform);
         }
@@ -140,7 +145,7 @@ namespace Bombageddon.Code.Entities
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
             float posX = lastPlatform.position.X + random.Next(600, 1000);
             PlatformData r = availablePlatforms[random.Next(availablePlatforms.Count)];
-            Platform platform = new Platform(game, spriteBatch, r.still, r.explosion, r.position, r.points);
+            Platform platform = new Platform(game, spriteBatch, r);
             platform.Initialize();
             platform.position.X = posX;
 
@@ -286,7 +291,7 @@ namespace Bombageddon.Code.Entities
                     {
                         if (tmpPlat.pointsWorth > 0)
                         {
-                            tmpPlat.AnimationName = "Explosion";
+                            tmpPlat.pause = false;
                             tmpPlat.ghost = true;
                             player.kinetics *= 0.2f;
                             player.points += tmpPlat.pointsWorth;

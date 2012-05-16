@@ -151,6 +151,8 @@ namespace Bombageddon.Code.Entities
             //MathHelper.Clamp(kinetics.X, -200, 100);
             //MathHelper.Clamp(kinetics.Y, -200, 100);
 
+            kinetics.X *= 0.99f;
+
             input.Update();
             Move(gameTime);
             base.Update(gameTime);
