@@ -110,6 +110,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\Hus3_sheet.PNG">
+      <Name>Hus3_sheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Graphics\Spritesheets\Hus2_sheet.PNG">
       <Name>Hus2_sheet</Name>
       <Importer>TextureImporter</Importer>
@@ -244,6 +251,13 @@
       <Name>Skrik2</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Collision\Hus3_collision.png">
+      <Name>Hus3_collision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
