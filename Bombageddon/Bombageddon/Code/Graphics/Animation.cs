@@ -120,6 +120,26 @@ namespace Bombageddon.Code.Graphics
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
             }
+
+            if (bool.Parse(game.config.getValue("Debug", "Hitbox")))
+            {
+                try
+                {
+                    SpriteBatch.Draw(currentFrame.CollisionTexture,
+                                        position,
+                                        currentFrame.SourceRectangle,
+                                        Color,
+                                        Rotation,
+                                        Origin,
+                                        Scale,
+                                        SpriteEffects.None,
+                                        0.0f);
+                }
+                catch (System.NullReferenceException)
+                {
+                    currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+                } 
+            }
         }
     }
 }

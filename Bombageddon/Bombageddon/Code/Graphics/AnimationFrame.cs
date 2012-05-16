@@ -21,6 +21,12 @@ namespace Bombageddon.Code.Graphics
             set;
         }
 
+        public Texture2D CollisionTexture
+        {
+            get;
+            set;
+        }
+
         public Color[,] ColorData
         {
             get;
@@ -44,6 +50,7 @@ namespace Bombageddon.Code.Graphics
         {
             SourceTexture = tex;
             SourceRectangle = rect;
+            CollisionTexture = colTex;
             SetColorData(colTex);
         }
     }

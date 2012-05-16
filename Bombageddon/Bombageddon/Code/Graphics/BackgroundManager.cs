@@ -41,16 +41,18 @@ namespace Bombageddon.Code.Graphics
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedsten"));
 
             KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.MAIN, 
-                new Background(@"Graphics\Backgrounds\Main", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
+                new Background(@"Graphics\Backgrounds\Main", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
-            backgroundList.AddLast(addBackground((int)Layers.MAIN));
-            backgroundList.AddLast(addBackground((int)Layers.MAIN));
+            for (int i = 0; i < 5; i++)
+            {
+                backgroundList.AddLast(addBackground((int)Layers.MAIN));
+            }
             background = new KeyValuePair<int, Background>((int)Layers.GRASS,
-                new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
+                new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
-            for (int i = 0; i < 14; i++)
+            for (int i = 0; i < 30; i++)
             {
                 backgroundList.AddLast(addBackground((int)Layers.GRASS));
             }
@@ -156,7 +158,7 @@ namespace Bombageddon.Code.Graphics
             List<int> newBackgrounds = new List<int>();
             foreach (KeyValuePair<int, Background> background in backgroundList)
             {
-                if (background.Value.SourceRectangle.Right < playerPosX - Bombageddon.WIDTH / 2)
+                if (background.Value.SourceRectangle.Right < playerPosX - Bombageddon.WIDTH)
                 {
                     background.Value.KillMe = true;
                     newBackgrounds.Add(background.Key);
