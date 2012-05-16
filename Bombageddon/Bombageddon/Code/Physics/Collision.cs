@@ -50,10 +50,10 @@ namespace Bombageddon.Code.Physics
         {
             Rectangle midRect = Rectangle.Intersect(entity1.SourceRectangle, entity2.SourceRectangle);
 
-            Point pos1 = new Point(midRect.Location.X - entity1.CollisionRectangle.Location.X,
-                midRect.Location.Y - entity1.CollisionRectangle.Location.Y);
-            Point pos2 = new Point(midRect.Location.X - entity2.CollisionRectangle.Location.X,
-                midRect.Location.Y - entity2.CollisionRectangle.Location.Y);
+            Point pos1 = new Point(midRect.Location.X - entity1.SourceRectangle.Location.X,
+                midRect.Location.Y - entity1.SourceRectangle.Location.Y);
+            Point pos2 = new Point(midRect.Location.X - entity2.SourceRectangle.Location.X,
+                midRect.Location.Y - entity2.SourceRectangle.Location.Y);
 
             for (int x = 0; x < midRect.Width; x++)
             {
