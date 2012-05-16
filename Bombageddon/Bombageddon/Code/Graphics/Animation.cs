@@ -116,7 +116,6 @@ namespace Bombageddon.Code.Graphics
 
             UpdateSourceRectangle();
             UpdateCollisionRectangle();
-            ColorData = SetColorData;
             HeightMap = SetHeightMap;
 
             base.Update(gameTime);

@@ -279,7 +279,7 @@ namespace Bombageddon.Code.Entities
                         return;
                     }
                 }
-                if (entity.GetType().Name == "Sheeples")
+                if (entity.GetType().Name == "Sheeple")
                 {
                     Sheeple tmpCiv = (Sheeple)entity;
                     if (collision.BasicCheck(player, tmpCiv))
@@ -292,6 +292,7 @@ namespace Bombageddon.Code.Entities
                         else
                         {
                             tmpCiv.IsKilled(false);
+                            player.points += tmpCiv.pointsWorth;
                         }
                     }
                 }

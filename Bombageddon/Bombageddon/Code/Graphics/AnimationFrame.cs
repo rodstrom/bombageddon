@@ -44,10 +44,10 @@ namespace Bombageddon.Code.Graphics
             Color[] ColorArray1D = new Color[texture.Width * texture.Height];
             texture.GetData(ColorArray1D);
 
-            Color[,] ColorArray2D = new Color[texture.Width, texture.Height];
-            for (int x = 0; x < texture.Width; x++)
-                for (int y = 0; y < texture.Height; y++)
-                    ColorArray2D[x, y] = ColorArray1D[x + y * texture.Width];
+            Color[,] ColorArray2D = new Color[SourceRectangle.Width, SourceRectangle.Height];
+            for (int x = 0; x < SourceRectangle.Width; x++)
+                for (int y = 0; y < SourceRectangle.Height; y++)
+                    ColorArray2D[x, y] = ColorArray1D[(x + y * SourceRectangle.Width) + SourceRectangle.Location.X];
 
             ColorData = ColorArray2D;
         }
