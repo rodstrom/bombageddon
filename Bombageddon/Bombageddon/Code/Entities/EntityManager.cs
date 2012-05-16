@@ -66,16 +66,16 @@ namespace Bombageddon.Code.Entities
 
         private void CreateListOfAvailablePlatforms()
         {
-            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 9, 128, 
+            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 9, 256, 
                 new Vector2(500f, Bombageddon.GROUND - 13f), 10);
             availablePlatforms.Add(platform);
 
-            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 8, 128,
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 8, 256,
                 new Vector2(100f, Bombageddon.GROUND - 13f), 10);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 1, 256,
-                new Vector2(100f, Bombageddon.GROUND - 10f), -1);
+                new Vector2(100f, Bombageddon.GROUND), -1);
             availablePlatforms.Add(platform);
         }
 
@@ -183,7 +183,7 @@ namespace Bombageddon.Code.Entities
             }
 
             Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
-            if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH / 2)
+            if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
             {
                 refreshPlatforms();
             }
@@ -288,14 +288,14 @@ namespace Bombageddon.Code.Entities
                         {
                             tmpPlat.AnimationName = "Explosion";
                             tmpPlat.ghost = true;
-                            player.kinetics *= 0f;
+                            player.kinetics *= 0.2f;
                             player.points += tmpPlat.pointsWorth;
                         }
                         else
                         {
                             //player.FuseTimer -= 5000;
                             tmpPlat.ghost = true;
-                            player.kinetics *= -1f;
+                            player.kinetics *= 0f;
                         }
 
                         //Side sides = collision.GetSidesCollided(player, tmpPlat);

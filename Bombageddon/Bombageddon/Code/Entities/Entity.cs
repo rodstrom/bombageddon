@@ -69,7 +69,7 @@ namespace Bombageddon.Code.Entities
             set;
         }
 
-        protected Bombageddon Runner
+        protected Bombageddon game
         {
             get;
             private set;
@@ -90,7 +90,7 @@ namespace Bombageddon.Code.Entities
         public Entity(Bombageddon game, SpriteBatch spriteBatch)
             : base(game)
         {
-            Runner = game;
+            this.game = game;
             SpriteBatch = spriteBatch;
             Scale = 1f;
             Rotation = 0.0f;

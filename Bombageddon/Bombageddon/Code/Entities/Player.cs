@@ -25,7 +25,6 @@ namespace Bombageddon.Code.Entities
         public Vector2 kinetics;
 
         public float fallTime;
-        public float runTime;
 
         float snapShotTimer = 0.0f;
         int snapShotIndex = 0;
@@ -52,13 +51,14 @@ namespace Bombageddon.Code.Entities
 
         public bool end = false;
 
+        private int furthestPointReached = 0;
+
         public Player(Bombageddon game, SpriteBatch spriteBatch, Vector2 position)
             : base(spriteBatch, game)
         {
             this.input = new InputManager(game);
             kineticVector = new KineticVector();
             this.fallTime = 0f;
-            this.runTime = 0f;
             this.position = position;
             kinetics = Vector2.Zero;
             FuseTimer = 60000;
@@ -93,6 +93,7 @@ namespace Bombageddon.Code.Entities
         public override void Terminate()
         {
             kineticVector.Terminate();
+            kinetics = Vector2.Zero;
             base.Terminate();
         }
 
@@ -123,8 +124,8 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y += kineticVector.FinalVector.Y * 1.5f;
-                        kinetics.X += kineticVector.FinalVector.X * 3f;
+                        kinetics.Y += kineticVector.FinalVector.Y * 1f;
+                        kinetics.X += kineticVector.FinalVector.X * 1f;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;
@@ -132,30 +133,12 @@ namespace Bombageddon.Code.Entities
                 }
             }
 
-            runTime += gameTime.ElapsedGameTime.Milliseconds;
-
-            //MathHelper.Clamp(kinetics.X, -100, 50);
-            //MathHelper.Clamp(kinetics.Y, -500, 50);
-            MathHelper.Clamp(runTime, 0, 5000);
             MathHelper.Clamp(fallTime, 0, 5000);
-
-            if (kinetics.X < 200f)
-            {
-                kinetics.X += ((runTime / 1000) * (runTime / 1000) * 2);
-            }
-            if (kinetics.X < 600f)
-            {
-                kinetics.X += ((runTime / 1000) * (runTime /  1000));
-            }
-            if (kinetics.X > 1200f)
-            {
-                kinetics.X -= ((runTime / 1000) * (runTime / 1000) * 0.5f);
-            }
-
+            
             if (Falling)
             {
                 fallTime += gameTime.ElapsedGameTime.Milliseconds;
-                kinetics.Y += ((fallTime / 1000) * (fallTime / 1000) * 500);
+                kinetics.Y += ((fallTime / 1000) * (fallTime / 1000) * 300);
             }
 
             //if (input.MouseRelative.Y < 0 && !falling)
@@ -164,7 +147,10 @@ namespace Bombageddon.Code.Entities
 
             //    //Runner.AudioManager.PlayEffect("Jump");
             //}
-            
+
+            //MathHelper.Clamp(kinetics.X, -200, 100);
+            //MathHelper.Clamp(kinetics.Y, -200, 100);
+
             input.Update();
             Move(gameTime);
             base.Update(gameTime);
@@ -175,6 +161,17 @@ namespace Bombageddon.Code.Entities
             position.X += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
             Rotation += 0.1f;
+
+            if(position.X > furthestPointReached)
+            {
+                furthestPointReached = (int)position.X;
+            }
+            else if (position.X < furthestPointReached - Bombageddon.WIDTH / 2)
+            {
+                position.X = furthestPointReached - Bombageddon.WIDTH / 2;
+                kinetics = Vector2.Zero;
+                //play sound too perhaps?
+            }
         }
     }
 }

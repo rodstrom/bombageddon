@@ -60,7 +60,7 @@ namespace Bombageddon.Code.Entities
 
             this.AnimationName = "Still";
 
-            this.Scale *= 2f;
+            //this.Scale *= 2f;
 
             //this.sourceTexture = texture;
             //this.hitTexture = hitTexture;

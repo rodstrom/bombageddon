@@ -103,7 +103,7 @@ namespace Bombageddon.Code.Graphics
         {
             SpriteBatch.Draw(SourceTexture, position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
 
-            if (hitTexture != null && bool.Parse(Runner.config.getValue("Debug", "Hitbox")))
+            if (hitTexture != null && bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {
                 SpriteBatch.Draw(hitTexture, position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
             }
