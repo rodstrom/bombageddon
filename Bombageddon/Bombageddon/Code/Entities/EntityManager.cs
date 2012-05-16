@@ -51,8 +51,7 @@ namespace Bombageddon.Code.Entities
             CreateListOfAvailablePlatforms();
             PlatformData temp = availablePlatforms[0];
             entityList.AddLast(new Platform(game, spriteBatch, temp));
-
-
+            
             for (int i = 0; i < 5; i++)
             {
                 entityList.AddLast(addPlatform());
@@ -60,6 +59,12 @@ namespace Bombageddon.Code.Entities
 
             CreateCivilianData();
             sheeple = new Sheeples(spriteBatch, game, new Vector2(500, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
+            sheeple.Initialize();
+            entityList.AddLast(sheeple);
+            sheeple = new Sheeples(spriteBatch, game, new Vector2(1000, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
+            sheeple.Initialize();
+            entityList.AddLast(sheeple);
+            sheeple = new Sheeples(spriteBatch, game, new Vector2(1200, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
             sheeple.Initialize();
             entityList.AddLast(sheeple);
         }
@@ -286,7 +291,7 @@ namespace Bombageddon.Code.Entities
                     {
                         if (tmpPlat.pointsWorth > 0)
                         {
-                            tmpPlat.AnimationName = "Explosion";
+                            tmpPlat.pause = false;
                             tmpPlat.ghost = true;
                             player.kinetics *= 0.2f;
                             player.points += tmpPlat.pointsWorth;

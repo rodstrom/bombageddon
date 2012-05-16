@@ -55,10 +55,11 @@ namespace Bombageddon.Code.Entities
             this.position = construct.position;
             this.pointsWorth = construct.points;
 
-            this.AddAnimation("Still", construct.still);
             this.AddAnimation("Explosion", construct.explosion);
 
-            this.AnimationName = "Still";
+            this.AnimationName = "Explosion";
+
+            this.pause = true;
 
             //this.Scale *= 2f;
 
@@ -74,7 +75,8 @@ namespace Bombageddon.Code.Entities
         {
             if (AnimationName == "Explosion" && CurrentIndex == AnimationFrames)
             {
-                KillMe = true;
+                //KillMe = true;
+                pause = true;
             }
 
             base.Update(gameTime);

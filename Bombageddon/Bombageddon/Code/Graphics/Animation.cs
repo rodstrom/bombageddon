@@ -12,11 +12,13 @@ namespace Bombageddon.Code.Graphics
     {
         Dictionary<String, AnimationStrip> animationList = new Dictionary<String, AnimationStrip>();
         String currentAnimation = "";
+        public bool pause = false;
 
         AnimationFrame currentFrame = null;
 
         public override void Terminate()
         {
+            pause = false;
             base.Terminate();
         }
 
@@ -91,7 +93,10 @@ namespace Bombageddon.Code.Graphics
 
         public override void Update(GameTime gameTime)
         {
-            currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+            if (!pause || currentFrame == null)
+            {
+                currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+            }
 
             Origin = new Vector2(currentFrame.SourceRectangle.Width * 0.5f, currentFrame.SourceRectangle.Height);
 
