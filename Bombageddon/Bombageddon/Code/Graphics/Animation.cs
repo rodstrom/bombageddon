@@ -22,6 +22,11 @@ namespace Bombageddon.Code.Graphics
             base.Terminate();
         }
 
+        public void LoopAnimation(string anim, bool loop)
+        {
+            animationList[anim].WillLoop = loop;
+        }
+
         protected int AnimationFrames
         {
             get
@@ -50,6 +55,11 @@ namespace Bombageddon.Code.Graphics
         public Color[,] SetColorData
         {
             get { return currentFrame.ColorData; }
+        }
+
+        public int[] SetHeightMap
+        {
+            get { return currentFrame.HeightMap; }
         }
 
         protected void UpdateSourceRectangle()
@@ -107,6 +117,7 @@ namespace Bombageddon.Code.Graphics
             UpdateSourceRectangle();
             UpdateCollisionRectangle();
             ColorData = SetColorData;
+            HeightMap = SetHeightMap;
 
             base.Update(gameTime);
         }

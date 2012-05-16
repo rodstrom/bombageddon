@@ -33,6 +33,12 @@ namespace Bombageddon.Code.Graphics
             private set;
         }
 
+        public int[] HeightMap
+        {
+            get;
+            private set;
+        }
+
         private void SetColorData(Texture2D texture)
         {
             Color[] ColorArray1D = new Color[texture.Width * texture.Height];
@@ -48,10 +54,21 @@ namespace Bombageddon.Code.Graphics
 
         private void SetHeight()
         {
+            int[] height = new int[SourceRectangle.Width];
+
             for (int x = 0; x < SourceRectangle.Width; x++)
             {
-
+                for (int y = 0; y < SourceRectangle.Height; y++)
+                {
+                    if (ColorData[x, y].R > 200)
+                    {
+                        height[x] = y;
+                        break;
+                    }
+                }
             }
+
+            HeightMap = height;
         }
 
         public AnimationFrame(Texture2D tex, Rectangle rect, Texture2D colTex)
@@ -59,7 +76,8 @@ namespace Bombageddon.Code.Graphics
             SourceTexture = tex;
             SourceRectangle = rect;
             CollisionTexture = colTex;
-            SetColorData(CollisionTexture);
+            SetColorData(colTex);
+            SetHeight();
         }
     }
 }

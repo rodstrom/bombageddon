@@ -66,16 +66,6 @@ namespace Bombageddon.Code.Entities
             {
                 entityList.AddLast(addSheeple());
             }
-
-            sheeple = new Sheeples(spriteBatch, game, new Vector2(500, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
-            sheeple.Initialize();
-            entityList.AddLast(sheeple);
-            sheeple = new Sheeples(spriteBatch, game, new Vector2(1000, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
-            sheeple.Initialize();
-            entityList.AddLast(sheeple);
-            sheeple = new Sheeples(spriteBatch, game, new Vector2(1200, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
-            sheeple.Initialize();
-            entityList.AddLast(sheeple);
         }
 
         private Sheeples addSheeple()
@@ -272,15 +262,15 @@ namespace Bombageddon.Code.Entities
                     Sheeples tmpCiv = (Sheeples)entity;
                     if (collision.BasicCheck(player, tmpCiv))
                     {
-                        //if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
-                        //{
+                        if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
+                        {
                             tmpCiv.IsKilled(true);
                             player.points += tmpCiv.pointsWorth;
-                        //}
-                        //else
-                        //{
-                        //    tmpCiv.IsKilled(false);
-                        //}
+                        }
+                        else
+                        {
+                            tmpCiv.IsKilled(false);
+                        }
                     }
                 }
             }
