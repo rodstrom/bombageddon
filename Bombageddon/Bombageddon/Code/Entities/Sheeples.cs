@@ -21,16 +21,20 @@ namespace Bombageddon.Code.Entities
         State currentState;
 
         CivilianData data;
-
         Random random = new Random(DateTime.Now.Millisecond);
-
         private Vector2 originalPosition;
+
+        public int pointsWorth
+        {
+            get { return data.pointsWorth; }
+        }
 
         public Sheeples(SpriteBatch spriteBatch, Bombageddon game, Vector2 spawnposition, CivilianData data)
             : base(game, spriteBatch)
         {
             position = spawnposition;
             originalPosition = spawnposition;
+            position.Y -= data.panicSheet.Height / 2;
             this.data = data;
         }
 

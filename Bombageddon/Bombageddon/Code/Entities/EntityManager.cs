@@ -51,13 +51,22 @@ namespace Bombageddon.Code.Entities
             CreateListOfAvailablePlatforms();
             PlatformData temp = availablePlatforms[0];
             entityList.AddLast(new Platform(game, spriteBatch, temp));
-            
             for (int i = 0; i < 5; i++)
             {
                 entityList.AddLast(addPlatform());
             }
 
             CreateCivilianData();
+            CivilianData civ = civilianData[0];
+            Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND);
+            Sheeples tmpSheeple = new Sheeples(spriteBatch, game, pos, civ);
+            tmpSheeple.Initialize();
+            entityList.AddLast(tmpSheeple);
+            for (int i = 0; i < 5; i++)
+            {
+                entityList.AddLast(addSheeple());
+            }
+
             sheeple = new Sheeples(spriteBatch, game, new Vector2(500, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
             sheeple.Initialize();
             entityList.AddLast(sheeple);
@@ -67,6 +76,16 @@ namespace Bombageddon.Code.Entities
             sheeple = new Sheeples(spriteBatch, game, new Vector2(1200, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
             sheeple.Initialize();
             entityList.AddLast(sheeple);
+        }
+
+        private Sheeples addSheeple()
+        {
+            Vector2 pos = new Vector2(player.position.X + Bombageddon.WIDTH + random.Next(100, 800), Bombageddon.GROUND);
+            CivilianData r = civilianData[random.Next(civilianData.Count)];
+            Sheeples sheeple = new Sheeples(spriteBatch, game, pos, r);
+            sheeple.Initialize();
+            
+            return sheeple;
         }
 
         private void CreateListOfAvailablePlatforms()
@@ -86,7 +105,9 @@ namespace Bombageddon.Code.Entities
 
         private void CreateCivilianData()
         {
-            CivilianData civilian = new CivilianData(game, "Man1");
+            CivilianData civilian = new CivilianData(game, "Man1", 2);
+            civilianData.Add(civilian);
+            civilian = new CivilianData(game, "Man2", 2);
             civilianData.Add(civilian);
         }
 
@@ -254,6 +275,7 @@ namespace Bombageddon.Code.Entities
                         //if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
                         //{
                             tmpCiv.IsKilled(true);
+                            player.points += tmpCiv.pointsWorth;
                         //}
                         //else
                         //{
