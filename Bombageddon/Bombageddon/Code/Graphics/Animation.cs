@@ -107,7 +107,14 @@ namespace Bombageddon.Code.Graphics
 
         public override void Update(GameTime gameTime)
         {
-            if (!pause || currentFrame == null)
+            if (currentFrame == null)
+            {
+                currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+                ColorData = SetColorData;
+                HeightMap = SetHeightMap;
+            }
+
+            if (!pause)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
             }
@@ -116,8 +123,6 @@ namespace Bombageddon.Code.Graphics
 
             UpdateSourceRectangle();
             UpdateCollisionRectangle();
-            ColorData = SetColorData;
-            HeightMap = SetHeightMap;
 
             base.Update(gameTime);
         }
