@@ -29,6 +29,8 @@ namespace Bombageddon.Code.Entities
             this.AddAnimation("Explosion", explosion);
             this.AnimationName = "Explosion";
 
+            explosion = null;
+
             this.pause = true;
             CurrentIndex = 0;
 

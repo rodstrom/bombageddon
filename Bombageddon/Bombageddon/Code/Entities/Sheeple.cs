@@ -40,6 +40,11 @@ namespace Bombageddon.Code.Entities
             this.data = data;
         }
 
+        public override void Terminate()
+        {
+            base.Terminate();
+        }
+
         protected override void LoadContent()
         {
             AnimationStrip _runningAnim = new AnimationStrip();
@@ -56,6 +61,8 @@ namespace Bombageddon.Code.Entities
             _runningAnim.WillLoop = true;
             this.AddAnimation("Running", _runningAnim);
 
+            _runningAnim = null;
+
             AnimationStrip _splatAnim = new AnimationStrip();
 
             for (int x = 0; x < data.splatDeathFramesCount; x++)
@@ -70,6 +77,8 @@ namespace Bombageddon.Code.Entities
 
             _splatAnim.TimeOnChange = 50;
             this.AddAnimation("Splat!", _splatAnim);
+
+            _splatAnim = null;
 
             AnimationStrip _death1Anim = new AnimationStrip();
 
@@ -86,6 +95,8 @@ namespace Bombageddon.Code.Entities
             _death1Anim.TimeOnChange = 50;
             this.AddAnimation("Death1", _death1Anim);
 
+            _death1Anim = null;
+
             AnimationStrip _death2Anim = new AnimationStrip();
 
             for (int x = 0; x < data.deathFramesCount2; x++)
@@ -100,6 +111,8 @@ namespace Bombageddon.Code.Entities
 
             _death2Anim.TimeOnChange = 50;
             this.AddAnimation("Death2", _death2Anim);
+
+            _death2Anim = null;
             
             currentState = State.Running;
             direction = 1;
@@ -153,6 +166,8 @@ namespace Bombageddon.Code.Entities
                     currentState = State.Flat;
                 else
                     currentState = State.Boom;
+
+            game.AudioManager.PlayEffect("Scream");
         }
     }
 }
