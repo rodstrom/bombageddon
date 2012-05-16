@@ -110,6 +110,11 @@ namespace Bombageddon.Code.Graphics
             if (!pause || currentFrame == null)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+                ColorData = SetColorData;
+            }
+            if (ColorData == null)
+            {
+                ColorData = SetColorData;
             }
 
             Origin = new Vector2(currentFrame.SourceRectangle.Width * 0.5f, currentFrame.SourceRectangle.Height);
