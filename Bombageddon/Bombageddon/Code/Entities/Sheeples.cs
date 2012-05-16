@@ -48,6 +48,7 @@ namespace Bombageddon.Code.Entities
             }
 
             _runningAnim.TimeOnChange = 50;
+            _runningAnim.WillLoop = true;
             this.AddAnimation("Running", _runningAnim);
 
             AnimationStrip _splatAnim = new AnimationStrip();
