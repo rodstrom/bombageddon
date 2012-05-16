@@ -117,7 +117,7 @@ namespace Bombageddon.Code.Graphics
             if (!pause)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
-                ColorData = SetColorData;
+                //ColorData = SetColorData;
             }
             if (ColorData == null)
             {

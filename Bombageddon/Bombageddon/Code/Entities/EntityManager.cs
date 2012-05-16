@@ -90,6 +90,10 @@ namespace Bombageddon.Code.Entities
                 new Vector2(100f, Bombageddon.GROUND - 13f), 10);
             availablePlatforms.Add(platform);
 
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus3_sheet", @"Graphics\Collision\Hus3_collision",
+                new Vector2(100f, Bombageddon.GROUND - 13f), 10);
+            availablePlatforms.Add(platform);
+
             platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 
                 new Vector2(100f, Bombageddon.GROUND), -1);
             availablePlatforms.Add(platform);
@@ -97,7 +101,7 @@ namespace Bombageddon.Code.Entities
 
         private void CreateCivilianData()
         {
-            Texture2D empty = new Texture2D(game.graphics.GraphicsDevice, 256, 256);
+            Texture2D empty = new Texture2D(game.graphics.GraphicsDevice, 2560, 256);
             CivilianData civilian = new CivilianData(game, "Man1", 2, empty);
             civilianData.Add(civilian);
             civilian = new CivilianData(game, "Man2", 2, empty);
