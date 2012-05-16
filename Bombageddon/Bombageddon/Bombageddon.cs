@@ -14,6 +14,7 @@ using Bombageddon.Code.States;
 using Bombageddon.Code.Audio;
 using Bombageddon.Code.Camera;
 using Bombageddon.Code.Time;
+using Bombageddon.Code.Entities;
 
 namespace Bombageddon
 {

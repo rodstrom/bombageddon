@@ -11,6 +11,7 @@ namespace Bombageddon.Code.Graphics
     {
         string _filename;
         public int velocityX = 0;
+        public bool stuck = false;
 
         public Background(String filename, SpriteBatch spriteBatch, Bombageddon game, Vector2 position)
             : base(spriteBatch, game)
@@ -35,15 +36,15 @@ namespace Bombageddon.Code.Graphics
 
         public override void Update(GameTime gameTime)
         {
-            position.X -= velocityX;
+            if (!stuck)
+            {
+                position.X -= velocityX;
+            }
+            else
+            {
+                position.X = game.Camera.Focus.position.X - Bombageddon.WIDTH / 4;
+            }
             base.Update(gameTime);
         }
-
-        //public override void Update(GameTime gameTime)
-        //{
-        //    position.X -= 1f;
-
-        //    base.Update(gameTime);
-        //}
     }
 }

@@ -16,6 +16,14 @@ namespace Bombageddon.Code.States
     class PlayState : State
     {
         EntityManager entityManager;
+
+        public EntityManager EntityManager
+        {
+            get
+            {
+                return entityManager;
+            }
+        }
         
         //Texture2D background;
 

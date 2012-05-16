@@ -289,7 +289,6 @@ namespace Bombageddon.Code.Entities
                     }
                     else if(!tmpPlat.ghost)
                     {
-                        tmpPlat.IsKilled();
                         if (tmpPlat.pointsWorth > 0)
                         {
                             tmpPlat.pause = false;
