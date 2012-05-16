@@ -115,7 +115,7 @@
     <Compile Include="Code\Entities\Platform.cs" />
     <Compile Include="Code\Entities\PlatformData.cs" />
     <Compile Include="Code\Entities\Player.cs" />
-    <Compile Include="Code\Entities\Sheeples.cs" />
+    <Compile Include="Code\Entities\Sheeple.cs" />
     <Compile Include="Code\Graphics\Animation.cs" />
     <Compile Include="Code\Graphics\AnimationFrame.cs" />
     <Compile Include="Code\Graphics\AnimationStrip.cs" />

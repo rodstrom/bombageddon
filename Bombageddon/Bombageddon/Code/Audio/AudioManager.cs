@@ -9,7 +9,7 @@ namespace Bombageddon.Code.Audio
 {
     public class AudioManager : GameComponent
     {
-        Dictionary<String, SoundEffect> effectList = new Dictionary<String, SoundEffect>();
+        List<KeyValuePair<String, SoundEffect>> effectList = new List<KeyValuePair<String, SoundEffect>>();
         Dictionary<String, SoundEffect> musicList = new Dictionary<String, SoundEffect>();
 
         SoundEffectInstance activeMusic = null;
@@ -38,22 +38,37 @@ namespace Bombageddon.Code.Audio
             {
                 SoundEffect tmpEffect = Game.Content.Load<SoundEffect>(effect);
                 tmpEffect.Name = key;
-                effectList.Add(key, tmpEffect);
+                effectList.Add(new KeyValuePair<String, SoundEffect>(key, tmpEffect));
             }
         }
 
-        public void RemoveEffect(String key)
+        //public void RemoveEffect(String key)
+        //{
+        //    if (key != null)
+        //    {
+        //        effectList[key].Dispose();
+        //        effectList.Remove(key);
+        //    }
+        //}
+
+        private SoundEffect getSoundEffect(String effectType)
         {
-            if (key != null)
+            List<SoundEffect> bgList = new List<SoundEffect>();
+
+            foreach (KeyValuePair<String, SoundEffect> e in effectList)
             {
-                effectList[key].Dispose();
-                effectList.Remove(key);
+                if (e.Key == effectType)
+                {
+                    bgList.Add(e.Value);
+                }
             }
+
+            return bgList[new Random().Next(bgList.Count)];
         }
 
         public void PlayEffect(String key)
         {
-            SoundEffectInstance tmpEffect = effectList[key].CreateInstance();
+            SoundEffectInstance tmpEffect = getSoundEffect(key).CreateInstance();
             if (tmpEffect != null)
             {
                 tmpEffect.Volume = EffectVolume;

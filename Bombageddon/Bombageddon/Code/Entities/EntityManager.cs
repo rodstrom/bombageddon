@@ -100,6 +100,10 @@ namespace Bombageddon.Code.Entities
             civilianData.Add(civilian);
             civilian = new CivilianData(game, "Man2", 2);
             civilianData.Add(civilian);
+
+            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Nej");
+            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik1");
+            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik2");
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
