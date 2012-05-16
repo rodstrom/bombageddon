@@ -84,7 +84,7 @@ namespace Bombageddon.Code.States
             //    outputCode = score;
             //    changeState = true;
             //}
-            else if (entityManager.player.lose)
+            else if (entityManager.player.end)
             {
                 outputCode = score;
                 changeState = true;
@@ -94,7 +94,8 @@ namespace Bombageddon.Code.States
             {
                 game.Timer.Update(gameTime);
                 //score = game.Timer.ToInteger("s_total");
-                score = (int)(entityManager.player.position.X - 300f) / 100;
+                //score = (int)(entityManager.player.position.X - 300f) / 100;
+                score = entityManager.player.points;
 
                 entityManager.Update(gameTime);
             }
@@ -146,7 +147,7 @@ namespace Bombageddon.Code.States
             }
             //int time = (int)game.Timer.MainEvent.currentTime;
 
-            spriteBatch.DrawString(font, score.ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, score.ToString() + " - " + (entityManager.player.FuseTimer / 1000).ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
 
             if(bool.Parse(game.config.getValue("Debug", "ExtendedGUI")))
             {

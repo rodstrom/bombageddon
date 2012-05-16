@@ -21,10 +21,10 @@ namespace Bombageddon.Code.Graphics
         {
             SKY = 0,
             MAIN,
-            SKYLINE,
+            GRASS,
             BUILDINGS,
             CLOUDS,
-            FADER
+            RANDOM
         }
 
         public BackgroundManager(Bombageddon game, SpriteBatch spriteBatch)
@@ -36,6 +36,9 @@ namespace Bombageddon.Code.Graphics
         public void Initialize()
         {
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MAIN, @"Graphics\Backgrounds\Main"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.GRASS, @"Graphics\Backgrounds\Ground"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedskelett"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedsten"));
 
             KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.MAIN, 
                 new Background(@"Graphics\Backgrounds\Main", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
@@ -43,10 +46,14 @@ namespace Bombageddon.Code.Graphics
             backgroundList.AddLast(background);
             backgroundList.AddLast(addBackground((int)Layers.MAIN));
             backgroundList.AddLast(addBackground((int)Layers.MAIN));
-            ////background = new KeyValuePair<int, Background>((int)Layers.MOON, 
-            ////    new Background(@"Graphics\Backgrounds\Moon", spriteBatch, game, new Vector2(-300f, Runner.HEIGHT)));
-            ////background.Value.Initialize();
-            ////backgroundList.AddLast(background);
+            background = new KeyValuePair<int, Background>((int)Layers.GRASS,
+                new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
+            background.Value.Initialize();
+            backgroundList.AddLast(background);
+            for (int i = 0; i < 14; i++)
+            {
+                backgroundList.AddLast(addBackground((int)Layers.GRASS));
+            }
             //background = new KeyValuePair<int, Background>((int)Layers.SKYLINE, 
             //    new Background(@"Graphics\Backgrounds\Skyline1", spriteBatch, game, new Vector2(-300f, Bombageddon.HEIGHT)));
             //background.Value.Initialize();
@@ -65,6 +72,11 @@ namespace Bombageddon.Code.Graphics
             //backgroundList.AddLast(background);
             //backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
             //backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
+            background = new KeyValuePair<int, Background>((int)Layers.RANDOM,
+                new Background(@"Graphics\Backgrounds\Random\jordmedsten", spriteBatch, game, new Vector2(700f, Bombageddon.HEIGHT)));
+            background.Value.Initialize();
+            backgroundList.AddLast(background);
+            backgroundList.AddLast(addBackground((int)Layers.RANDOM));
 
             rand = new Random();
         }
@@ -119,6 +131,25 @@ namespace Bombageddon.Code.Graphics
                 }
             }
         }
+
+        public void Draw(GameTime gameTime, bool front)
+        {
+            int start = 0;
+            int end = 2;
+            if (front)
+            {
+                start = 2;
+                end = 6;
+            }
+
+            for (int i = start; i < end; i++)
+            {
+                foreach (Background background in getBackgroundsByLayer(i))
+                {
+                    background.Draw(gameTime);
+                }
+            }
+        }
         
         private void refreshBackgrounds(int playerPosX)
         {
@@ -140,9 +171,9 @@ namespace Bombageddon.Code.Graphics
         private KeyValuePair<int, Background> addBackground(int layer)
         {
             int offset = 0;
-            if (layer == (int)Layers.BUILDINGS || layer == (int)Layers.CLOUDS)
+            if (layer == (int)Layers.RANDOM)
             {
-                offset = rand.Next(100, 600);
+                offset = rand.Next(1600, 3500);
             }
             Vector2 position = new Vector2(getBackgroundsByLayer(layer).Last().position.X + getBackgroundsByLayer(layer).Last().SourceRectangle.Width + offset, Bombageddon.HEIGHT);
 

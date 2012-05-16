@@ -16,6 +16,12 @@ namespace Bombageddon.Code.Entities
         InputManager input;
         KineticVector kineticVector;
 
+        public int FuseTimer
+        {
+            get;
+            set;
+        }
+
         public Vector2 kinetics;
 
         public float fallTime;
@@ -23,6 +29,8 @@ namespace Bombageddon.Code.Entities
 
         float snapShotTimer = 0.0f;
         int snapShotIndex = 0;
+
+        public int points = 0;
 
         private bool _falling;
         public bool Falling
@@ -34,7 +42,7 @@ namespace Bombageddon.Code.Entities
             set
             {
                 _falling = value;
-                if (!Falling)
+                if (!_falling)
                 {
                     fallTime = 0;
                     kinetics.Y = 0;
@@ -42,8 +50,7 @@ namespace Bombageddon.Code.Entities
             }
         }
 
-        public bool win = false;
-        public bool lose = false;
+        public bool end = false;
 
         public Player(Bombageddon game, SpriteBatch spriteBatch, Vector2 position)
             : base(spriteBatch, game)
@@ -54,6 +61,7 @@ namespace Bombageddon.Code.Entities
             this.runTime = 0f;
             this.position = position;
             kinetics = Vector2.Zero;
+            FuseTimer = 60000;
         }
 
         protected override void LoadContent()
@@ -78,6 +86,8 @@ namespace Bombageddon.Code.Entities
             
             //_runningAnim.TimeOnChange = 50;
             //this.AddAnimation("Running", _runningAnim);
+
+            Falling = true;
         }
 
         public override void Terminate()
@@ -92,6 +102,11 @@ namespace Bombageddon.Code.Entities
             //{
             //    this.AnimationName = "Running";
             //}
+            FuseTimer -= gameTime.ElapsedGameTime.Milliseconds;
+            if (FuseTimer < 0)
+            {
+                end = true;
+            }
 
             if (input.CurrentMouse != input.MouseOriginal)
             {
@@ -108,8 +123,8 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y -= kineticVector.FinalVector.Y * 2;
-                        kinetics.X -= kineticVector.FinalVector.X * 1;
+                        kinetics.Y += kineticVector.FinalVector.Y * 1.5f;
+                        kinetics.X += kineticVector.FinalVector.X * 3f;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;
@@ -124,15 +139,15 @@ namespace Bombageddon.Code.Entities
             MathHelper.Clamp(runTime, 0, 5000);
             MathHelper.Clamp(fallTime, 0, 5000);
 
-            if (kinetics.X < 300f)
+            if (kinetics.X < 200f)
             {
                 kinetics.X += ((runTime / 1000) * (runTime / 1000) * 2);
             }
-            if (kinetics.X < 900f)
+            if (kinetics.X < 600f)
             {
                 kinetics.X += ((runTime / 1000) * (runTime /  1000));
             }
-            if (kinetics.X > 1050f)
+            if (kinetics.X > 1200f)
             {
                 kinetics.X -= ((runTime / 1000) * (runTime / 1000) * 0.5f);
             }
@@ -160,15 +175,6 @@ namespace Bombageddon.Code.Entities
             position.X += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
             Rotation += 0.1f;
-
-            if (position.Y > Bombageddon.HEIGHT - SourceRectangle.Center.X)
-            {
-                Falling = false;
-            }
-            else
-            {
-                Falling = true;
-            }
         }
     }
 }

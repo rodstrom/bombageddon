@@ -21,8 +21,10 @@ namespace Bombageddon.Code.Entities
         public LinkedList<Entity> entityList = new LinkedList<Entity>();
         Random random = new Random();
 
-        Dictionary<String, String> platformFiles = new Dictionary<String, String>();
+        //Dictionary<String, String> platformFiles = new Dictionary<String, String>();
 
+        //public Platform platform = null;
+        List<PlatformData> availablePlatforms = new List<PlatformData>();
         List<CivilianData> civilianData = new List<CivilianData>();
 
         public Platform platform = null;
@@ -42,16 +44,13 @@ namespace Bombageddon.Code.Entities
             backgroundManager = new BackgroundManager(game, spriteBatch);
             backgroundManager.Initialize();
 
-            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 64f));
+            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 512f));
             player.Initialize();
             entityList.AddLast(player);
 
-            platform = new Platform(game, spriteBatch, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", new Vector2(100f, Bombageddon.GROUND));
-            platform.Initialize();
-            entityList.AddLast(platform);
-
-            platformFiles.Add(@"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision");
-            platformFiles.Add(@"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision");
+            CreateListOfAvailablePlatforms();
+            PlatformData temp = availablePlatforms[0];
+            entityList.AddLast(new Platform(game, spriteBatch, temp.still, temp.explosion, temp.position, temp.points));
 
 
             for (int i = 0; i < 5; i++)
@@ -65,18 +64,33 @@ namespace Bombageddon.Code.Entities
             entityList.AddLast(sheeple);
         }
 
+        private void CreateListOfAvailablePlatforms()
+        {
+            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 9, 128, 
+                new Vector2(500f, Bombageddon.GROUND - 13f), 10);
+            availablePlatforms.Add(platform);
+
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 8, 128,
+                new Vector2(100f, Bombageddon.GROUND - 13f), 10);
+            availablePlatforms.Add(platform);
+
+            platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 1, 256,
+                new Vector2(100f, Bombageddon.GROUND - 10f), -1);
+            availablePlatforms.Add(platform);
+        }
+
         private void CreateCivilianData()
         {
             CivilianData tmpCiv;
             tmpCiv.civilianType = "1";
-            tmpCiv.panicSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0PanicSheet");
-            tmpCiv.collisionSheet = game.Content.Load<Texture2D>(@"Graphics\Collision\0Collision");
+            tmpCiv.panicSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\Man1sheet");
+            tmpCiv.collisionSheet = game.Content.Load<Texture2D>(@"Graphics\Collision\Man1_collision");
             tmpCiv.panicFramesCount = 2;
-            tmpCiv.splatDeathSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0PlattningSheet");
+            tmpCiv.splatDeathSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\man1plattningsheet");
             tmpCiv.splatDeathFramesCount = 5;
-            tmpCiv.randomDeathSheet1 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0ExplosionSheet");
+            tmpCiv.randomDeathSheet1 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\man1explosionsheet");
             tmpCiv.deathFramesCount1 = 5;
-            tmpCiv.randomDeathSheet2 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0KavlingSheet");
+            tmpCiv.randomDeathSheet2 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\man1kavlingsheet");
             tmpCiv.deathFramesCount2 = 9;
             civilianData.Add(tmpCiv);
         }
@@ -84,7 +98,6 @@ namespace Bombageddon.Code.Entities
         private LinkedListNode<Entity> findFirstOfType(String type)
         {
             LinkedListNode<Entity> temp = entityList.First;
-            bool foundFirstPlatform = false;
             do
             {
                 if (temp.Value.GetType().Name.Equals(type))
@@ -95,14 +108,12 @@ namespace Bombageddon.Code.Entities
                 {
                     temp = temp.Next;
                 }
-            } while (!foundFirstPlatform);
-            return null;
+            } while (true);
         }
 
         private LinkedListNode<Entity> findLastOfType(String type)
         {
             LinkedListNode<Entity> temp = entityList.Last;
-            bool foundLastPlatform = false;
             do
             {
                 if (temp.Value.GetType().Name.Equals(type))
@@ -113,8 +124,7 @@ namespace Bombageddon.Code.Entities
                 {
                     temp = temp.Previous;
                 }
-            } while (!foundLastPlatform);
-            return null;
+            } while (true);
         }
 
         private void refreshPlatforms()
@@ -127,14 +137,12 @@ namespace Bombageddon.Code.Entities
 
         private Platform addPlatform()
         {
-            int rand = random.Next(platformFiles.Count);
-            string filename = platformFiles.ElementAt(rand).Key;
-            string collisionname = platformFiles.ElementAt(rand).Value;
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
-            float posX = lastPlatform.position.X + lastPlatform.SourceRectangle.Width + random.Next(400, 700);
-            Vector2 position = new Vector2(posX, Bombageddon.GROUND);
-            platform = new Platform(game, spriteBatch, filename, collisionname, position);
+            float posX = lastPlatform.position.X + random.Next(600, 1000);
+            PlatformData r = availablePlatforms[random.Next(availablePlatforms.Count)];
+            Platform platform = new Platform(game, spriteBatch, r.still, r.explosion, r.position, r.points);
             platform.Initialize();
+            platform.position.X = posX;
 
             return platform;
         }
@@ -144,10 +152,14 @@ namespace Bombageddon.Code.Entities
             foreach (Entity e in entityList)
             {
                 e.Terminate();
+            } 
+            foreach (PlatformData p in availablePlatforms)
+            {
+                p.Terminate();
             }
             entityList.Clear();
+            availablePlatforms.Clear();
             player = null;
-            platform = null;
         }
 
         public void Update(GameTime gameTime)
@@ -170,8 +182,8 @@ namespace Bombageddon.Code.Entities
                 entityList.AddLast(addPlatform());
             }
 
-            Platform tempPlatform = (Platform)findFirstOfType("Platform").Next.Value;
-            if (tempPlatform.SourceRectangle.Right < player.position.X - Bombageddon.WIDTH / 2)
+            Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
+            if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH / 2)
             {
                 refreshPlatforms();
             }
@@ -181,14 +193,16 @@ namespace Bombageddon.Code.Entities
 
         public void Draw(GameTime gameTime)
         {
-            backgroundManager.Draw(gameTime);
+            backgroundManager.Draw(gameTime, false);
 
             foreach (Entity entity in entityList)
             {
                 entity.Draw(gameTime);
             }
 
-            player.Draw(gameTime);
+            //player.Draw(gameTime);
+
+            backgroundManager.Draw(gameTime, true);
 
             //Texture2D t = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
             //t.SetData(new[] { Color.White }); 
@@ -268,9 +282,21 @@ namespace Bombageddon.Code.Entities
                     {
                         //player.Falling = true;
                     }
-                    else
+                    else if(!tmpPlat.ghost)
                     {
-                        tmpPlat.KillMe = true;
+                        if (tmpPlat.pointsWorth > 0)
+                        {
+                            tmpPlat.AnimationName = "Explosion";
+                            tmpPlat.ghost = true;
+                            player.kinetics *= 0f;
+                            player.points += tmpPlat.pointsWorth;
+                        }
+                        else
+                        {
+                            //player.FuseTimer -= 5000;
+                            tmpPlat.ghost = true;
+                            player.kinetics *= -1f;
+                        }
 
                         //Side sides = collision.GetSidesCollided(player, tmpPlat);
 
@@ -295,10 +321,14 @@ namespace Bombageddon.Code.Entities
                 }
             }
 
-            if (player.SourceRectangle.Bottom > Bombageddon.GROUND)
+            if (player.position.Y + 64 > Bombageddon.GROUND)
             {
-                player.position.Y = Bombageddon.GROUND - player.SourceRectangle.Center.X - 2;
-                //player.Falling = false;
+                player.position.Y = Bombageddon.GROUND - 64 - 2;
+                player.Falling = false;
+            }
+            else
+            {
+                player.Falling = true;
             }
         }
 

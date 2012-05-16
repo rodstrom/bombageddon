@@ -8,10 +8,13 @@ using Microsoft.Xna.Framework;
 
 namespace Bombageddon.Code.Entities
 {
-    class Platform : Sprite
+    class Platform : Animation
     {
-        string textureName;
-        string collisionName;
+        //string textureName;
+        //string collisionName;
+
+        public int pointsWorth = 0;
+        public bool ghost = false;
 
         //private Rectangle _hitRectangle;
         //public Rectangle HitRectangle
@@ -46,15 +49,35 @@ namespace Bombageddon.Code.Entities
         //    }
         //}
 
-        public Platform(Bombageddon game, SpriteBatch spriteBatch, string filename, string collisionfile, Vector2 position)
-            : base(spriteBatch, game)
+        public Platform(Bombageddon game, SpriteBatch spriteBatch, AnimationStrip still, AnimationStrip explosion, Vector2 position, int pointsWorth)
+            : base(game, spriteBatch)
         {
             this.position = position;
-            textureName = filename;
-            collisionName = collisionfile;
+            this.pointsWorth = pointsWorth;
+
+            this.AddAnimation("Still", still);
+            this.AddAnimation("Explosion", explosion);
+
+            this.AnimationName = "Still";
+
+            this.Scale *= 2f;
+
+            //this.sourceTexture = texture;
+            //this.hitTexture = hitTexture;
+
             //this._hitRectangle = hitRectangle;
             //this._hitRectangle2 = new Rectangle(0, 0, 0, 0);
             //this.hitRect2Enabled = false;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (AnimationName == "Explosion" && CurrentIndex == AnimationFrames)
+            {
+                KillMe = true;
+            }
+
+            base.Update(gameTime);
         }
 
         //public Platform(Runner game, SpriteBatch spriteBatch, string filename, string collisionfile, Vector2 position)
@@ -68,16 +91,18 @@ namespace Bombageddon.Code.Entities
         //    //this.hitRect2Enabled = true;
         //}
 
-        protected override void LoadContent()
-        {
-            SourceTexture = Game.Content.Load<Texture2D>(textureName);
+        //protected override void LoadContent()
+        //{
+        //    //SourceTexture = Game.Content.Load<Texture2D>(textureName);
 
-            hitTexture = Game.Content.Load<Texture2D>(collisionName);
-            GetColorData(hitTexture);
-            CollisionRectangle = SourceRectangle;
-            GetHeight();
+        //    //hitTexture = Game.Content.Load<Texture2D>(collisionName);
+        //    //GetColorData(hitTexture);
+        //    //CollisionRectangle = SourceRectangle;
+        //    ////GetHeight();
 
-            Origin = new Vector2(SourceTexture.Bounds.Left, SourceTexture.Bounds.Bottom);
-        }
+        //    //Origin = new Vector2(SourceTexture.Bounds.Center.X, SourceTexture.Bounds.Bottom);
+
+        //    Scale *= 2f;
+        //}
     }
 }

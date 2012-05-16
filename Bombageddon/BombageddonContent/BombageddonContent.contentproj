@@ -56,32 +56,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Sound\Jump.wav">
-      <Name>Jump</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Music\Level 1.wav">
-      <Name>Level 1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Music\Menu.wav">
-      <Name>Menu</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Music\Level3.wav">
-      <Name>Level3</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Graphics\Bomb.png">
       <Name>Bomb</Name>
       <Importer>TextureImporter</Importer>
@@ -91,32 +65,6 @@
   <ItemGroup>
     <Compile Include="Graphics\Collision\Bomb_collision.png">
       <Name>Bomb_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Collision\0Collision.png">
-      <Name>0Collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\Main.jpg">
-      <Name>Main</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Graphics\Buildings\Hus1.png">
-      <Name>Hus1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Graphics\Buildings\Hus2.png">
-      <Name>Hus2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -134,29 +82,96 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\0ExplosionSheet.PNG">
-      <Name>0ExplosionSheet</Name>
+    <Compile Include="Graphics\Backgrounds\Ground.png">
+      <Name>Ground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\0KavlingSheet.PNG">
-      <Name>0KavlingSheet</Name>
+    <Compile Include="Graphics\Spritesheets\Hus1_sheet.PNG">
+      <Name>Hus1_sheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\0PlattningSheet.PNG">
-      <Name>0PlattningSheet</Name>
+    <Compile Include="Audio\Music\Background.wav">
+      <Name>Background</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audio\Sound\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\Hus2_sheet.PNG">
+      <Name>Hus2_sheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Spritesheets\0PanicSheet.PNG">
-      <Name>0PanicSheet</Name>
+    <Compile Include="Graphics\Backgrounds\Random\jordmedskelett.png">
+      <Name>jordmedskelett</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Backgrounds\Random\jordmedsten.png">
+      <Name>jordmedsten</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Backgrounds\Main.png">
+      <Name>Main</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Buildings\Sten.png">
+      <Name>Sten</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Buildings\Stencollision.png">
+      <Name>Stencollision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\Man1sheet.PNG">
+      <Name>Man1sheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Graphics\Collision\Man1_collision.png">
+      <Name>Man1_collision</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\man1plattningsheet.PNG">
+      <Name>man1plattningsheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\man1kavlingsheet.PNG">
+      <Name>man1kavlingsheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Spritesheets\man1explosionsheet.PNG">
+      <Name>man1explosionsheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

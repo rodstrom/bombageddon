@@ -20,6 +20,22 @@ namespace Bombageddon.Code.Graphics
             base.Terminate();
         }
 
+        protected int AnimationFrames
+        {
+            get
+            {
+                return animationList[AnimationName].AnimationFrames;
+            }
+        }
+
+        protected int CurrentIndex
+        {
+            get
+            {
+                return animationList[AnimationName].CurrentIndex;
+            }
+        }
+
         public AnimationFrame CurrentFrame
         {
             get { return currentFrame; }
@@ -30,14 +46,14 @@ namespace Bombageddon.Code.Graphics
             get { return currentFrame.ColorData; }
         }
 
-        private void UpdateSourceRectangle()
+        protected void UpdateSourceRectangle()
         {
             int x = (int)(position.X - Origin.X);
             int y = (int)(position.Y - Origin.Y);
             SourceRectangle = new Rectangle(x, y, currentFrame.SourceRectangle.Width, currentFrame.SourceRectangle.Height);
         }
 
-        private void UpdateCollisionRectangle()
+        protected void UpdateCollisionRectangle()
         {
             CollisionRectangle = new Rectangle(SourceRectangle.X - currentFrame.SourceRectangle.X,
                 SourceRectangle.Y - currentFrame.SourceRectangle.Y,
@@ -77,7 +93,7 @@ namespace Bombageddon.Code.Graphics
         {
             currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
 
-            Origin = new Vector2(currentFrame.SourceRectangle.Width * 0.5f, currentFrame.SourceRectangle.Height * 0.5f);
+            Origin = new Vector2(currentFrame.SourceRectangle.Width * 0.5f, currentFrame.SourceRectangle.Height);
 
             UpdateSourceRectangle();
             UpdateCollisionRectangle();
@@ -96,7 +112,7 @@ namespace Bombageddon.Code.Graphics
                                     Color,
                                     Rotation,
                                     Origin,
-                                    1.0f,
+                                    Scale,
                                     SpriteEffects.None,
                                     0.0f);
             }

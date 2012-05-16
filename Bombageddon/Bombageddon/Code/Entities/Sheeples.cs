@@ -60,6 +60,21 @@ namespace Bombageddon.Code.Entities
 
             _splatAnim.TimeOnChange = 50;
             this.AddAnimation("Splat!", _splatAnim);
+
+            AnimationStrip _death1Anim = new AnimationStrip();
+
+            for (int x = 0; x < data.deathFramesCount1; x++)
+            {
+                _splatAnim.AddFrame(new AnimationFrame(
+                    data.randomDeathSheet1,
+                    new Rectangle((data.randomDeathSheet1.Width / data.deathFramesCount1) * x, 0,
+                        (data.randomDeathSheet1.Width / data.deathFramesCount1),
+                        data.randomDeathSheet1.Height),
+                    new Texture2D(GraphicsDevice, data.randomDeathSheet1.Width, data.randomDeathSheet1.Height)));
+            }
+
+            _death1Anim.TimeOnChange = 50;
+            this.AddAnimation("Death1", _death1Anim);
             
             currentState = State.Running;
 
@@ -79,7 +94,6 @@ namespace Bombageddon.Code.Entities
             {
                 if (this.AnimationName != "Splat!")
                     this.AnimationName = "Splat!";
-                if(this.AnimationName.
             }
 
             base.Update(gameTime);

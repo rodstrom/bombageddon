@@ -14,6 +14,14 @@ namespace Bombageddon.Code.Graphics
         int currentTime = 0;
         int currentIndex = 0;
 
+        public int AnimationFrames
+        {
+            get
+            {
+                return frames.Count - 1;
+            }
+        }
+
         public int CurrentIndex
         {
             get { return currentIndex; }

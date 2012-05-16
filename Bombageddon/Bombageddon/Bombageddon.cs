@@ -77,11 +77,8 @@ namespace Bombageddon
             timer = new Timer(this);
 
             audioManager = new AudioManager(this);
-            audioManager.LoadNewEffect("Jump", @"Audio\Sound\Jump");
-            audioManager.LoadNewMusic("Level1", @"Audio\Music\Level 1");
-            audioManager.LoadNewMusic("Level3", @"Audio\Music\Level3");
-            audioManager.LoadNewMusic("Menu", @"Audio\Music\Menu");
-            audioManager.SetMusic("Level3");
+            audioManager.LoadNewMusic("Background", @"Audio\Music\Background");
+            audioManager.SetMusic("Background");
             audioManager.PlayMusic();
 
             Resolution.Init(ref graphics);
@@ -96,7 +93,7 @@ namespace Bombageddon
                 int.Parse(config.getValue("Video", "Height"))
                 );
             //Viewport view = new Viewport(0, 0, Bombageddon.WIDTH, Bombageddon.HEIGHT);
-            camera = new Camera2D(view, 0.7f, 0f, this);
+            camera = new Camera2D(view, 0.62f, 0f, this);
 
             this.IsMouseVisible = false;
 
