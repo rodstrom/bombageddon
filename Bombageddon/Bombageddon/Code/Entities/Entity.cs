@@ -30,6 +30,7 @@ namespace Bombageddon.Code.Entities
 
 
         public Vector2 position;
+        public bool ghost = false;
 
         public Color[,] ColorData
         {

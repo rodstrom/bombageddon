@@ -72,7 +72,7 @@ namespace Bombageddon.Code.Entities
                     new Rectangle((data.splatDeathSheet.Width / data.splatDeathFramesCount) * x, 0,
                         (data.splatDeathSheet.Width / data.splatDeathFramesCount),
                         data.splatDeathSheet.Height),
-                    new Texture2D(GraphicsDevice, data.splatDeathSheet.Width, data.splatDeathSheet.Height)));
+                    data.emptySheet));
             }
 
             _splatAnim.TimeOnChange = 50;
@@ -89,7 +89,7 @@ namespace Bombageddon.Code.Entities
                     new Rectangle((data.randomDeathSheet1.Width / data.deathFramesCount1) * x, 0,
                         (data.randomDeathSheet1.Width / data.deathFramesCount1),
                         data.randomDeathSheet1.Height),
-                    new Texture2D(GraphicsDevice, data.randomDeathSheet1.Width, data.randomDeathSheet1.Height)));
+                    data.emptySheet));
             }
 
             _death1Anim.TimeOnChange = 50;
@@ -106,7 +106,7 @@ namespace Bombageddon.Code.Entities
                     new Rectangle((data.randomDeathSheet2.Width / data.deathFramesCount2) * x, 0,
                         (data.randomDeathSheet2.Width / data.deathFramesCount2),
                         data.randomDeathSheet2.Height),
-                    new Texture2D(GraphicsDevice, data.randomDeathSheet2.Width, data.randomDeathSheet2.Height)));
+                    data.emptySheet));
             }
 
             _death2Anim.TimeOnChange = 50;
