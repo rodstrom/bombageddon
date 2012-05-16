@@ -22,9 +22,12 @@ namespace Bombageddon.Code.Entities
         Random random = new Random();
 
         Dictionary<String, String> platformFiles = new Dictionary<String, String>();
-        //Dictionary<String, Rectangle[]> platformFiles = new Dictionary<String, Rectangle[]>();
+
+        List<CivilianData> civilianData = new List<CivilianData>();
 
         public Platform platform = null;
+
+        public Sheeples sheeple = null;
         
         public EntityManager(Bombageddon game, SpriteBatch spriteBatch)
         {
@@ -50,10 +53,32 @@ namespace Bombageddon.Code.Entities
             platformFiles.Add(@"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision");
             platformFiles.Add(@"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision");
 
+
             for (int i = 0; i < 5; i++)
             {
                 entityList.AddLast(addPlatform());
             }
+
+            CreateCivilianData();
+            sheeple = new Sheeples(spriteBatch, game, new Vector2(500, Bombageddon.GROUND - civilianData[0].panicSheet.Height / 2), civilianData[0]);
+            sheeple.Initialize();
+            entityList.AddLast(sheeple);
+        }
+
+        private void CreateCivilianData()
+        {
+            CivilianData tmpCiv;
+            tmpCiv.civilianType = "1";
+            tmpCiv.panicSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0PanicSheet");
+            tmpCiv.collisionSheet = game.Content.Load<Texture2D>(@"Graphics\Collision\0Collision");
+            tmpCiv.panicFramesCount = 2;
+            tmpCiv.splatDeathSheet = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0PlattningSheet");
+            tmpCiv.splatDeathFramesCount = 5;
+            tmpCiv.randomDeathSheet1 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0ExplosionSheet");
+            tmpCiv.deathFramesCount1 = 5;
+            tmpCiv.randomDeathSheet2 = game.Content.Load<Texture2D>(@"Graphics\Spritesheets\0KavlingSheet");
+            tmpCiv.deathFramesCount2 = 9;
+            civilianData.Add(tmpCiv);
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
