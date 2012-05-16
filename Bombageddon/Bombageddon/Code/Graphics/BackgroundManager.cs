@@ -51,7 +51,7 @@ namespace Bombageddon.Code.Graphics
                  new Background(@"Graphics\Backgrounds\Forest", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 backgroundList.AddLast(addBackground((int)Layers.MAIN));
             }
@@ -59,7 +59,7 @@ namespace Bombageddon.Code.Graphics
                 new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 15; i++)
             {
                 backgroundList.AddLast(addBackground((int)Layers.GRASS));
             }

@@ -145,7 +145,10 @@ namespace Bombageddon.Code.Entities
             Sheeple s = (Sheeple)findFirstOfType("Sheeple").Value;
             s.Terminate();
             entityList.Remove(s);
-            entityList.AddLast(addSheeple());
+            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
+            {
+                entityList.AddLast(addSheeple());
+            }
         }
 
         private void refreshPlatforms()
@@ -206,14 +209,24 @@ namespace Bombageddon.Code.Entities
                 }
                 else if (e.GetType().ToString().Equals("Sheeple"))
                 {
-                    entityList.AddLast(addSheeple());
+                    if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
+                    {
+                        entityList.AddLast(addSheeple());
+                    }
                 }
             }
 
-            for (int i = addThisManySheeples; i > 0; i--)
+            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
             {
-                entityList.AddLast(addSheeple());
-                addThisManySheeples--;
+                for (int i = addThisManySheeples; i > 0; i--)
+                {
+                    entityList.AddLast(addSheeple());
+                    addThisManySheeples--;
+                }
+            }
+            else
+            {
+                addThisManySheeples = 0;
             }
 
             Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
