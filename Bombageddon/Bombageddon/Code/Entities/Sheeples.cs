@@ -117,7 +117,10 @@ namespace Bombageddon.Code.Entities
                 if (currentState == State.Flat && AnimationName != "Death2")
                     this.AnimationName = "Death2";
 
-                
+                if (CurrentIndex == AnimationFrames)
+                {
+                    pause = true;
+                }
             }
 
             base.Update(gameTime);

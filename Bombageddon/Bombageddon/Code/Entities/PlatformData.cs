@@ -12,7 +12,9 @@ namespace Bombageddon.Code.Entities
     {
         public Texture2D Texture;
         public Texture2D HitTexture;
+        public Texture2D EmptyCollision;
 
+        public AnimationStrip still;
         public AnimationStrip explosion;
 
         public int points;
@@ -22,11 +24,16 @@ namespace Bombageddon.Code.Entities
         {
             Texture = game.Content.Load<Texture2D>(textureName);
             HitTexture = game.Content.Load<Texture2D>(collisionName);
-            
+            EmptyCollision = new Texture2D(game.GraphicsDevice, Texture.Width, Texture.Height, false, SurfaceFormat.Color);
+
+            still = new AnimationStrip();
+            still.AddFrame(new AnimationFrame(Texture, new Rectangle(0, 0, Texture.Height, Texture.Height), HitTexture));
+            still.TimeOnChange = 0;
+
             explosion = new AnimationStrip();
             for (int x = 0; x < Texture.Width / Texture.Height; x++)
             {
-                explosion.AddFrame(new AnimationFrame(Texture, new Rectangle(Texture.Height * x, 0, Texture.Height, Texture.Height), HitTexture));
+                explosion.AddFrame(new AnimationFrame(Texture, new Rectangle(Texture.Height * x, 0, Texture.Height, Texture.Height), EmptyCollision));
             }
             explosion.TimeOnChange = 50;
 
@@ -38,6 +45,7 @@ namespace Bombageddon.Code.Entities
         {
             Texture = null;
             HitTexture = null;
+            EmptyCollision = null;
         }
     }
 }

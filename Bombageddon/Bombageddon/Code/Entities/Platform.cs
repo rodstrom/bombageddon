@@ -56,8 +56,9 @@ namespace Bombageddon.Code.Entities
             this.pointsWorth = construct.points;
 
             this.AddAnimation("Explosion", construct.explosion);
+            this.AddAnimation("Still", construct.still);
 
-            this.AnimationName = "Explosion";
+            this.AnimationName = "Still";
 
             this.pause = true;
 
@@ -80,6 +81,11 @@ namespace Bombageddon.Code.Entities
             }
 
             base.Update(gameTime);
+        }
+
+        public void IsKilled()
+        {
+            this.AnimationName = "Explosion";
         }
 
         //public Platform(Runner game, SpriteBatch spriteBatch, string filename, string collisionfile, Vector2 position)
