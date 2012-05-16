@@ -22,6 +22,11 @@ namespace Bombageddon.Code.Graphics
             base.Terminate();
         }
 
+        public void LoopAnimation(string anim, bool loop)
+        {
+            animationList[anim].WillLoop = loop;
+        }
+
         protected int AnimationFrames
         {
             get

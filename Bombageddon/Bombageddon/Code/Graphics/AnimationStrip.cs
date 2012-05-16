@@ -14,6 +14,24 @@ namespace Bombageddon.Code.Graphics
         int currentTime = 0;
         int currentIndex = 0;
 
+        bool looping = false;
+
+        private AnimationFrame LastFrame
+        {
+            get
+            {
+                return frames[frames.Count - 1];
+            }
+        }
+
+        public bool WillLoop
+        {
+            set
+            {
+                looping = value;
+            }
+        }
+
         public int AnimationFrames
         {
             get
@@ -58,7 +76,10 @@ namespace Bombageddon.Code.Graphics
                 
                 if (currentIndex > frames.Count - 1)
                 {
-                    currentIndex = 0;
+                    if (looping)
+                        currentIndex = 0;
+                    else
+                        return LastFrame;
                 }
 
                 currentTime = 0;

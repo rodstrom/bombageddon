@@ -26,6 +26,7 @@ namespace Bombageddon.Code.Entities
 
             this.pause = true;
 
+
             //this.Scale *= 2f;
 
             //this.sourceTexture = texture;
@@ -41,7 +42,7 @@ namespace Bombageddon.Code.Entities
             if (AnimationName == "Explosion" && CurrentIndex == AnimationFrames)
             {
                 //KillMe = true;
-                pause = true;
+                //pause = true;
             }
 
             base.Update(gameTime);
