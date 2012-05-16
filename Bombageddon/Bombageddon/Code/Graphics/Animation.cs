@@ -48,6 +48,11 @@ namespace Bombageddon.Code.Graphics
             get { return currentFrame.ColorData; }
         }
 
+        public int[] SetHeightMap
+        {
+            get { return currentFrame.HeightMap; }
+        }
+
         protected void UpdateSourceRectangle()
         {
             int x = (int)(position.X - Origin.X);
@@ -103,6 +108,7 @@ namespace Bombageddon.Code.Graphics
             UpdateSourceRectangle();
             UpdateCollisionRectangle();
             ColorData = SetColorData;
+            HeightMap = SetHeightMap;
 
             base.Update(gameTime);
         }

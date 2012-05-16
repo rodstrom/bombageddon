@@ -23,6 +23,7 @@ namespace Bombageddon.Code.Entities
         CivilianData data;
 
         Random random = new Random(DateTime.Now.Millisecond);
+        int direction;
 
         private Vector2 originalPosition;
 
@@ -95,6 +96,7 @@ namespace Bombageddon.Code.Entities
             this.AddAnimation("Death2", _death2Anim);
             
             currentState = State.Running;
+            direction = 1;
 
             base.LoadContent();
         }
@@ -106,7 +108,12 @@ namespace Bombageddon.Code.Entities
                 if (this.AnimationName != "Running")
                     this.AnimationName = "Running";
 
-                position.X -= random.Next(-3, 3);
+                if (position.X > (originalPosition.X + 50))
+                    direction = -1;
+                else if (position.X < (originalPosition.X - 50))
+                    direction = 1;
+
+                position.X += direction * 2 * (float)random.NextDouble();
             }
             else
             {
@@ -136,7 +143,10 @@ namespace Bombageddon.Code.Entities
             if (topHit)
                 currentState = State.Splat;
             else
-                currentState = (State.Boom | State.Flat);
+                if (random.Next(0, 100) > 50)
+                    currentState = State.Flat;
+                else
+                    currentState = State.Boom;
         }
     }
 }

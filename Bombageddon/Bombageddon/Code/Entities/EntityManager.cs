@@ -330,14 +330,14 @@ namespace Bombageddon.Code.Entities
                     Sheeples tmpCiv = (Sheeples)entity;
                     if (collision.BasicCheck(player, tmpCiv))
                     {
-                        //if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
-                        //{
+                        if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
+                        {
                             tmpCiv.IsKilled(true);
-                        //}
-                        //else
-                        //{
-                        //    tmpCiv.IsKilled(false);
-                        //}
+                        }
+                        else
+                        {
+                            tmpCiv.IsKilled(false);
+                        }
                     }
                 }
             }
