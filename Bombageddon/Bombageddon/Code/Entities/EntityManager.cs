@@ -319,6 +319,14 @@ namespace Bombageddon.Code.Entities
                         return;
                     }
                 }
+                if (entity.GetType().Name == "Sheeples")
+                {
+                    Sheeples tmpCiv = (Sheeples)entity;
+                    if (collision.BasicCheck(player, tmpCiv))
+                    {
+                        tmpCiv.IsKilled();
+                    }
+                }
             }
 
             if (player.position.Y + 64 > Bombageddon.GROUND)

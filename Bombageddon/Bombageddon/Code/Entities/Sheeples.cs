@@ -65,7 +65,7 @@ namespace Bombageddon.Code.Entities
 
             for (int x = 0; x < data.deathFramesCount1; x++)
             {
-                _splatAnim.AddFrame(new AnimationFrame(
+                _death1Anim.AddFrame(new AnimationFrame(
                     data.randomDeathSheet1,
                     new Rectangle((data.randomDeathSheet1.Width / data.deathFramesCount1) * x, 0,
                         (data.randomDeathSheet1.Width / data.deathFramesCount1),
@@ -75,6 +75,21 @@ namespace Bombageddon.Code.Entities
 
             _death1Anim.TimeOnChange = 50;
             this.AddAnimation("Death1", _death1Anim);
+
+            AnimationStrip _death2Anim = new AnimationStrip();
+
+            for (int x = 0; x < data.deathFramesCount2; x++)
+            {
+                _death2Anim.AddFrame(new AnimationFrame(
+                    data.randomDeathSheet2,
+                    new Rectangle((data.randomDeathSheet2.Width / data.deathFramesCount2) * x, 0,
+                        (data.randomDeathSheet2.Width / data.deathFramesCount2),
+                        data.randomDeathSheet2.Height),
+                    new Texture2D(GraphicsDevice, data.randomDeathSheet2.Width, data.randomDeathSheet2.Height)));
+            }
+
+            _death2Anim.TimeOnChange = 50;
+            this.AddAnimation("Death2", _death2Anim);
             
             currentState = State.Running;
 
@@ -95,6 +110,16 @@ namespace Bombageddon.Code.Entities
                 if (this.AnimationName != "Splat!")
                     this.AnimationName = "Splat!";
             }
+            if (currentState == State.Boom)
+            {
+                if (this.AnimationName != "Death1")
+                    this.AnimationName = "Death1";
+            }
+            if (currentState == State.Flat)
+            {
+                if (this.AnimationName != "Death2")
+                    this.AnimationName = "Death2";
+            }
 
             base.Update(gameTime);
         }
@@ -102,6 +127,11 @@ namespace Bombageddon.Code.Entities
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+        }
+
+        public void IsKilled()
+        {
+            currentState = State.Flat;
         }
     }
 }
