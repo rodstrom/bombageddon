@@ -22,6 +22,8 @@ namespace Bombageddon
         public const int WIDTH = 1920;
         public const int HEIGHT = 1200;
 
+        public const int GROUND = 1000;
+
         public InputFile config;
 
         StateManager stateManager;
@@ -89,11 +91,12 @@ namespace Bombageddon
                 bool.Parse(config.getValue("Video", "Fullscreen"))
                 );
 
-            Viewport view = new Viewport(0, 0, 
+            Viewport view = new Viewport(0, 0,
                 int.Parse(config.getValue("Video", "Width")),
                 int.Parse(config.getValue("Video", "Height"))
                 );
-            camera = new Camera2D(view, 0.6f, 0f, this);
+            //Viewport view = new Viewport(0, 0, Bombageddon.WIDTH, Bombageddon.HEIGHT);
+            camera = new Camera2D(view, 0.7f, 0f, this);
 
             this.IsMouseVisible = false;
 

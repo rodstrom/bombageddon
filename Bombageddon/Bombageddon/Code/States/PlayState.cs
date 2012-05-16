@@ -148,8 +148,10 @@ namespace Bombageddon.Code.States
 
             spriteBatch.DrawString(font, score.ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
 
-            //spriteBatch.DrawString(font, "Kinetic X: " + entityManager.player.kinetics.X.ToString() + System.Environment.NewLine + "Kinetic Y: " + entityManager.player.kinetics.Y.ToString(), new Vector2(game.Camera.Position.X - 150, game.Camera.Position.Y + 200), Color.Red);
-            
+            if(bool.Parse(game.config.getValue("Debug", "ExtendedGUI")))
+            {
+                spriteBatch.DrawString(font, "Kinetic X: " + entityManager.player.kinetics.X.ToString() + System.Environment.NewLine + "Kinetic Y: " + entityManager.player.kinetics.Y.ToString(), new Vector2(game.Camera.Position.X - 150, game.Camera.Position.Y + 200), Color.Red);
+            }
             spriteBatch.End();
         }
 

@@ -39,21 +39,16 @@ namespace Bombageddon.Code.Entities
             backgroundManager = new BackgroundManager(game, spriteBatch);
             backgroundManager.Initialize();
 
-            player = new Player(game, spriteBatch, new Vector2(300f, -500f));
+            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 64f));
             player.Initialize();
             entityList.AddLast(player);
 
-            platform = new Platform(game, spriteBatch, @"Graphics\Platforms\hus3", @"Graphics\Collision\Platforms\hus3_collision", new Vector2(-100f, Bombageddon.HEIGHT + 600f));
+            platform = new Platform(game, spriteBatch, @"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision", new Vector2(100f, Bombageddon.GROUND));
             platform.Initialize();
             entityList.AddLast(platform);
 
-            //platformFiles.Add(@"Graphics\Platforms\hus1", @"Graphics\Collision\Platforms\Hus1_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus3", @"Graphics\Collision\Platforms\hus3_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus4", @"Graphics\Collision\Platforms\Hus4_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus6", @"Graphics\Collision\Platforms\hus6_collision");
-            //platformFiles.Add(@"Graphics\Platforms\hus2", @"Graphics\Collision\Platforms\hus2_collision");
-            platformFiles.Add(@"Graphics\Platforms\hus5", @"Graphics\Collision\Platforms\hus5_collision");
-            //platformFiles.Add(@"Graphics\Platforms\hus7", @"Graphics\Collision\Platforms\hus7_collision");
+            platformFiles.Add(@"Graphics\Buildings\Hus1", @"Graphics\Collision\Hus1_collision");
+            platformFiles.Add(@"Graphics\Buildings\Hus2", @"Graphics\Collision\Hus2_collision");
 
             for (int i = 0; i < 5; i++)
             {
@@ -111,8 +106,8 @@ namespace Bombageddon.Code.Entities
             string filename = platformFiles.ElementAt(rand).Key;
             string collisionname = platformFiles.ElementAt(rand).Value;
             Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
-            float posX = lastPlatform.position.X + lastPlatform.SourceRectangle.Width + random.Next(200, 700);
-            Vector2 position = new Vector2(posX, Bombageddon.HEIGHT + 600f);
+            float posX = lastPlatform.position.X + lastPlatform.SourceRectangle.Width + random.Next(400, 700);
+            Vector2 position = new Vector2(posX, Bombageddon.GROUND);
             platform = new Platform(game, spriteBatch, filename, collisionname, position);
             platform.Initialize();
 
@@ -121,26 +116,37 @@ namespace Bombageddon.Code.Entities
 
         public void Terminate()
         {
-            player = null;
-            platform = null;
             foreach (Entity e in entityList)
             {
                 e.Terminate();
             }
             entityList.Clear();
+            player = null;
+            platform = null;
         }
 
         public void Update(GameTime gameTime)
         {
             backgroundManager.Update(gameTime, (int)player.position.X);
 
+            List<Entity> removeList = new List<Entity>();
             foreach (Entity entity in entityList)
             {
                 entity.Update(gameTime);
+                if (entity.KillMe)
+                {
+                    removeList.Add(entity);
+                }
+            }
+
+            foreach (Entity e in removeList)
+            {
+                entityList.Remove(e);
+                entityList.AddLast(addPlatform());
             }
 
             Platform tempPlatform = (Platform)findFirstOfType("Platform").Next.Value;
-            if (tempPlatform.SourceRectangle.Right < player.position.X - Bombageddon.WIDTH)
+            if (tempPlatform.SourceRectangle.Right < player.position.X - Bombageddon.WIDTH / 2)
             {
                 refreshPlatforms();
             }
@@ -159,9 +165,9 @@ namespace Bombageddon.Code.Entities
 
             player.Draw(gameTime);
 
-            Texture2D t = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
-            t.SetData(new[] { Color.White }); 
-            spriteBatch.Draw(t, new Rectangle((int)player.position.X - Bombageddon.WIDTH, Bombageddon.HEIGHT, Bombageddon.WIDTH * 4, 4), Color.Red); // Bottom
+            //Texture2D t = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
+            //t.SetData(new[] { Color.White }); 
+            //spriteBatch.Draw(t, new Rectangle((int)player.position.X - Bombageddon.WIDTH, Bombageddon.GROUND, Bombageddon.WIDTH * 4, 4), Color.Red); // Bottom
         }
 
         //private void CollisionCheck()
@@ -228,11 +234,6 @@ namespace Bombageddon.Code.Entities
 
         private void CollisionCheck()
         {
-            if (player.SourceRectangle.Bottom > Bombageddon.HEIGHT)
-            {
-                player.lose = true;
-            }
-
             foreach (Entity entity in entityList)
             {
                 if (entity.GetType().Name == "Platform")
@@ -240,31 +241,39 @@ namespace Bombageddon.Code.Entities
                     Platform tmpPlat = (Platform)entity;
                     if (!collision.BasicCheck(player, tmpPlat))
                     {
-                        player.falling = true;
+                        //player.Falling = true;
                     }
                     else
                     {
-                        Side sides = collision.GetSidesCollided(player, tmpPlat);
+                        tmpPlat.KillMe = true;
 
-                        //if ((int)sides % 2 == (int)Side.Top)
-                        //Är det en toppkollision bryts spelarens fall och placeras i samma höjd som kollisionsytan.
-                        if (sides == Side.Top)
-                        {
-                            player.falling = false;
-                            player.position.Y = tmpPlat.SourceRectangle.Y + tmpPlat.HeightMap[
-                                (int)MathHelper.Clamp((player.SourceRectangle.X - tmpPlat.SourceRectangle.X),
-                                0, tmpPlat.SourceRectangle.Width)] - 
-                                    player.SourceRectangle.Height / 2;
-                        }
-                        //Är det en vänsterkollision stoppas spelarens
-                        if (sides == Side.Left)
-                        {
-                            player.position.X = (tmpPlat.CollisionRectangle.Left - player.SourceRectangle.Width / 2) - 2;
-                            player.falling = true;
-                        }
+                        //Side sides = collision.GetSidesCollided(player, tmpPlat);
+
+                        ////if ((int)sides % 2 == (int)Side.Top)
+                        ////Är det en toppkollision bryts spelarens fall och placeras i samma höjd som kollisionsytan.
+                        //if (sides == Side.Top)
+                        //{
+                        //    //player.Falling = false;
+                        //    player.position.Y = tmpPlat.SourceRectangle.Y + tmpPlat.HeightMap[
+                        //        (int)MathHelper.Clamp((player.SourceRectangle.X - tmpPlat.SourceRectangle.X),
+                        //        0, tmpPlat.SourceRectangle.Width)] - 
+                        //            player.SourceRectangle.Height / 2;
+                        //}
+                        ////Är det en vänsterkollision stoppas spelarens
+                        //if (sides == Side.Left)
+                        //{
+                        //    player.position.X = (tmpPlat.CollisionRectangle.Left - player.SourceRectangle.Width / 2) - 2;
+                        //    //player.Falling = true;
+                        //}
                         return;
                     }
                 }
+            }
+
+            if (player.SourceRectangle.Bottom > Bombageddon.GROUND)
+            {
+                player.position.Y = Bombageddon.GROUND - player.SourceRectangle.Center.X - 2;
+                //player.Falling = false;
             }
         }
 

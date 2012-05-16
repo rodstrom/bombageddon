@@ -82,7 +82,7 @@ namespace Bombageddon.Code.Camera
         {
             if (Focus != null)
             {
-                Position = new Vector2(Focus.position.X + Center.X / 2, Focus.position.Y);
+                Position = new Vector2(Focus.position.X + Center.X / 2, Bombageddon.HEIGHT / 2);
             }
             Transform = Resolution.getTransformationMatrix();
             Transform = Matrix.Identity *
