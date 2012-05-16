@@ -10,6 +10,12 @@ namespace Bombageddon.Code.Entities
 {
     public class Entity : DrawableGameComponent
     {
+        public int pointsWorth
+        {
+            get;
+            set;
+        }
+
         public float Rotation
         {
             get;

@@ -121,6 +121,7 @@
     <Compile Include="Code\Graphics\AnimationStrip.cs" />
     <Compile Include="Code\Graphics\Background.cs" />
     <Compile Include="Code\Graphics\BackgroundManager.cs" />
+    <Compile Include="Code\Graphics\FlyingPoint.cs" />
     <Compile Include="Code\Input\InputFile.cs" />
     <Compile Include="Code\Physics\Collision.cs" />
     <Compile Include="Code\Physics\KineticVector.cs" />

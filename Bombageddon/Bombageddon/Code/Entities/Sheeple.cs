@@ -26,11 +26,6 @@ namespace Bombageddon.Code.Entities
 
         private Vector2 originalPosition;
 
-        public int pointsWorth
-        {
-            get { return data.pointsWorth; }
-        }
-
         public Sheeple(SpriteBatch spriteBatch, Bombageddon game, Vector2 spawnposition, CivilianData data)
             : base(game, spriteBatch)
         {
@@ -38,6 +33,7 @@ namespace Bombageddon.Code.Entities
             originalPosition = spawnposition;
             position.Y -= data.panicSheet.Height / 2;
             this.data = data;
+            base.pointsWorth = data.pointsWorth;
         }
 
         public override void Terminate()

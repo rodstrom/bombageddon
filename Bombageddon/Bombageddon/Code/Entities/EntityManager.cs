@@ -27,6 +27,8 @@ namespace Bombageddon.Code.Entities
         List<PlatformData> availablePlatforms = new List<PlatformData>();
         List<CivilianData> civilianData = new List<CivilianData>();
 
+        Dictionary<int, Texture2D> pointTextures = new Dictionary<int, Texture2D>();
+
         public Platform platform = null;
 
         public Sheeple sheeple = null;
@@ -67,6 +69,16 @@ namespace Bombageddon.Code.Entities
             {
                 entityList.AddLast(addSheeple());
             }
+
+            CreateListOfPoints();
+        }
+
+        private void CreateListOfPoints()
+        {
+            pointTextures.Add(1, game.Content.Load<Texture2D>(@"Graphics\Points\+1"));
+            pointTextures.Add(5, game.Content.Load<Texture2D>(@"Graphics\Points\+5"));
+            pointTextures.Add(10, game.Content.Load<Texture2D>(@"Graphics\Points\10"));
+            pointTextures.Add(50, game.Content.Load<Texture2D>(@"Graphics\Points\50"));
         }
 
         private Sheeple addSheeple()
@@ -83,29 +95,33 @@ namespace Bombageddon.Code.Entities
         private void CreateListOfAvailablePlatforms()
         {
             PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 
-                new Vector2(500f, Bombageddon.GROUND - 13f), 10);
+                new Vector2(500f, Bombageddon.GROUND - 13f), 50);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 
-                new Vector2(100f, Bombageddon.GROUND - 13f), 10);
+                new Vector2(100f, Bombageddon.GROUND - 13f), 50);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 
                 new Vector2(100f, Bombageddon.GROUND), -1);
             availablePlatforms.Add(platform);
+
+            game.AudioManager.LoadNewEffect("Crash", @"Audio\Sound\Crash\buildingexplosion");
+            game.AudioManager.LoadNewEffect("Crash", @"Audio\Sound\Crash\hosedesetruction1");
         }
 
         private void CreateCivilianData()
         {
             Texture2D empty = new Texture2D(game.graphics.GraphicsDevice, 256, 256);
-            CivilianData civilian = new CivilianData(game, "Man1", 2, empty);
+            CivilianData civilian = new CivilianData(game, "Man1", 10, empty);
             civilianData.Add(civilian);
-            civilian = new CivilianData(game, "Man2", 2, empty);
+            civilian = new CivilianData(game, "Man2", 10, empty);
             civilianData.Add(civilian);
 
             game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Nej");
             game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik1");
             game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik2");
+            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik3");
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -176,13 +192,19 @@ namespace Bombageddon.Code.Entities
             foreach (Entity e in entityList)
             {
                 e.Terminate();
-            } 
+            }
             foreach (PlatformData p in availablePlatforms)
             {
                 p.Terminate();
-            }
+            } 
+            foreach (CivilianData c in civilianData)
+            {
+                c.Terminate();
+            } 
             entityList.Clear();
             availablePlatforms.Clear();
+            civilianData.Clear();
+            pointTextures.Clear();
             player = null;
         }
 
@@ -258,6 +280,8 @@ namespace Bombageddon.Code.Entities
 
         private void CollisionCheck()
         {
+            List<KeyValuePair<int, Vector2>> addThesePoints = new List<KeyValuePair<int, Vector2>>();
+
             foreach (Entity entity in entityList)
             {
                 if (entity.GetType().Name == "Platform")
@@ -275,6 +299,8 @@ namespace Bombageddon.Code.Entities
                             tmpPlat.ghost = true;
                             player.kinetics *= 0.2f;
                             player.points += tmpPlat.pointsWorth;
+                            game.AudioManager.PlayEffect("Crash");
+                            addThesePoints.Add(new KeyValuePair<int, Vector2>(tmpPlat.pointsWorth, tmpPlat.position));
                         }
                         else
                         {
@@ -282,26 +308,7 @@ namespace Bombageddon.Code.Entities
                             tmpPlat.ghost = true;
                             player.kinetics *= 0f;
                         }
-
-                        //Side sides = collision.GetSidesCollided(player, tmpPlat);
-
-                        ////if ((int)sides % 2 == (int)Side.Top)
-                        ////Är det en toppkollision bryts spelarens fall och placeras i samma höjd som kollisionsytan.
-                        //if (sides == Side.Top)
-                        //{
-                        //    //player.Falling = false;
-                        //    player.position.Y = tmpPlat.SourceRectangle.Y + tmpPlat.HeightMap[
-                        //        (int)MathHelper.Clamp((player.SourceRectangle.X - tmpPlat.SourceRectangle.X),
-                        //        0, tmpPlat.SourceRectangle.Width)] - 
-                        //            player.SourceRectangle.Height / 2;
-                        //}
-                        ////Är det en vänsterkollision stoppas spelarens
-                        //if (sides == Side.Left)
-                        //{
-                        //    player.position.X = (tmpPlat.CollisionRectangle.Left - player.SourceRectangle.Width / 2) - 2;
-                        //    //player.Falling = true;
-                        //}
-                        return;
+                        //return;
                     }
                 }
                 if (entity.GetType().Name == "Sheeple")
@@ -314,18 +321,26 @@ namespace Bombageddon.Code.Entities
                             if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
                             {
                                 tmpCiv.IsKilled(true);
+                                //addThesePoints.Add(new KeyValuePair<int, Vector2>(5, tmpCiv.position - new Vector2(20f)));    //BONUS
                             }
                             else
                             {
                                 tmpCiv.IsKilled(false);
                             }
+
                             player.points += tmpCiv.pointsWorth;
                             tmpCiv.ghost = true;
                             addThisManySheeples++;
+                            addThesePoints.Add(new KeyValuePair<int, Vector2>(tmpCiv.pointsWorth, tmpCiv.position));
                         }
                     }
                 }
             }
+            foreach (KeyValuePair<int, Vector2> p in addThesePoints)
+            {
+                entityList.AddLast(new FlyingPoint(spriteBatch, game, pointTextures[p.Key], p.Value));
+            }
+            addThesePoints.Clear();
 
             if (player.position.Y + 64 > Bombageddon.GROUND)
             {

@@ -52,5 +52,14 @@ namespace Bombageddon.Code.Entities
             randomDeathSheet1 = game.Content.Load<Texture2D>(filename + "_flatten");
             randomDeathSheet2 = game.Content.Load<Texture2D>(filename + "_explosion");
         }
+
+        public void Terminate()
+        {
+            panicSheet = null;
+            collisionSheet = null;
+            splatDeathSheet = null;
+            randomDeathSheet1 = null;
+            randomDeathSheet2 = null;
+        }
     }
 }

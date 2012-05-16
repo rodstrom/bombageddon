@@ -82,7 +82,7 @@ namespace Bombageddon.Code.Graphics
             //backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
             //backgroundList.AddLast(addBackground((int)Layers.CLOUDS));
             background = new KeyValuePair<int, Background>((int)Layers.RANDOM,
-                new Background(@"Graphics\Backgrounds\Random\jordmedsten", spriteBatch, game, new Vector2(700f, Bombageddon.HEIGHT)));
+                new Background(@"Graphics\Backgrounds\Random\jordmedjolt", spriteBatch, game, new Vector2(700f, Bombageddon.HEIGHT)));
             background.Value.Initialize();
             backgroundList.AddLast(background);
             backgroundList.AddLast(addBackground((int)Layers.RANDOM));
