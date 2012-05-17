@@ -134,8 +134,12 @@ namespace Bombageddon.Code.Graphics
 
         public override void Draw(GameTime gameTime)
         {
-            try
+            if (currentFrame == null)
             {
+                currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+            }
+            //try
+            //{
                 SpriteBatch.Draw(currentFrame.SourceTexture,
                                     position,
                                     currentFrame.SourceRectangle,
@@ -145,11 +149,10 @@ namespace Bombageddon.Code.Graphics
                                     Scale,
                                     SpriteEffects.None,
                                     0.0f);
-            }
-            catch (System.NullReferenceException)
-            {
-                currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
-            }
+            //}
+            //catch (System.NullReferenceException)
+            //{
+            //}
 
             if (bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {
