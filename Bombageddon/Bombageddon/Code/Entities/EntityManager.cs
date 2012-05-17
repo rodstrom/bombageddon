@@ -52,7 +52,7 @@ namespace Bombageddon.Code.Entities
             entityList.AddLast(player);
 
             CreateListOfAvailablePlatforms();
-            PlatformData temp = availablePlatforms[2];
+            PlatformData temp = availablePlatforms[1];
             entityList.AddLast(new Platform(game, spriteBatch, temp));
             for (int i = 0; i < 5; i++)
             {
@@ -98,11 +98,11 @@ namespace Bombageddon.Code.Entities
 
         private void CreateListOfAvailablePlatforms()
         {
-            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision", 
+            PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision",
                 new Vector2(500f, Bombageddon.GROUND - 13f), 50);
             availablePlatforms.Add(platform);
 
-            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision", 
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision",
                 new Vector2(100f, Bombageddon.GROUND - 13f), 50);
             availablePlatforms.Add(platform);
 
@@ -110,7 +110,11 @@ namespace Bombageddon.Code.Entities
                 new Vector2(100f, Bombageddon.GROUND - 13f), 50);
             availablePlatforms.Add(platform);
 
-            platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision", 
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus4_sheet", @"Graphics\Collision\Hus4_collision",
+                new Vector2(100f, Bombageddon.GROUND - 13f), 50);
+            availablePlatforms.Add(platform);
+
+            platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision",
                 new Vector2(100f, Bombageddon.GROUND), -1);
             availablePlatforms.Add(platform);
 
@@ -120,10 +124,9 @@ namespace Bombageddon.Code.Entities
 
         private void CreateCivilianData()
         {
-            Texture2D empty = new Texture2D(game.graphics.GraphicsDevice, 2560, 256);
-            CivilianData civilian = new CivilianData(game, "Man1", 10, empty);
+            CivilianData civilian = new CivilianData(game, "Man1", 10);
             civilianData.Add(civilian);
-            civilian = new CivilianData(game, "Man2", 10, empty);
+            civilian = new CivilianData(game, "Man2", 10);
             civilianData.Add(civilian);
 
             game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Nej");
@@ -295,26 +298,25 @@ namespace Bombageddon.Code.Entities
                 if (entity.GetType().Name == "Platform")
                 {
                     Platform tmpPlat = (Platform)entity;
-                    if (!collision.BasicCheck(player, tmpPlat))
+                    if(!tmpPlat.ghost)
                     {
-                        //player.Falling = true;
-                    }
-                    else if(!tmpPlat.ghost)
-                    {
-                        if (tmpPlat.pointsWorth > 0)
+                        if (collision.BasicCheck(player, tmpPlat))
                         {
-                            tmpPlat.pause = false;
-                            tmpPlat.ghost = true;
-                            player.kinetics *= 0.2f;
-                            player.points += tmpPlat.pointsWorth;
-                            game.AudioManager.PlayEffect("Crash");
-                            addThesePoints.Add(new KeyValuePair<int, Vector2>(tmpPlat.pointsWorth, tmpPlat.position));
-                        }
-                        else
-                        {
-                            //player.FuseTimer -= 5000;
-                            tmpPlat.ghost = true;
-                            player.kinetics *= 0f;
+                            if (tmpPlat.pointsWorth > 0)
+                            {
+                                tmpPlat.pause = false;
+                                tmpPlat.ghost = true;
+                                player.kinetics *= 0.2f;
+                                player.points += tmpPlat.pointsWorth;
+                                game.AudioManager.PlayEffect("Crash");
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(tmpPlat.pointsWorth, tmpPlat.position));
+                            }
+                            else
+                            {
+                                //player.FuseTimer -= 5000;
+                                tmpPlat.ghost = true;
+                                player.kinetics *= 0f;
+                            }
                         }
                         //return;
                     }

@@ -31,7 +31,6 @@ namespace Bombageddon.Code.Entities
             this.pause = true;
             CurrentIndex = 0;
 
-
             //this.Scale *= 2f;
 
             //this.sourceTexture = texture;
@@ -44,10 +43,9 @@ namespace Bombageddon.Code.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (AnimationName == "Explosion" && CurrentIndex == AnimationFrames)
+            if (pause && CurrentIndex > 0)
             {
-                //KillMe = true;
-                //pause = true;
+                CurrentIndex = 0;
             }
 
             base.Update(gameTime);
