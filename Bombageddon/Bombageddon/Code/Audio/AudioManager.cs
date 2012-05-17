@@ -68,12 +68,16 @@ namespace Bombageddon.Code.Audio
 
         public void PlayEffect(String key)
         {
-            SoundEffectInstance tmpEffect = getSoundEffect(key).CreateInstance();
-            if (tmpEffect != null)
+            SoundEffectInstance tmpEffect;
+            do
             {
-                tmpEffect.Volume = EffectVolume;
-                tmpEffect.Play();
-            }
+                tmpEffect = getSoundEffect(key).CreateInstance();
+                if (tmpEffect != null)
+                {
+                    tmpEffect.Volume = EffectVolume;
+                    tmpEffect.Play();
+                }
+            } while (tmpEffect == null);
         }
 
         public void LoadNewMusic(String key, String music)

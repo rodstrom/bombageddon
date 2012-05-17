@@ -65,7 +65,7 @@ namespace Bombageddon.Code.Entities
             Sheeple tmpSheeple = new Sheeple(spriteBatch, game, pos, civ);
             tmpSheeple.Initialize();
             entityList.AddLast(tmpSheeple);
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 30; i++)
             {
                 entityList.AddLast(addSheeple());
             }
@@ -79,12 +79,16 @@ namespace Bombageddon.Code.Entities
             pointTextures.Add(5, game.Content.Load<Texture2D>(@"Graphics\Points\+5"));
             pointTextures.Add(10, game.Content.Load<Texture2D>(@"Graphics\Points\10"));
             pointTextures.Add(50, game.Content.Load<Texture2D>(@"Graphics\Points\50"));
+
+            game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point1");
+            game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point2");
+            game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point3");
         }
 
         private Sheeple addSheeple()
         {
             Sheeple lastSheeple = (Sheeple)findLastOfType("Sheeple").Value;
-            Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(100, 300), Bombageddon.GROUND);
+            Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(30, 150), Bombageddon.GROUND);
             CivilianData r = civilianData[random.Next(civilianData.Count)];
             Sheeple sheeple = new Sheeple(spriteBatch, game, pos, r);
             sheeple.Initialize();

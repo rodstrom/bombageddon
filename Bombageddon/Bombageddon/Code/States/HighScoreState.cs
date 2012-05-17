@@ -69,12 +69,12 @@ namespace Bombageddon.Code.States
         private void ReadHighScoreList()
         {
             highScoreList.Clear();
-            int points = 0;
+            //int points = 0;
             string name = ""; 
             for (int i = 0; i < 10; i++)
             {
                 //read from file
-                highScoreList.Add(new KeyValuePair<int, string>(new Random(i).Next(1, 100), name));
+                highScoreList.Add(new KeyValuePair<int, string>(new Random(i).Next(480, 3500), name));
             }
             SortHighScore();
         }
