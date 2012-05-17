@@ -20,9 +20,9 @@ namespace Bombageddon.Code.Graphics
         private enum Layers
         {
             SKY = 0,
-            MAIN,
+            FBACK,
+            FFRONT,
             GRASS,
-            BUILDINGS,
             CLOUDS,
             RANDOM
         }
@@ -36,7 +36,8 @@ namespace Bombageddon.Code.Graphics
         public void Initialize()
         {
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.SKY, @"Graphics\Backgrounds\Mountains"));
-            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.MAIN, @"Graphics\Backgrounds\Forest"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.FBACK, @"Graphics\Backgrounds\ForestBack"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.FFRONT, @"Graphics\Backgrounds\ForestFront"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.GRASS, @"Graphics\Backgrounds\Ground"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedskelett"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedsten"));
@@ -48,13 +49,23 @@ namespace Bombageddon.Code.Graphics
             background.Value.Initialize();
             background.Value.stuck = true;
             backgroundList.AddLast(background);
-            background = new KeyValuePair<int, Background>((int)Layers.MAIN,
-                 new Background(@"Graphics\Backgrounds\Forest", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
+            background = new KeyValuePair<int, Background>((int)Layers.FBACK,
+                 new Background(@"Graphics\Backgrounds\ForestBack", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
             background.Value.Initialize();
+            background.Value.velocityX = -1;
             backgroundList.AddLast(background);
             for (int i = 0; i < 3; i++)
             {
-                backgroundList.AddLast(addBackground((int)Layers.MAIN));
+                backgroundList.AddLast(addBackground((int)Layers.FBACK));
+            }
+            background = new KeyValuePair<int, Background>((int)Layers.FFRONT,
+                 new Background(@"Graphics\Backgrounds\ForestFront", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
+            background.Value.Initialize();
+            //background.Value.velocityX = -2;
+            backgroundList.AddLast(background);
+            for (int i = 0; i < 3; i++)
+            {
+                backgroundList.AddLast(addBackground((int)Layers.FFRONT));
             }
             background = new KeyValuePair<int, Background>((int)Layers.GRASS,
                 new Background(@"Graphics\Backgrounds\Ground", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
@@ -145,10 +156,10 @@ namespace Bombageddon.Code.Graphics
         public void Draw(GameTime gameTime, bool front)
         {
             int start = 0;
-            int end = 2;
+            int end = 3;
             if (front)
             {
-                start = 2;
+                start = 3;
                 end = 6;
             }
 
@@ -201,6 +212,14 @@ namespace Bombageddon.Code.Graphics
 
             Background background = new Background(filename, spriteBatch, game, position);
             background.Initialize();
+            if (layer == 1)
+            {
+                background.velocityX = -1;
+            }
+            //else if (layer == 2)
+            //{
+            //    background.velocityX = -2;
+            //}
 
             return new KeyValuePair<int,Background>(layer, background);
         }

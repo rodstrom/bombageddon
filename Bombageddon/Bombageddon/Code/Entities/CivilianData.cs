@@ -37,10 +37,13 @@ namespace Bombageddon.Code.Entities
             get { return randomDeathSheet2.Width / randomDeathSheet2.Height; }
         }
 
-        public CivilianData(Bombageddon game, String filename, int points/*, Texture2D empty*/)
+        public string type;
+
+        public CivilianData(Bombageddon game, String filename, int points, String type)
         {
             this.civilianType = filename;
             this.pointsWorth = points;
+            this.type = type;
 
             //this.emptySheet = empty;
 

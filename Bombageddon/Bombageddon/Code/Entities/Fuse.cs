@@ -55,10 +55,14 @@ namespace Bombageddon.Code.Entities
 
             position = new Vector2(-200f, 1050f);
             fuseLineStart = position;
-            position.Y += 42;
+            position.Y += 38;
 
             fuseBurningDown = fuse.Bounds;
             startWidth = fuseBurningDown.Width;
+
+            //game.AudioManager.LoadNewMusic("Fuse", @"Audio\Music\stubin");
+            //game.AudioManager.SetMusic("Fuse");
+            //game.AudioManager.PlayMusic();
 
             base.LoadContent();
         }

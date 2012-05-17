@@ -160,7 +160,8 @@ namespace Bombageddon.Code.Entities
                 else
                     currentState = State.Boom;
 
-            game.AudioManager.PlayEffect("Scream");
+            game.AudioManager.PlayEffect(data.type);
+            game.AudioManager.PlayEffect("Squish");
         }
     }
 }
