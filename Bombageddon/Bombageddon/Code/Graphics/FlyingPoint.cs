@@ -16,6 +16,8 @@ namespace Bombageddon.Code.Graphics
         {
             base.SourceTexture = texture;
             base.position = position;
+
+            game.AudioManager.PlayEffect("Point");
         }
 
         public override void Update(GameTime gameTime)
