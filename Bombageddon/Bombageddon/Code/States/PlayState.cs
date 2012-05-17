@@ -67,7 +67,7 @@ namespace Bombageddon.Code.States
             guiPosition.X = game.Camera.Position.X - game.Camera.Center.X + 20;
             guiPosition.Y = game.Camera.Position.Y - game.Camera.Center.Y + 10;
 
-            if (inputManager.Pause)
+            if (inputManager.Pause || inputManager.LeftButton)
             {
                 pause = !pause;
             }

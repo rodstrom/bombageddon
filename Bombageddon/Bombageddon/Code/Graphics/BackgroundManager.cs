@@ -41,6 +41,7 @@ namespace Bombageddon.Code.Graphics
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedskelett"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedsten"));
             backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedjolt"));
+            backgroundFilenames.Add(new KeyValuePair<int, string>((int)Layers.RANDOM, @"Graphics\Backgrounds\Random\jordmedlizardswanguy"));
 
             KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.SKY,
                 new Background(@"Graphics\Backgrounds\Mountains", spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
