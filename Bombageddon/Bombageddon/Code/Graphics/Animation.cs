@@ -114,15 +114,20 @@ namespace Bombageddon.Code.Graphics
                 HeightMap = SetHeightMap;
             }
 
+            if (!CurrentFrame.Collidable)
+            {
+                ghost = true;
+            }
+
             if (!pause)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
                 //ColorData = SetColorData;
             }
-            if (ColorData == null)
-            {
-                ColorData = SetColorData;
-            }
+            //if (ColorData == null)
+            //{
+            //    ColorData = SetColorData;
+            //}
 
             Origin = new Vector2(currentFrame.SourceRectangle.Width * 0.5f, currentFrame.SourceRectangle.Height);
 
@@ -134,8 +139,12 @@ namespace Bombageddon.Code.Graphics
 
         public override void Draw(GameTime gameTime)
         {
-            try
+            if (currentFrame == null)
             {
+                currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+            }
+            //try
+            //{
                 SpriteBatch.Draw(currentFrame.SourceTexture,
                                     position,
                                     currentFrame.SourceRectangle,
@@ -145,11 +154,10 @@ namespace Bombageddon.Code.Graphics
                                     Scale,
                                     SpriteEffects.None,
                                     0.0f);
-            }
-            catch (System.NullReferenceException)
-            {
-                currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
-            }
+            //}
+            //catch (System.NullReferenceException)
+            //{
+            //}
 
             if (bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {

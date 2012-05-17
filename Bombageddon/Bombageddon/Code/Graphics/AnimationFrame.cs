@@ -12,19 +12,25 @@ namespace Bombageddon.Code.Graphics
         public Texture2D SourceTexture
         {
             get;
-            set;
+            private set;
         }
 
         public Rectangle SourceRectangle
         {
             get;
-            set;
+            private set;
         }
 
         public Texture2D CollisionTexture
         {
             get;
-            set;
+            private set;
+        }
+
+        public bool Collidable
+        {
+            get;
+            private set;
         }
 
         public Color[,] ColorData
@@ -78,6 +84,14 @@ namespace Bombageddon.Code.Graphics
             CollisionTexture = colTex;
             SetColorData(colTex);
             SetHeight();
+            Collidable = true;
+        }
+
+        public AnimationFrame(Texture2D tex, Rectangle rect)
+        {
+            SourceTexture = tex;
+            SourceRectangle = rect;
+            Collidable = false;
         }
     }
 }
