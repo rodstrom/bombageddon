@@ -56,7 +56,7 @@ namespace Bombageddon.Code.Camera
             set;
         }
 
-        public Entity Focus
+        public Player Focus
         {
             get;
             set;

@@ -16,6 +16,7 @@ namespace Bombageddon.Code.States
     class PlayState : State
     {
         EntityManager entityManager;
+        Fuse fuse;
 
         public EntityManager EntityManager
         {
@@ -44,10 +45,14 @@ namespace Bombageddon.Code.States
             nextState = "HighScoreState";
 
             game.Timer.StartTimer();
+
+            fuse = new Fuse(game, spriteBatch);
+            fuse.Initialize();
         }
 
         public override void Terminate()
         {
+            fuse.Terminate();
             entityManager.Terminate();
             game.Timer.ResetTimer();
             score = 0;
@@ -109,6 +114,8 @@ namespace Bombageddon.Code.States
             {
                 SelectionScreen();
             }
+
+            fuse.Update(gameTime);
         }
 
         private void SelectionScreen()
@@ -146,6 +153,8 @@ namespace Bombageddon.Code.States
 
             
             entityManager.Draw(gameTime);
+
+            fuse.Draw(gameTime);
 
             if (pause)
             {
