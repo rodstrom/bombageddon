@@ -20,7 +20,7 @@ namespace Bombageddon.Code.Entities
 
         State currentState;
 
-        CivilianData data;
+        public CivilianData data;
         Random random = new Random(DateTime.Now.Millisecond);
         int direction;
 
@@ -31,7 +31,11 @@ namespace Bombageddon.Code.Entities
         {
             position = spawnposition;
             originalPosition = spawnposition;
-            position.Y -= data.panicSheet.Height / 2;
+            if(data.type == "Bird")
+            {
+                position.Y = random.Next(100, 500);
+                effect = SpriteEffects.FlipHorizontally;
+            }
             this.data = data;
             base.pointsWorth = data.pointsWorth;
         }
@@ -112,7 +116,7 @@ namespace Bombageddon.Code.Entities
 
             base.LoadContent();
         }
-
+        
         public override void Update(GameTime gameTime)
         {
             if (currentState == State.Running)
@@ -120,10 +124,36 @@ namespace Bombageddon.Code.Entities
                 if (this.AnimationName != "Running")
                     this.AnimationName = "Running";
 
-                if (position.X > (originalPosition.X + 50))
+                int movement = 50;
+                if (data.type == "Bird")
+                {
+                    movement = 400;
+                }
+
+                if (position.X > (originalPosition.X + movement))
+                {
                     direction = -1;
-                else if (position.X < (originalPosition.X - 50))
+                    if (data.type == "Cow" || data.type == "Sheep")
+                    {
+                        effect = SpriteEffects.FlipHorizontally;
+                    }
+                    else if (data.type == "Bird")
+                    {
+                        effect = SpriteEffects.None;
+                    }
+                }
+                else if (position.X < (originalPosition.X - movement))
+                {
                     direction = 1;
+                    if (data.type == "Cow" || data.type == "Sheep")
+                    {
+                        effect = SpriteEffects.None;
+                    }
+                    else if (data.type == "Bird")
+                    {
+                        effect = SpriteEffects.FlipHorizontally;
+                    }
+                }
 
                 position.X += direction * 2 * (float)random.NextDouble();
             }
@@ -143,11 +173,6 @@ namespace Bombageddon.Code.Entities
             }
 
             base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
         }
 
         public void IsKilled(bool topHit)

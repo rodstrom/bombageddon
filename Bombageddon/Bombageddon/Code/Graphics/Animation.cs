@@ -13,6 +13,7 @@ namespace Bombageddon.Code.Graphics
         Dictionary<String, AnimationStrip> animationList = new Dictionary<String, AnimationStrip>();
         String currentAnimation = "";
         public bool pause = false;
+        protected SpriteEffects effect = SpriteEffects.None;
 
         AnimationFrame currentFrame = null;
 
@@ -20,11 +21,6 @@ namespace Bombageddon.Code.Graphics
         {
             pause = false;
             base.Terminate();
-        }
-
-        public void Pause(String anim, bool pause)
-        {
-            animationList[anim].Paused = pause;
         }
 
         public void LoopAnimation(string anim, bool loop)
@@ -76,8 +72,8 @@ namespace Bombageddon.Code.Graphics
 
         protected void UpdateCollisionRectangle()
         {
-            CollisionRectangle = new Rectangle(SourceRectangle.X + currentFrame.SourceRectangle.X,
-                SourceRectangle.Y + currentFrame.SourceRectangle.Y,
+            CollisionRectangle = new Rectangle(SourceRectangle.X - currentFrame.SourceRectangle.X,
+                SourceRectangle.Y - currentFrame.SourceRectangle.Y,
                 currentFrame.SourceRectangle.Width,
                 currentFrame.SourceRectangle.Height);
         }
@@ -157,7 +153,7 @@ namespace Bombageddon.Code.Graphics
                                     Rotation,
                                     Origin,
                                     Scale,
-                                    SpriteEffects.None,
+                                    effect,
                                     0.0f);
             //}
             //catch (System.NullReferenceException)
@@ -166,25 +162,22 @@ namespace Bombageddon.Code.Graphics
 
             if (bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {
-                if (currentFrame.CollisionTexture != null)
+                try
                 {
-                    try
-                    {
-                        SpriteBatch.Draw(currentFrame.CollisionTexture,
-                                            position,
-                                            currentFrame.SourceRectangle,
-                                            Color,
-                                            Rotation,
-                                            Origin,
-                                            Scale,
-                                            SpriteEffects.None,
-                                            0.0f);
-                    }
-                    catch (System.NullReferenceException)
-                    {
-                        currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
-                    }
+                    SpriteBatch.Draw(currentFrame.CollisionTexture,
+                                        position,
+                                        currentFrame.SourceRectangle,
+                                        Color,
+                                        Rotation,
+                                        Origin,
+                                        Scale,
+                                        effect,
+                                        0.0f);
                 }
+                catch (System.NullReferenceException)
+                {
+                    currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+                } 
             }
         }
     }
