@@ -13,6 +13,7 @@ namespace Bombageddon.Code.Graphics
         Dictionary<String, AnimationStrip> animationList = new Dictionary<String, AnimationStrip>();
         String currentAnimation = "";
         public bool pause = false;
+        protected SpriteEffects effect = SpriteEffects.None;
 
         AnimationFrame currentFrame = null;
 
@@ -152,7 +153,7 @@ namespace Bombageddon.Code.Graphics
                                     Rotation,
                                     Origin,
                                     Scale,
-                                    SpriteEffects.None,
+                                    effect,
                                     0.0f);
             //}
             //catch (System.NullReferenceException)
@@ -170,7 +171,7 @@ namespace Bombageddon.Code.Graphics
                                         Rotation,
                                         Origin,
                                         Scale,
-                                        SpriteEffects.None,
+                                        effect,
                                         0.0f);
                 }
                 catch (System.NullReferenceException)

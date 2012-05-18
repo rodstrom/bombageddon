@@ -15,6 +15,8 @@ namespace Bombageddon.Code.Entities
         SpriteBatch spriteBatch;
         BackgroundManager backgroundManager;
 
+        int birdsInTheAir = 0;
+
         Collision collision;
 
         public Player player;
@@ -61,7 +63,7 @@ namespace Bombageddon.Code.Entities
 
             CreateCivilianData();
             CivilianData civ = civilianData[0];
-            Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND + 5);
+            Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND - 8);
             Sheeple tmpSheeple = new Sheeple(spriteBatch, game, pos, civ);
             tmpSheeple.Initialize();
             entityList.AddLast(tmpSheeple);
@@ -87,11 +89,26 @@ namespace Bombageddon.Code.Entities
 
         private Sheeple addSheeple()
         {
-            Sheeple lastSheeple = (Sheeple)findLastOfType("Sheeple").Value;
-            Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(30, 150), Bombageddon.GROUND + 5);
-            CivilianData r = civilianData[random.Next(civilianData.Count)];
-            Sheeple sheeple = new Sheeple(spriteBatch, game, pos, r);
-            sheeple.Initialize();
+            bool tryAgain;
+            Sheeple sheeple;
+
+            do
+            {
+                tryAgain = false;
+                Sheeple lastSheeple = (Sheeple)findLastOfType("Sheeple").Value;
+                Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(30, 150), Bombageddon.GROUND - 8);
+                CivilianData r = civilianData[random.Next(civilianData.Count)];
+                sheeple = new Sheeple(spriteBatch, game, pos, r);
+                sheeple.Initialize();
+                if (sheeple.data.type == "Bird" && birdsInTheAir > 2)
+                {
+                    tryAgain = true;
+                }
+                else if (sheeple.data.type == "Bird")
+                {
+                    birdsInTheAir++;
+                }
+            } while (tryAgain);
             
             return sheeple;
         }
@@ -136,6 +153,17 @@ namespace Bombageddon.Code.Entities
             civilian = new CivilianData(game, "Sheep", 10, "Sheep");
             civilianData.Add(civilian);
 
+            civilian = new CivilianData(game, "Bird1", 50, "Bird");
+            civilianData.Add(civilian); 
+            civilian = new CivilianData(game, "Bird2", 50, "Bird");
+            civilianData.Add(civilian); 
+            civilian = new CivilianData(game, "Bird3", 50, "Bird");
+            civilianData.Add(civilian);
+            civilian = new CivilianData(game, "Bird4", 50, "Bird");
+            civilianData.Add(civilian);
+            //civilian = new CivilianData(game, "Swan", 50, "Bird");
+            //civilianData.Add(civilian);
+
             game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Nej");
             game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik1");
             game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik2");
@@ -152,6 +180,7 @@ namespace Bombageddon.Code.Entities
 
             game.AudioManager.LoadNewEffect("Cow", @"Audio\Sound\Animals\ko");
             game.AudioManager.LoadNewEffect("Sheep", @"Audio\Sound\Animals\sheep");
+            game.AudioManager.LoadNewEffect("Bird", @"Audio\Sound\Animals\bird");
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -189,6 +218,10 @@ namespace Bombageddon.Code.Entities
         private void refreshSheeples()
         {
             Sheeple s = (Sheeple)findFirstOfType("Sheeple").Value;
+            if (s.data.type == "Bird")
+            {
+                birdsInTheAir--;
+            }
             s.Terminate();
             entityList.Remove(s);
             if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
@@ -265,6 +298,12 @@ namespace Bombageddon.Code.Entities
                     {
                         entityList.AddLast(addSheeple());
                     }
+                    Sheeple temp = (Sheeple)e;
+                    if (temp.data.type == "Bird")
+                    {
+                        birdsInTheAir--;
+                    }
+                    temp = null;
                 }
             }
 
