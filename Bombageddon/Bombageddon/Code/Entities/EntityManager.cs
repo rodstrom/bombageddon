@@ -15,6 +15,9 @@ namespace Bombageddon.Code.Entities
         SpriteBatch spriteBatch;
         BackgroundManager backgroundManager;
 
+        public bool blazeOfGloryDone = false;
+        bool blazeOfGloryStarted = false;
+
         int birdsInTheAir = 0;
 
         Collision collision;
@@ -285,54 +288,93 @@ namespace Bombageddon.Code.Entities
                 }
             }
 
-            foreach (Entity e in removeList)
+            if (!blazeOfGloryStarted)
             {
-                entityList.Remove(e);
-                if (e.GetType().ToString().Equals("Platform"))
+                foreach (Entity e in removeList)
                 {
-                    entityList.AddLast(addPlatform());
+                    entityList.Remove(e);
+                    if (e.GetType().ToString().Equals("Platform"))
+                    {
+                        entityList.AddLast(addPlatform());
+                    }
+                    else if (e.GetType().ToString().Equals("Sheeple"))
+                    {
+                        if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
+                        {
+                            entityList.AddLast(addSheeple());
+                        }
+                        Sheeple temp = (Sheeple)e;
+                        if (temp.data.type == "Bird")
+                        {
+                            birdsInTheAir--;
+                        }
+                        temp = null;
+                    }
                 }
-                else if (e.GetType().ToString().Equals("Sheeple"))
+
+                if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
                 {
-                    if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
+                    for (int i = addThisManySheeples; i > 0; i--)
                     {
                         entityList.AddLast(addSheeple());
+                        addThisManySheeples--;
                     }
-                    Sheeple temp = (Sheeple)e;
-                    if (temp.data.type == "Bird")
-                    {
-                        birdsInTheAir--;
-                    }
-                    temp = null;
                 }
-            }
-
-            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
-            {
-                for (int i = addThisManySheeples; i > 0; i--)
+                else
                 {
-                    entityList.AddLast(addSheeple());
-                    addThisManySheeples--;
+                    addThisManySheeples = 0;
+                }
+
+                Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
+                if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
+                {
+                    refreshPlatforms();
+                }
+
+                Sheeple tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
+                if (tempSheeple.position.X < player.position.X - Bombageddon.WIDTH)
+                {
+                    refreshSheeples();
+                }
+
+                CollisionCheck();
+            }
+
+            if (player.end && !blazeOfGloryStarted)
+            {
+                Explosion explosion = new Explosion(game, spriteBatch);
+                explosion.Initialize();
+                entityList.AddLast(explosion);
+
+                blazeOfGloryStarted = true;
+                player.KillMe = true;
+            }
+            else if (player.end && blazeOfGloryStarted)
+            {
+                Explosion explosion = (Explosion)findFirstOfType("Explosion").Value;
+                if (explosion.killEverything)
+                {
+                    foreach (Entity e in entityList)
+                    {
+                        e.ghost = true;
+                        if (e.GetType().Name == "Platform")
+                        {
+                            Platform p = (Platform)e;
+                            p.pause = false;
+                        }
+                        else if (e.GetType().Name == "Sheeple")
+                        {
+                            Sheeple s = (Sheeple)e;
+                            s.IsKilled(false);
+                        }
+                    }
+                    explosion.killEverything = false;
+                }
+                if (explosion.endGame)
+                {
+                    blazeOfGloryDone = true;
                 }
             }
-            else
-            {
-                addThisManySheeples = 0;
-            }
-
-            Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
-            if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
-            {
-                refreshPlatforms();
-            }
-
-            Sheeple tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
-            if (tempSheeple.position.X < player.position.X - Bombageddon.WIDTH)
-            {
-                refreshSheeples();
-            }
-
-            CollisionCheck();
         }
 
         public void Draw(GameTime gameTime)
@@ -345,6 +387,11 @@ namespace Bombageddon.Code.Entities
             }
 
             backgroundManager.Draw(gameTime, true);
+
+            if (blazeOfGloryStarted)
+            {
+                findFirstOfType("Explosion").Value.Draw(gameTime);
+            }
         }
 
         private void CollisionCheck()

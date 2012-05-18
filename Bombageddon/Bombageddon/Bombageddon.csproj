@@ -112,6 +112,7 @@
     <Compile Include="Code\Entities\CivilianData.cs" />
     <Compile Include="Code\Entities\Entity.cs" />
     <Compile Include="Code\Entities\EntityManager.cs" />
+    <Compile Include="Code\Entities\Explosion.cs" />
     <Compile Include="Code\Entities\Fuse.cs" />
     <Compile Include="Code\Entities\Platform.cs" />
     <Compile Include="Code\Entities\PlatformData.cs" />

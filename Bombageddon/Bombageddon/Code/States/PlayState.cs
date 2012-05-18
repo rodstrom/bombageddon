@@ -96,7 +96,7 @@ namespace Bombageddon.Code.States
             //    outputCode = score;
             //    changeState = true;
             //}
-            else if (entityManager.player.end)
+            else if (entityManager.blazeOfGloryDone)
             {
                 outputCode = score;
                 changeState = true;
