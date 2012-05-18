@@ -56,7 +56,7 @@ namespace Bombageddon.Code.Entities
             _runningAnim.TimeOnChange = 50;
             _runningAnim.WillLoop = true;
             this.AddAnimation("Running", _runningAnim);
-
+            
             _runningAnim = null;
 
             AnimationStrip _splatAnim = new AnimationStrip();
@@ -136,10 +136,10 @@ namespace Bombageddon.Code.Entities
                 if (currentState == State.Flat && AnimationName != "Death2")
                     this.AnimationName = "Death2";
 
-                if (CurrentIndex == AnimationFrames)
-                {
-                    pause = true;
-                }
+                //if (CurrentIndex == AnimationFrames)
+                //{
+                //    pause = true;
+                //}
             }
 
             base.Update(gameTime);

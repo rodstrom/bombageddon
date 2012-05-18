@@ -15,12 +15,21 @@ namespace Bombageddon.Code.Graphics
         int currentIndex = 0;
 
         bool looping = false;
+        bool pause = false;
 
         private AnimationFrame LastFrame
         {
             get
             {
                 return frames[frames.Count - 1];
+            }
+        }
+
+        private AnimationFrame FirstFrame
+        {
+            get
+            {
+                return frames[0];
             }
         }
 
@@ -62,6 +71,11 @@ namespace Bombageddon.Code.Graphics
             currentTime = 0;
         }
 
+        public bool Paused
+        {
+            set { pause = value; }
+        }
+
         public void AddFrame(AnimationFrame spriteFrame)
         {
             frames.Add(spriteFrame);
@@ -69,6 +83,11 @@ namespace Bombageddon.Code.Graphics
 
         public AnimationFrame getCurrentFrame(GameTime gameTime)
         {
+            if (pause)
+            {
+                return FirstFrame;
+            }
+
             if (!looping && currentIndex > frames.Count - 2)
             {
                 return LastFrame;

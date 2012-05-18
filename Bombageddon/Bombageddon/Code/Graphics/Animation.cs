@@ -22,6 +22,11 @@ namespace Bombageddon.Code.Graphics
             base.Terminate();
         }
 
+        public void Pause(String anim, bool pause)
+        {
+            animationList[anim].Paused = pause;
+        }
+
         public void LoopAnimation(string anim, bool loop)
         {
             animationList[anim].WillLoop = loop;
@@ -71,8 +76,8 @@ namespace Bombageddon.Code.Graphics
 
         protected void UpdateCollisionRectangle()
         {
-            CollisionRectangle = new Rectangle(SourceRectangle.X - currentFrame.SourceRectangle.X,
-                SourceRectangle.Y - currentFrame.SourceRectangle.Y,
+            CollisionRectangle = new Rectangle(SourceRectangle.X + currentFrame.SourceRectangle.X,
+                SourceRectangle.Y + currentFrame.SourceRectangle.Y,
                 currentFrame.SourceRectangle.Width,
                 currentFrame.SourceRectangle.Height);
         }
@@ -161,22 +166,25 @@ namespace Bombageddon.Code.Graphics
 
             if (bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {
-                try
+                if (currentFrame.CollisionTexture != null)
                 {
-                    SpriteBatch.Draw(currentFrame.CollisionTexture,
-                                        position,
-                                        currentFrame.SourceRectangle,
-                                        Color,
-                                        Rotation,
-                                        Origin,
-                                        Scale,
-                                        SpriteEffects.None,
-                                        0.0f);
+                    try
+                    {
+                        SpriteBatch.Draw(currentFrame.CollisionTexture,
+                                            position,
+                                            currentFrame.SourceRectangle,
+                                            Color,
+                                            Rotation,
+                                            Origin,
+                                            Scale,
+                                            SpriteEffects.None,
+                                            0.0f);
+                    }
+                    catch (System.NullReferenceException)
+                    {
+                        currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
+                    }
                 }
-                catch (System.NullReferenceException)
-                {
-                    currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
-                } 
             }
         }
     }
