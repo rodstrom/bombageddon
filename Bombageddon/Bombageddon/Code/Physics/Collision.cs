@@ -48,12 +48,21 @@ namespace Bombageddon.Code.Physics
 
         public bool AdvancedCheck(Entity entity1, Entity entity2)
         {
-            Rectangle midRect = Rectangle.Intersect(entity1.SourceRectangle, entity2.SourceRectangle);
+            Rectangle midRect = Rectangle.Intersect(entity1.CollisionRectangle, entity2.CollisionRectangle);
 
-            Point pos1 = new Point(midRect.Location.X - entity1.SourceRectangle.Location.X,
-                midRect.Location.Y - entity1.SourceRectangle.Location.Y);
-            Point pos2 = new Point(midRect.Location.X - entity2.SourceRectangle.Location.X,
-                midRect.Location.Y - entity2.SourceRectangle.Location.Y);
+            //Point pos1 = new Point(midRect.Location.X - entity1.CollisionRectangle.Location.X,
+            //    midRect.Location.Y - entity1.CollisionRectangle.Location.Y);
+            //Point pos2 = new Point(midRect.Location.X - entity2.CollisionRectangle.Location.X,
+            //    midRect.Location.Y - entity2.CollisionRectangle.Location.Y);
+
+            int D1x = (int)Vector2.Distance(new Vector2(midRect.Location.X, 0), new Vector2(entity1.CollisionRectangle.Location.X, 0));
+            int D1y = (int)Vector2.Distance(new Vector2(0, midRect.Location.Y), new Vector2(0, entity1.CollisionRectangle.Location.Y));
+
+            int D2x = (int)Vector2.Distance(new Vector2(midRect.Location.X, 0), new Vector2(entity2.CollisionRectangle.Location.X, 0));
+            int D2y = (int)Vector2.Distance(new Vector2(0, midRect.Location.Y), new Vector2(0, entity2.CollisionRectangle.Location.Y));
+
+            Point pos1 = new Point(D1x, D1y);
+            Point pos2 = new Point(D2x, D2y);
 
             for (int x = 0; x < midRect.Width; x++)
             {
@@ -78,37 +87,40 @@ namespace Bombageddon.Code.Physics
             Rectangle midRect = Rectangle.Intersect(entity1.SourceRectangle, entity2.SourceRectangle);
 
             //Kollar vinkeln mellan den nya rektangelns mittpunkt och plattformens centrala bottenpunkt
-            float R = MathHelper.ToDegrees((float)Math.Atan2(entity2.CollisionRectangle.Bottom - midRect.Center.Y, 
-               entity2.CollisionRectangle.Center.X - midRect.Center.X));
+            //float R = MathHelper.ToDegrees((float)Math.Atan2(entity2.SourceRectangle.Bottom - midRect.Center.Y,
+            //   entity2.SourceRectangle.Center.X - midRect.Center.X));
+
+            float R = MathHelper.ToDegrees((float)Math.Atan2(entity2.SourceRectangle.Center.Y - midRect.Center.Y,
+               entity2.SourceRectangle.Center.X - midRect.Center.X));
 
             //C1 och C2 motsvarar de övre motsatta hörnen av plattformens kollisionsyta
             Vector2 C1 = Vector2.Zero;
-            for(int x = 0; x < entity2.HeightMap.Length; x++)
-            {
-                if (entity2.HeightMap[x] != 0)
-                {
-                    C1 = new Vector2(entity2.SourceRectangle.Left + x, entity2.SourceRectangle.Top + entity2.HeightMap[x]);
-                    break;
-                }
-                if (x >= entity2.HeightMap.Length)
-                {
+            //for(int x = 0; x < entity2.HeightMap.Length; x++)
+            //{
+                //if (entity2.HeightMap[x] != 0)
+                //{
+                //    C1 = new Vector2(entity2.SourceRectangle.Left + x, entity2.SourceRectangle.Top + entity2.HeightMap[x]);
+                //    break;
+                //}
+                //if (x >= entity2.HeightMap.Length)
+                //{
                     C1 = new Vector2(entity2.SourceRectangle.Left, entity2.SourceRectangle.Top);
-                }
-            }
+                //}
+            //}
 
             Vector2 C2 = Vector2.Zero;
-            for (int x = entity2.HeightMap.Length - 1; x >= 0; x--)
-            {
-                if (entity2.HeightMap[x] != 0)
-                {
-                    C2 = new Vector2(entity2.SourceRectangle.Right + x, entity2.SourceRectangle.Top + entity2.HeightMap[x]);
-                    break;
-                }
-                if (x < 1)
-                {
+            //for (int x = entity2.HeightMap.Length - 1; x >= 0; x--)
+            //{
+                //if (entity2.HeightMap[x] != 0)
+                //{
+                //    C2 = new Vector2(entity2.SourceRectangle.Right + x, entity2.SourceRectangle.Top + entity2.HeightMap[x]);
+                //    break;
+                //}
+                //if (x < 1)
+                //{
                     C2 = new Vector2(entity2.SourceRectangle.Right, entity2.SourceRectangle.Top);
-                }
-            }
+                //}
+            //}
 
             //K1 är helt enkelt plattformens centrala bottenpunkt
             Vector2 K1 = new Vector2(entity2.SourceRectangle.Center.X, entity2.SourceRectangle.Bottom);

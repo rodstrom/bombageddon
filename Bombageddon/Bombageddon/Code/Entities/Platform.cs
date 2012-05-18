@@ -28,7 +28,9 @@ namespace Bombageddon.Code.Entities
 
             explosion = null;
 
-            this.pause = true;
+            //Pause("Explosion", true);
+            pause = true;
+
             CurrentIndex = 0;
 
             //this.Scale *= 2f;
@@ -43,10 +45,10 @@ namespace Bombageddon.Code.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (pause && CurrentIndex > 0)
-            {
-                CurrentIndex = 0;
-            }
+            //if (pause && CurrentIndex > 0)
+            //{
+            //    CurrentIndex = 0;
+            //}
 
             base.Update(gameTime);
         }
