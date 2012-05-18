@@ -38,7 +38,7 @@ namespace Bombageddon.Code.Graphics
         {
             if (!stuck)
             {
-                position.X -= velocityX;
+                position.X -= velocityX * game.Camera.Focus.kinetics.X / 100;
             }
             else
             {

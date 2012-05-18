@@ -61,7 +61,7 @@ namespace Bombageddon.Code.Entities
 
             CreateCivilianData();
             CivilianData civ = civilianData[0];
-            Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND);
+            Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND + 5);
             Sheeple tmpSheeple = new Sheeple(spriteBatch, game, pos, civ);
             tmpSheeple.Initialize();
             entityList.AddLast(tmpSheeple);
@@ -88,7 +88,7 @@ namespace Bombageddon.Code.Entities
         private Sheeple addSheeple()
         {
             Sheeple lastSheeple = (Sheeple)findLastOfType("Sheeple").Value;
-            Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(30, 150), Bombageddon.GROUND);
+            Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(30, 150), Bombageddon.GROUND + 5);
             CivilianData r = civilianData[random.Next(civilianData.Count)];
             Sheeple sheeple = new Sheeple(spriteBatch, game, pos, r);
             sheeple.Initialize();
@@ -99,19 +99,19 @@ namespace Bombageddon.Code.Entities
         private void CreateListOfAvailablePlatforms()
         {
             PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision",
-                new Vector2(500f, Bombageddon.GROUND - 13f), 50);
+                new Vector2(500f, Bombageddon.GROUND - 10f), 50);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision",
-                new Vector2(100f, Bombageddon.GROUND - 13f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 50);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus3_sheet", @"Graphics\Collision\Hus3_collision",
-                new Vector2(100f, Bombageddon.GROUND - 13f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 50);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus4_sheet", @"Graphics\Collision\Hus4_collision",
-                new Vector2(100f, Bombageddon.GROUND - 13f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 50);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision",
@@ -124,15 +124,34 @@ namespace Bombageddon.Code.Entities
 
         private void CreateCivilianData()
         {
-            CivilianData civilian = new CivilianData(game, "Man1", 10);
+            CivilianData civilian = new CivilianData(game, "Man1", 10, "Man");
             civilianData.Add(civilian);
-            civilian = new CivilianData(game, "Man2", 10);
+            civilian = new CivilianData(game, "Man2", 10, "Man");
+            civilianData.Add(civilian);
+            civilian = new CivilianData(game, "Woman1", 10, "Woman");
             civilianData.Add(civilian);
 
-            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Nej");
-            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik1");
-            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik2");
-            game.AudioManager.LoadNewEffect("Scream", @"Audio\Sound\Screams\Skrik3");
+            civilian = new CivilianData(game, "Cow", 10, "Cow");
+            civilianData.Add(civilian);
+            civilian = new CivilianData(game, "Sheep", 10, "Sheep");
+            civilianData.Add(civilian);
+
+            game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Nej");
+            game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik1");
+            game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik2");
+            game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik4");
+            game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik5");
+            game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik6");
+
+            game.AudioManager.LoadNewEffect("Woman", @"Audio\Sound\Screams\Skrik3");
+
+            game.AudioManager.LoadNewEffect("Squish", @"Audio\Sound\Squish\squish1");
+            game.AudioManager.LoadNewEffect("Squish", @"Audio\Sound\Squish\squish2");
+            game.AudioManager.LoadNewEffect("Squish", @"Audio\Sound\Squish\squish3");
+            game.AudioManager.LoadNewEffect("Squish", @"Audio\Sound\Squish\squish4");
+
+            game.AudioManager.LoadNewEffect("Cow", @"Audio\Sound\Animals\ko");
+            game.AudioManager.LoadNewEffect("Sheep", @"Audio\Sound\Animals\sheep");
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)

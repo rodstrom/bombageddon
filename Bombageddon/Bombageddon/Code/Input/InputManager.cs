@@ -50,6 +50,18 @@ namespace Bombageddon.Code.Input
             set { currentMouseState = value; }
         }
 
+        public bool LeftButton
+        {
+            get
+            {
+                if(currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public InputManager(Bombageddon game)
         {
             Game = game; 

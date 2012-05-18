@@ -11,12 +11,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Bombageddon.Code.Entities
 {
-    class Player : Sprite
+    public class Player : Sprite
     {
         InputManager input;
         KineticVector kineticVector;
 
         Dictionary<int, Texture2D> bloodCover = new Dictionary<int, Texture2D>();
+
+        public int StartTime = 60000;
 
         public int FuseTimer
         {
@@ -66,7 +68,7 @@ namespace Bombageddon.Code.Entities
             this.fallTime = 0f;
             this.position = position;
             kinetics = Vector2.Zero;
-            FuseTimer = 60000;
+            FuseTimer = StartTime;
         }
 
         protected override void LoadContent()
@@ -142,7 +144,7 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y += kineticVector.FinalVector.Y * 1f;
+                        kinetics.Y += kineticVector.FinalVector.Y * 2f;
                         kinetics.X += kineticVector.FinalVector.X * 1f;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
