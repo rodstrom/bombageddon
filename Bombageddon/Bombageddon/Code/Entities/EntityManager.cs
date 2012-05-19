@@ -282,8 +282,8 @@ namespace Bombageddon.Code.Entities
             }
             //foreach (Texture2D p in pointTextures.Values)
             //{
-            //    //p.Dispose();
-            //    p = null;
+            //    p.Dispose();
+            //    //p = null;
             //}
             pointTextures.Clear();
             entityList.Clear();
@@ -301,6 +301,7 @@ namespace Bombageddon.Code.Entities
             foreach (Entity entity in entityList)
             {
                 entity.Update(gameTime);
+
                 if (entity.KillMe)
                 {
                     removeList.Add(entity);
