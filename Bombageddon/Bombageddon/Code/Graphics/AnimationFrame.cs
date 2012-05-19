@@ -9,6 +9,12 @@ namespace Bombageddon.Code.Graphics
 {
     class AnimationFrame
     {
+        public void Terminate()
+        {
+            //SourceTexture.Dispose();
+            SourceTexture = null;
+        }
+
         public Texture2D SourceTexture
         {
             get;
@@ -47,17 +53,25 @@ namespace Bombageddon.Code.Graphics
 
         private void SetColorData(Texture2D texture)
         {
-            Color[] ColorArray1D = new Color[texture.Width * texture.Height];
-            texture.GetData(ColorArray1D);
+            if (!texture.IsDisposed)
+            {
+                Color[] ColorArray1D = new Color[texture.Width * texture.Height];
+                texture.GetData(ColorArray1D);
 
-            Color[,] ColorArray2D = new Color[SourceRectangle.Width, SourceRectangle.Height];
-            for (int x = 0; x < SourceRectangle.Width; x++)
-                for (int y = 0; y < SourceRectangle.Height; y++)
+                Color[,] ColorArray2D = new Color[SourceRectangle.Width, SourceRectangle.Height];
+                for (int x = 0; x < SourceRectangle.Width; x++)
                 {
-                    ColorArray2D[x, y] = ColorArray1D[(x + y * SourceRectangle.Width) + SourceRectangle.Location.X];
+                    for (int y = 0; y < SourceRectangle.Height; y++)
+                    {
+                        ColorArray2D[x, y] = ColorArray1D[(x + y * SourceRectangle.Width) + SourceRectangle.Location.X];
+                    }
                 }
 
-            ColorData = ColorArray2D;
+                ColorData = ColorArray2D;
+
+                ColorArray1D = null;
+                ColorArray2D = null;
+            }
         }
 
         private void SetHeight()

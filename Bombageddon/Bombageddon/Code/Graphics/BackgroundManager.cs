@@ -17,6 +17,8 @@ namespace Bombageddon.Code.Graphics
         private LinkedList<KeyValuePair<int, Background>> backgroundList = new LinkedList<KeyValuePair<int, Background>>();
         private List<KeyValuePair<int, string>> backgroundFilenames = new List<KeyValuePair<int, string>>();
 
+        private List<KeyValuePair<int, Background>> removeBackgrounds = new List<KeyValuePair<int, Background>>();
+
         private enum Layers
         {
             SKY = 0,
@@ -125,9 +127,19 @@ namespace Bombageddon.Code.Graphics
             return bgList;
         }
 
-        public void Update(GameTime gameTime, int playerPosX)
+        public void Terminate()
         {
-            List<KeyValuePair<int, Background>> removeBackgrounds = new List<KeyValuePair<int, Background>>();
+            foreach (KeyValuePair<int, Background> b in backgroundList)
+            {
+                b.Value.Terminate();
+            }
+            backgroundList.Clear();
+            removeBackgrounds.Clear();
+            backgroundFilenames.Clear();
+        }
+
+        public void Update(GameTime gameTime)
+        {
             foreach (KeyValuePair<int, Background> background in backgroundList)
             {
                 background.Value.Update(gameTime);
@@ -139,21 +151,13 @@ namespace Bombageddon.Code.Graphics
 
             foreach (KeyValuePair<int, Background> b in removeBackgrounds)
             {
+                b.Value.Terminate();
                 backgroundList.Remove(b);
             }
 
-            refreshBackgrounds(playerPosX);
-        }
+            removeBackgrounds.Clear();
 
-        public void Draw(GameTime gameTime)
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                foreach (Background background in getBackgroundsByLayer(i))
-                {
-                    background.Draw(gameTime);
-                }
-            }
+            refreshBackgrounds();
         }
 
         public void Draw(GameTime gameTime, bool front)
@@ -175,12 +179,12 @@ namespace Bombageddon.Code.Graphics
             }
         }
         
-        private void refreshBackgrounds(int playerPosX)
+        private void refreshBackgrounds()
         {
             List<int> newBackgrounds = new List<int>();
             foreach (KeyValuePair<int, Background> background in backgroundList)
             {
-                if (background.Value.SourceRectangle.Right < playerPosX - Bombageddon.WIDTH)
+                if (background.Value.SourceRectangle.Right < game.Camera.Focus.position.X - Bombageddon.WIDTH)
                 {
                     background.Value.KillMe = true;
                     newBackgrounds.Add(background.Key);

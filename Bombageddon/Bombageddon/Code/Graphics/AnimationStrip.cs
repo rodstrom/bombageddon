@@ -17,6 +17,14 @@ namespace Bombageddon.Code.Graphics
         bool looping = false;
         bool pause = false;
 
+        public void Terminate()
+        {
+            foreach (AnimationFrame a in frames)
+            {
+                a.Terminate();
+            }
+        }
+
         private AnimationFrame LastFrame
         {
             get

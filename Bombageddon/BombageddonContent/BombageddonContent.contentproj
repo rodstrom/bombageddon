@@ -212,13 +212,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Collision\Hus3_collision.png">
-      <Name>Hus3_collision</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Audio\Sound\Crash\buildingexplosion.wav">
       <Name>buildingexplosion</Name>
       <Importer>WavImporter</Importer>
@@ -717,13 +710,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Explosion\BOOM_sheet2.PNG">
-      <Name>BOOM_sheet2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Audio\Sound\Explosion\Explosion.wav">
       <Name>Explosion</Name>
       <Importer>WavImporter</Importer>
@@ -757,6 +743,20 @@
   <ItemGroup>
     <Compile Include="Graphics\Points\x10.png">
       <Name>x10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Explosion\BOOM_sheet2.PNG">
+      <Name>BOOM_sheet2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Collision\Hus3_collision.png">
+      <Name>Hus3_collision</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

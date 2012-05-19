@@ -30,7 +30,7 @@ namespace Bombageddon.Code.Entities
             this.AddAnimation("Explosion", explosion);
             this.AnimationName = "Explosion";
             position = game.Camera.Focus.position;
-            position.Y += 224f;
+            position.Y += 190f;
             Scale *= 4;
 
             game.AudioManager.LoadNewEffect("Explosion", @"Audio\Sound\Explosion\Explosion2");

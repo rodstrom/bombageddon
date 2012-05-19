@@ -151,21 +151,15 @@ namespace Bombageddon.Code.States
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, game.Camera.Transform);
 
-            //spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
-            //spriteBatch.Draw(background, new Vector2(1920, 0), Color.White);
-
-            
             entityManager.Draw(gameTime);
-
             fuse.Draw(gameTime);
 
             if (pause)
             {
                 drawPauseDialog();
             }
-            //int time = (int)game.Timer.MainEvent.currentTime;
 
-            spriteBatch.DrawString(font, score.ToString() + " - " + (entityManager.player.FuseTimer / 1000).ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, score.ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
 
             if(bool.Parse(game.config.getValue("Debug", "ExtendedGUI")))
             {

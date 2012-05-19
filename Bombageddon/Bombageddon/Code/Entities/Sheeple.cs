@@ -40,11 +40,6 @@ namespace Bombageddon.Code.Entities
             base.pointsWorth = data.pointsWorth;
         }
 
-        public override void Terminate()
-        {
-            base.Terminate();
-        }
-
         protected override void LoadContent()
         {
             AnimationStrip _runningAnim = new AnimationStrip();

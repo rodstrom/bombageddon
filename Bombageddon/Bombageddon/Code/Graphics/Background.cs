@@ -30,7 +30,7 @@ namespace Bombageddon.Code.Graphics
 
         protected override void LoadContent()
         {
-            SourceTexture = Game.Content.Load<Texture2D>(_filename);
+            SourceTexture = game.Content.Load<Texture2D>(_filename);
             Origin = new Vector2(SourceRectangle.Left, SourceRectangle.Bottom);
         }
 

@@ -69,6 +69,8 @@ namespace Bombageddon.Code.Entities
 
         public override void Terminate()
         {
+            //fuse.Dispose();
+            //burntFuse.Dispose();
             fuse = null;
             burntFuse = null;
             base.Terminate();
@@ -87,8 +89,11 @@ namespace Bombageddon.Code.Entities
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch.Draw(burntFuse, fuseLineStart, null, Color.White, 0f, burntFuseOrigin, 1f, SpriteEffects.None, 0.0f);
-            SpriteBatch.Draw(fuse, fuseLineStart, fuseBurningDown, Color.White, 0f, fuseOrigin, 1f, SpriteEffects.None, 0.0f);
+            if (!burntFuse.IsDisposed && !fuse.IsDisposed)
+            {
+                SpriteBatch.Draw(burntFuse, fuseLineStart, null, Color.White, 0f, burntFuseOrigin, 1f, SpriteEffects.None, 0.0f);
+                SpriteBatch.Draw(fuse, fuseLineStart, fuseBurningDown, Color.White, 0f, fuseOrigin, 1f, SpriteEffects.None, 0.0f);
+            }
 
             base.Draw(gameTime);
         }

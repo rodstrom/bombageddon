@@ -32,31 +32,6 @@ namespace Bombageddon.Code.Entities
             pause = true;
 
             CurrentIndex = 0;
-
-            //this.Scale *= 2f;
-
-            //this.sourceTexture = texture;
-            //this.hitTexture = hitTexture;
-
-            //this._hitRectangle = hitRectangle;
-            //this._hitRectangle2 = new Rectangle(0, 0, 0, 0);
-            //this.hitRect2Enabled = false;
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            //if (pause && CurrentIndex > 0)
-            //{
-            //    CurrentIndex = 0;
-            //}
-
-            base.Update(gameTime);
-        }
-
-        //public void IsKilled()
-        //{
-        //    this.AnimationName = "Explosion";
-        //}
-
     }
 }
