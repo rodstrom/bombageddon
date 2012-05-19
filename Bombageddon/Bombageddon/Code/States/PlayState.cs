@@ -48,6 +48,9 @@ namespace Bombageddon.Code.States
 
             fuse = new Fuse(game, spriteBatch);
             fuse.Initialize();
+
+            game.AudioManager.SetMusic("Background");
+            game.AudioManager.PlayMusic();
         }
 
         public override void Terminate()

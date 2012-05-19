@@ -33,13 +33,14 @@ namespace Bombageddon.Code.Entities
             position.Y += 224f;
             Scale *= 4;
 
-            game.AudioManager.LoadNewEffect("Explosion", @"Audio\Sound\Explosion\Explosion");
+            game.AudioManager.LoadNewEffect("Explosion", @"Audio\Sound\Explosion\Explosion2");
             game.AudioManager.PlayEffect("Explosion");
+            game.AudioManager.StopMusic();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (CurrentIndex == 8)
+            if (CurrentIndex == 4)
             {
                 killEverything = true;
             } 

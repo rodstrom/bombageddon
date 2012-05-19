@@ -33,6 +33,7 @@ namespace Bombageddon.Code.Entities
         List<CivilianData> civilianData = new List<CivilianData>();
 
         Dictionary<int, Texture2D> pointTextures = new Dictionary<int, Texture2D>();
+        List<KeyValuePair<int, Vector2>> addThesePoints = new List<KeyValuePair<int, Vector2>>();
 
         public Platform platform = null;
 
@@ -84,6 +85,8 @@ namespace Bombageddon.Code.Entities
             pointTextures.Add(5, game.Content.Load<Texture2D>(@"Graphics\Points\+5"));
             pointTextures.Add(10, game.Content.Load<Texture2D>(@"Graphics\Points\10"));
             pointTextures.Add(50, game.Content.Load<Texture2D>(@"Graphics\Points\50"));
+
+            pointTextures.Add(11, game.Content.Load<Texture2D>(@"Graphics\Points\x10"));
 
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point1");
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point2");
@@ -347,7 +350,7 @@ namespace Bombageddon.Code.Entities
                 entityList.AddLast(explosion);
 
                 blazeOfGloryStarted = true;
-                player.KillMe = true;
+                entityList.Remove(player);
             }
             else if (player.end && blazeOfGloryStarted)
             {
@@ -356,16 +359,28 @@ namespace Bombageddon.Code.Entities
                 {
                     foreach (Entity e in entityList)
                     {
-                        e.ghost = true;
-                        if (e.GetType().Name == "Platform")
+                        if (e.position.X > player.position.X - 500f && e.position.X < player.position.X + 500f)
                         {
-                            Platform p = (Platform)e;
-                            p.pause = false;
-                        }
-                        else if (e.GetType().Name == "Sheeple")
-                        {
-                            Sheeple s = (Sheeple)e;
-                            s.IsKilled(false);
+                            Boolean points = false;
+                            if (e.GetType().Name == "Platform")
+                            {
+                                Platform p = (Platform)e;
+                                p.pause = false;
+                                points = true;
+                            }
+                            else if (e.GetType().Name == "Sheeple")
+                            {
+                                Sheeple s = (Sheeple)e;
+                                s.IsKilled(false);
+                                points = true;
+                            }
+                            if (points && !e.ghost)
+                            {
+                                player.points += e.pointsWorth * 10;
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(e.pointsWorth, e.position));
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(11, e.position + new Vector2(-20, 20)));
+                            }
+                            e.ghost = true;
                         }
                     }
                     explosion.killEverything = false;
@@ -375,6 +390,12 @@ namespace Bombageddon.Code.Entities
                     blazeOfGloryDone = true;
                 }
             }
+            
+            foreach (KeyValuePair<int, Vector2> p in addThesePoints)
+            {
+                entityList.AddLast(new FlyingPoint(spriteBatch, game, pointTextures[p.Key], p.Value));
+            }
+            addThesePoints.Clear();
         }
 
         public void Draw(GameTime gameTime)
@@ -396,8 +417,6 @@ namespace Bombageddon.Code.Entities
 
         private void CollisionCheck()
         {
-            List<KeyValuePair<int, Vector2>> addThesePoints = new List<KeyValuePair<int, Vector2>>();
-
             foreach (Entity entity in entityList)
             {
                 if (entity.GetType().Name == "Platform")
@@ -451,11 +470,6 @@ namespace Bombageddon.Code.Entities
                     }
                 }
             }
-            foreach (KeyValuePair<int, Vector2> p in addThesePoints)
-            {
-                entityList.AddLast(new FlyingPoint(spriteBatch, game, pointTextures[p.Key], p.Value));
-            }
-            addThesePoints.Clear();
 
             if (player.position.Y + 64 > Bombageddon.GROUND)
             {
