@@ -10,11 +10,15 @@ namespace Bombageddon.Code.Entities
 {
     class Platform : Animation
     {
+        public int life = 0;
+
         public Platform(Bombageddon game, SpriteBatch spriteBatch, PlatformData construct)
             : base(game, spriteBatch)
         {
             this.position = construct.position;
             base.pointsWorth = construct.points;
+
+            this.life = construct.life;
 
             AnimationStrip explosion = new AnimationStrip();
             for (int x = 0; x < construct.Texture.Width / construct.Texture.Height; x++)

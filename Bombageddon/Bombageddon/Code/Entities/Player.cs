@@ -107,7 +107,7 @@ namespace Bombageddon.Code.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (currentBloodSpatter < 6 && points - pointsSinceUpgrade > 150)
+            if (currentBloodSpatter < 6 && points - pointsSinceUpgrade > 300)
             {
                 SourceTexture = bloodCover[currentBloodSpatter++];
                 pointsSinceUpgrade = points;
@@ -134,8 +134,10 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y += kineticVector.FinalVector.Y * 2f;
-                        kinetics.X += kineticVector.FinalVector.X * 1f;
+                        float multiplier = 1f + points * 0.0001f;
+                        MathHelper.Clamp(multiplier, 1f, 2f);
+                        kinetics.Y += kineticVector.FinalVector.Y * 2f * multiplier;
+                        kinetics.X += kineticVector.FinalVector.X * 1f * multiplier;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;

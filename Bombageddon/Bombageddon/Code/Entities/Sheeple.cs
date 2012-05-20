@@ -33,7 +33,7 @@ namespace Bombageddon.Code.Entities
             originalPosition = spawnposition;
             if(data.type == "Bird")
             {
-                position.Y = random.Next(100, 500);
+                position.Y = random.Next(400, 800);
                 effect = SpriteEffects.FlipHorizontally;
             }
             this.data = data;

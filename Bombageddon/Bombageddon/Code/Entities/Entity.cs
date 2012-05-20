@@ -104,15 +104,5 @@ namespace Bombageddon.Code.Entities
             Layer = 1f;
             KillMe = false;
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-        }
     }
 }

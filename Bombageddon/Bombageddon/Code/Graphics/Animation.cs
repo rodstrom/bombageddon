@@ -114,6 +114,11 @@ namespace Bombageddon.Code.Graphics
 
         public override void Update(GameTime gameTime)
         {
+            if (!base.ghost && this.CurrentIndex != 0)
+            {
+                this.CurrentIndex = 0;
+            }
+
             if (currentFrame == null || ColorData == null || HeightMap == null)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);

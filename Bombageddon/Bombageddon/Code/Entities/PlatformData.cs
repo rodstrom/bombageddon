@@ -16,13 +16,16 @@ namespace Bombageddon.Code.Entities
         public int points;
         public Vector2 position;
 
-        public PlatformData(Bombageddon game, String textureName, String collisionName, Vector2 position, int points)
+        public int life;
+
+        public PlatformData(Bombageddon game, String textureName, String collisionName, Vector2 position, int points, int life)
         {
             Texture = game.Content.Load<Texture2D>(textureName);
             HitTexture = game.Content.Load<Texture2D>(collisionName);
 
             this.position = position;
             this.points = points;
+            this.life = life;
         }
 
         public void Terminate()
