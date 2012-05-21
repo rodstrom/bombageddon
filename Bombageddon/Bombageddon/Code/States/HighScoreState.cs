@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Bombageddon.Code.Graphics;
+using Bombageddon.Code.Input;
 
 namespace Bombageddon.Code.States
 {
@@ -14,6 +15,8 @@ namespace Bombageddon.Code.States
         string hiscore = "";
         string congrats = "";
         List<KeyValuePair<int, string>> highScoreList = new List<KeyValuePair<int, string>>(10);
+
+        InputFile scoreFile;
 
         public override int InputCode
         {
@@ -33,6 +36,8 @@ namespace Bombageddon.Code.States
             : base(game, id)
         {
             nextState = "PlayState";
+            scoreFile = new InputFile(@"Content\Highscore\highscore.txt");
+            scoreFile.parse();
             ReadHighScoreList();
         }
 
@@ -48,6 +53,11 @@ namespace Bombageddon.Code.States
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
+
+            if (inputManager.Space)
+            {
+                game.Exit();
+            }
 
             if (inputManager.Pause || bool.Parse(game.config.getValue("Debug", "Memtest")))
             {
@@ -69,19 +79,23 @@ namespace Bombageddon.Code.States
         private void ReadHighScoreList()
         {
             highScoreList.Clear();
-            //int points = 0;
-            string name = ""; 
             for (int i = 0; i < 10; i++)
             {
-                //read from file
-                highScoreList.Add(new KeyValuePair<int, string>(new Random(i).Next(480, 3500), name));
+                string name = scoreFile.getValue("Player" + i.ToString(), "Name");
+                int score = int.Parse(scoreFile.getValue("Player" + i.ToString(), "Score"));
+                highScoreList.Add(new KeyValuePair<int, string>(score, name));
             }
             SortHighScore();
         }
 
         private void WriteHighScoreList()
         {
-            //write to file
+            for (int i = 0; i < 10; i++)
+            {
+                scoreFile.addModify("Player" + i.ToString(), "Score", highScoreList[i].Key.ToString());
+                scoreFile.addModify("Player" + i.ToString(), "Name", highScoreList[i].Value.ToString());
+                scoreFile.save();
+            }
         }
 
         private void SortHighScore()
