@@ -84,6 +84,17 @@ namespace Bombageddon.Code.Input
             }
         }
 
+        public void EraseGroup(String _group)
+        {
+            TextWriter iniFile = new StreamWriter(_filename);
+
+            _options.Remove(_group);
+
+            iniFile.Close();
+
+            save();
+        }
+
         public void save()
         {
             TextWriter iniFile = new StreamWriter(_filename);
@@ -99,6 +110,11 @@ namespace Bombageddon.Code.Input
             }
 
             iniFile.Close();
+        }
+
+        public int NumberGroups
+        {
+            get { return _options.Count; }
         }
     }
 }
