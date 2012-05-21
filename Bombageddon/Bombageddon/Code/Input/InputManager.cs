@@ -192,5 +192,21 @@ namespace Bombageddon.Code.Input
                 return false;
             }
         }
+
+        public enum Trackball
+        {
+            Left = -2,
+            Up = -1,
+            None = 0,
+            Down = 1,
+            Right = 2
+        };
+
+        public Trackball TrackballNavigation()
+        {
+            Trackball direction = Trackball.None;
+
+            return direction;
+        }
     }
 }
