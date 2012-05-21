@@ -1,6 +1,6 @@
 [Player0]
-Name=Arne
-Score=620
+Name=Jonnytown
+Score=50
 [Player1]
 Name=Jonnytown
 Score=50
