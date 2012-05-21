@@ -19,7 +19,13 @@ namespace Bombageddon.Code.Graphics
 
         public override void Terminate()
         {
+            foreach(AnimationStrip a in animationList.Values)
+            {
+                a.Terminate();
+            }
+            animationList.Clear();
             pause = false;
+            currentFrame = null;
             base.Terminate();
         }
 
@@ -108,6 +114,11 @@ namespace Bombageddon.Code.Graphics
 
         public override void Update(GameTime gameTime)
         {
+            if (!base.ghost && this.CurrentIndex != 0)
+            {
+                this.CurrentIndex = 0;
+            }
+
             if (currentFrame == null || ColorData == null || HeightMap == null)
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
@@ -144,8 +155,9 @@ namespace Bombageddon.Code.Graphics
             {
                 currentFrame = animationList[currentAnimation].getCurrentFrame(gameTime);
             }
-            //try
-            //{
+
+            if(!currentFrame.SourceTexture.IsDisposed)
+            {
                 SpriteBatch.Draw(currentFrame.SourceTexture,
                                     position,
                                     currentFrame.SourceRectangle,
@@ -155,10 +167,7 @@ namespace Bombageddon.Code.Graphics
                                     Scale,
                                     effect,
                                     0.0f);
-            //}
-            //catch (System.NullReferenceException)
-            //{
-            //}
+            }
 
             if (bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {

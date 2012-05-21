@@ -48,6 +48,9 @@ namespace Bombageddon.Code.States
 
             fuse = new Fuse(game, spriteBatch);
             fuse.Initialize();
+
+            game.AudioManager.SetMusic("Background");
+            game.AudioManager.PlayMusic();
         }
 
         public override void Terminate()
@@ -148,25 +151,19 @@ namespace Bombageddon.Code.States
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, game.Camera.Transform);
 
-            //spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
-            //spriteBatch.Draw(background, new Vector2(1920, 0), Color.White);
-
-            
             entityManager.Draw(gameTime);
-
             fuse.Draw(gameTime);
 
             if (pause)
             {
                 drawPauseDialog();
             }
-            //int time = (int)game.Timer.MainEvent.currentTime;
 
-            spriteBatch.DrawString(font, score.ToString() + " - " + (entityManager.player.FuseTimer / 1000).ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, score.ToString(), guiPosition, Color.Red, 0f, Vector2.Zero, 0.5f / game.Camera.Zoom, SpriteEffects.None, 1f);
 
             if(bool.Parse(game.config.getValue("Debug", "ExtendedGUI")))
             {
-                spriteBatch.DrawString(font, "Kinetic X: " + entityManager.player.kinetics.X.ToString() + System.Environment.NewLine + "Kinetic Y: " + entityManager.player.kinetics.Y.ToString(), new Vector2(game.Camera.Position.X - 150, game.Camera.Position.Y + 200), Color.Red);
+                spriteBatch.DrawString(font, "Kinetic X: " + entityManager.player.kinetics.X.ToString() + System.Environment.NewLine + "Kinetic Y: " + entityManager.player.kinetics.Y.ToString() + System.Environment.NewLine + "Hit multiplier: " + entityManager.playerKineticMultiplier.ToString(), new Vector2(game.Camera.Position.X - 150, game.Camera.Position.Y + 200), Color.Red);
             }
             spriteBatch.End();
         }

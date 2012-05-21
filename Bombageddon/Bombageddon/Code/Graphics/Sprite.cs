@@ -16,9 +16,16 @@ namespace Bombageddon.Code.Graphics
 
         public override void Terminate()
         {
+            //sourceTexture.Dispose();
+            //if (hitTexture != null)
+            //{
+            //    hitTexture.Dispose();
+            //}
+
             sourceTexture = null;
             hitTexture = null;
             ColorData = null;
+            base.Terminate();
         }
 
         public Texture2D HitTexture
@@ -101,9 +108,12 @@ namespace Bombageddon.Code.Graphics
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch.Draw(SourceTexture, position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
+            if (!SourceTexture.IsDisposed)
+            {
+                SpriteBatch.Draw(SourceTexture, position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
+            }
 
-            if (hitTexture != null && bool.Parse(game.config.getValue("Debug", "Hitbox")))
+            if (hitTexture != null && !hitTexture.IsDisposed && bool.Parse(game.config.getValue("Debug", "Hitbox")))
             {
                 SpriteBatch.Draw(hitTexture, position, null, Color.White, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
             }

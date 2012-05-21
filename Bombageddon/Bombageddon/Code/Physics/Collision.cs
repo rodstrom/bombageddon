@@ -78,7 +78,8 @@ namespace Bombageddon.Code.Physics
                 }
             }
 
-            return false;
+            return true;    //debug!!!!!!!!!!!!!!!!!!!!!
+            //return false;
         }
 
         public Side GetSidesCollided(Entity entity1, Entity entity2)

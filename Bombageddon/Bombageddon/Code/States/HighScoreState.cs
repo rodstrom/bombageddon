@@ -49,7 +49,7 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
-            if (inputManager.Pause)
+            if (inputManager.Pause || bool.Parse(game.config.getValue("Debug", "Memtest")))
             {
                 changeState = true;
             }

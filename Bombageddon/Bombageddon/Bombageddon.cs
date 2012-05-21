@@ -79,8 +79,6 @@ namespace Bombageddon
 
             audioManager = new AudioManager(this);
             audioManager.LoadNewMusic("Background", @"Audio\Music\Background");
-            audioManager.SetMusic("Background");
-            audioManager.PlayMusic();
 
             Resolution.Init(ref graphics);
             Resolution.SetResolution(

@@ -13,6 +13,14 @@ namespace Bombageddon.Code.States
         List<State> states;
         State currentState;
 
+        public PlayState level
+        {
+            get
+            {
+                return (PlayState)states[0];
+            }
+        }
+
         public StateManager(Bombageddon game)
         {
             this.game = game;

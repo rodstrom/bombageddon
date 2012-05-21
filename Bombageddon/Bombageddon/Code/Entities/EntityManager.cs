@@ -18,7 +18,17 @@ namespace Bombageddon.Code.Entities
         public bool blazeOfGloryDone = false;
         bool blazeOfGloryStarted = false;
 
+        Sheeple tempSheeple;
+        Platform tempPlatform;
+        LinkedListNode<Entity> temp;
+
         int birdsInTheAir = 0;
+        int currentBuildingLevel = 25;
+
+        Vector2 startingIntervals = new Vector2(200, 350);
+        Vector2 sheepleRandomInterval;
+        Vector2 platformRandomInterval;
+        public float playerKineticMultiplier = 1f;
 
         Collision collision;
 
@@ -33,10 +43,12 @@ namespace Bombageddon.Code.Entities
         List<CivilianData> civilianData = new List<CivilianData>();
 
         Dictionary<int, Texture2D> pointTextures = new Dictionary<int, Texture2D>();
+        List<KeyValuePair<int, Vector2>> addThesePoints = new List<KeyValuePair<int, Vector2>>();
 
-        public Platform platform = null;
+        private List<Entity> removeList = new List<Entity>();
 
-        public Sheeple sheeple = null;
+        Vector2 pos;
+
         private int addThisManySheeples = 0;
         
         public EntityManager(Bombageddon game, SpriteBatch spriteBatch)
@@ -52,38 +64,47 @@ namespace Bombageddon.Code.Entities
             backgroundManager = new BackgroundManager(game, spriteBatch);
             backgroundManager.Initialize();
 
-            player = new Player(game, spriteBatch, new Vector2(300f, Bombageddon.GROUND - 512f));
+            player = new Player(game, spriteBatch, new Vector2(0f, Bombageddon.GROUND - 200f));
             player.Initialize();
             entityList.AddLast(player);
 
             CreateListOfAvailablePlatforms();
-            PlatformData temp = availablePlatforms[1];
-            entityList.AddLast(new Platform(game, spriteBatch, temp));
-            for (int i = 0; i < 5; i++)
-            {
-                entityList.AddLast(addPlatform());
-            }
+            entityList.AddLast(new Platform(game, spriteBatch, availablePlatforms[5]));
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    entityList.AddLast(addPlatform());
+            //}
+
+            //temp.Terminate();
 
             CreateCivilianData();
-            CivilianData civ = civilianData[0];
-            Vector2 pos = new Vector2(player.position.X + 400f, Bombageddon.GROUND - 8);
-            Sheeple tmpSheeple = new Sheeple(spriteBatch, game, pos, civ);
-            tmpSheeple.Initialize();
-            entityList.AddLast(tmpSheeple);
-            for (int i = 0; i < 30; i++)
-            {
-                entityList.AddLast(addSheeple());
-            }
+            pos = new Vector2(player.position.X + 100f, Bombageddon.GROUND - 8);
+            tempSheeple = new Sheeple(spriteBatch, game, pos, civilianData[0]);
+            tempSheeple.Initialize();
+            entityList.AddLast(tempSheeple);
+            //for (int i = 0; i < 30; i++)
+            //{
+            //    entityList.AddLast(addSheeple());
+            //}
+
+            //civ.Terminate();
 
             CreateListOfPoints();
+
+            birdsInTheAir = 0;
         }
 
         private void CreateListOfPoints()
         {
-            pointTextures.Add(1, game.Content.Load<Texture2D>(@"Graphics\Points\+1"));
-            pointTextures.Add(5, game.Content.Load<Texture2D>(@"Graphics\Points\+5"));
             pointTextures.Add(10, game.Content.Load<Texture2D>(@"Graphics\Points\10"));
+            pointTextures.Add(25, game.Content.Load<Texture2D>(@"Graphics\Points\25"));
             pointTextures.Add(50, game.Content.Load<Texture2D>(@"Graphics\Points\50"));
+            pointTextures.Add(75, game.Content.Load<Texture2D>(@"Graphics\Points\75"));
+            pointTextures.Add(100, game.Content.Load<Texture2D>(@"Graphics\Points\100"));
+
+            pointTextures.Add(-5, game.Content.Load<Texture2D>(@"Graphics\Points\x5"));
+
+            pointTextures.Add(-10, game.Content.Load<Texture2D>(@"Graphics\Points\+10"));
 
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point1");
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point2");
@@ -93,50 +114,57 @@ namespace Bombageddon.Code.Entities
         private Sheeple addSheeple()
         {
             bool tryAgain;
-            Sheeple sheeple;
 
             do
             {
                 tryAgain = false;
                 Sheeple lastSheeple = (Sheeple)findLastOfType("Sheeple").Value;
-                Vector2 pos = new Vector2(lastSheeple.position.X + random.Next(30, 150), Bombageddon.GROUND - 8);
+                pos = new Vector2(lastSheeple.position.X + random.Next((int)sheepleRandomInterval.X, (int)sheepleRandomInterval.Y), Bombageddon.GROUND - 8);
                 CivilianData r = civilianData[random.Next(civilianData.Count)];
-                sheeple = new Sheeple(spriteBatch, game, pos, r);
-                sheeple.Initialize();
-                if (sheeple.data.type == "Bird" && birdsInTheAir > 2)
+                tempSheeple = new Sheeple(spriteBatch, game, pos, r);
+                tempSheeple.Initialize();
+                if (tempSheeple.data.type == "Bird" && birdsInTheAir > 2)
                 {
                     tryAgain = true;
                 }
-                else if (sheeple.data.type == "Bird")
+                else if (tempSheeple.data.type == "Bird")
                 {
                     birdsInTheAir++;
                 }
             } while (tryAgain);
-            
-            return sheeple;
+
+            return tempSheeple;
         }
 
         private void CreateListOfAvailablePlatforms()
         {
             PlatformData platform = new PlatformData(game, @"Graphics\Spritesheets\Hus1_sheet", @"Graphics\Collision\Hus1_collision",
-                new Vector2(500f, Bombageddon.GROUND - 10f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 50, 1500);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus2_sheet", @"Graphics\Collision\Hus2_collision",
-                new Vector2(100f, Bombageddon.GROUND - 10f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 50, 2000);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus3_sheet", @"Graphics\Collision\Hus3_collision",
-                new Vector2(100f, Bombageddon.GROUND - 10f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 75, 8000);
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus4_sheet", @"Graphics\Collision\Hus4_collision",
-                new Vector2(100f, Bombageddon.GROUND - 10f), 50);
+                new Vector2(100f, Bombageddon.GROUND - 10f), 75, 7000);
             availablePlatforms.Add(platform);
 
-            platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision",
-                new Vector2(100f, Bombageddon.GROUND), -1);
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus5_sheet", @"Graphics\Collision\Hus5_collision",
+                new Vector2(100f, Bombageddon.GROUND - 10f), 100, 12000);
             availablePlatforms.Add(platform);
+
+            platform = new PlatformData(game, @"Graphics\Spritesheets\Hus6_sheet", @"Graphics\Collision\Hus6_collision",
+                new Vector2(100f, Bombageddon.GROUND - 10f), 25, 500);
+            availablePlatforms.Add(platform);
+
+            //platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision",
+            //    new Vector2(100f, Bombageddon.GROUND), -1, 1000000);
+            //availablePlatforms.Add(platform);
 
             game.AudioManager.LoadNewEffect("Crash", @"Audio\Sound\Crash\buildingexplosion");
             game.AudioManager.LoadNewEffect("Crash", @"Audio\Sound\Crash\hosedesetruction1");
@@ -156,16 +184,16 @@ namespace Bombageddon.Code.Entities
             civilian = new CivilianData(game, "Sheep", 10, "Sheep");
             civilianData.Add(civilian);
 
-            civilian = new CivilianData(game, "Bird1", 50, "Bird");
+            civilian = new CivilianData(game, "Bird1", 25, "Bird");
             civilianData.Add(civilian); 
-            civilian = new CivilianData(game, "Bird2", 50, "Bird");
+            civilian = new CivilianData(game, "Bird2", 25, "Bird");
             civilianData.Add(civilian); 
-            civilian = new CivilianData(game, "Bird3", 50, "Bird");
+            civilian = new CivilianData(game, "Bird3", 25, "Bird");
             civilianData.Add(civilian);
-            civilian = new CivilianData(game, "Bird4", 50, "Bird");
+            civilian = new CivilianData(game, "Bird4", 25, "Bird");
             civilianData.Add(civilian);
-            //civilian = new CivilianData(game, "Swan", 50, "Bird");
-            //civilianData.Add(civilian);
+            civilian = new CivilianData(game, "Swan", 25, "Bird");
+            civilianData.Add(civilian);
 
             game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Nej");
             game.AudioManager.LoadNewEffect("Man", @"Audio\Sound\Screams\Skrik1");
@@ -188,7 +216,7 @@ namespace Bombageddon.Code.Entities
 
         private LinkedListNode<Entity> findFirstOfType(String type)
         {
-            LinkedListNode<Entity> temp = entityList.First;
+            temp = entityList.First;
             do
             {
                 if (temp.Value.GetType().Name.Equals(type))
@@ -204,7 +232,7 @@ namespace Bombageddon.Code.Entities
 
         private LinkedListNode<Entity> findLastOfType(String type)
         {
-            LinkedListNode<Entity> temp = entityList.Last;
+            temp = entityList.Last;
             do
             {
                 if (temp.Value.GetType().Name.Equals(type))
@@ -220,13 +248,13 @@ namespace Bombageddon.Code.Entities
 
         private void refreshSheeples()
         {
-            Sheeple s = (Sheeple)findFirstOfType("Sheeple").Value;
-            if (s.data.type == "Bird")
+            tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
+            if (tempSheeple.data.type == "Bird")
             {
                 birdsInTheAir--;
             }
-            s.Terminate();
-            entityList.Remove(s);
+            tempSheeple.Terminate();
+            entityList.Remove(tempSheeple);
             if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
             {
                 entityList.AddLast(addSheeple());
@@ -235,26 +263,40 @@ namespace Bombageddon.Code.Entities
 
         private void refreshPlatforms()
         {
-            Platform p = (Platform)findFirstOfType("Platform").Value;
-            p.Terminate();
-            entityList.Remove(p);
+            findFirstOfType("Platform").Value.Terminate();
+            entityList.Remove(findFirstOfType("Platform").Value);
             entityList.AddLast(addPlatform());
         }
 
         private Platform addPlatform()
         {
-            Platform lastPlatform = (Platform)findLastOfType("Platform").Value;
-            float posX = lastPlatform.position.X + random.Next(600, 1000);
-            PlatformData r = availablePlatforms[random.Next(availablePlatforms.Count)];
-            Platform platform = new Platform(game, spriteBatch, r);
-            platform.Initialize();
-            platform.position.X = posX;
+            bool tooHard;
+            int randomPlatform;
+            float posX;
+            do
+            {
+                tooHard = false;
+                tempPlatform = (Platform)findLastOfType("Platform").Value;
+                posX = tempPlatform.position.X + random.Next((int)platformRandomInterval.X, (int)platformRandomInterval.Y);
+                randomPlatform = random.Next(availablePlatforms.Count);
+                if (availablePlatforms[randomPlatform].points > currentBuildingLevel
+                    || (availablePlatforms[randomPlatform].points == 25 && player.points > 500))
+                {
+                    tooHard = true;
+                }
+            } while (tooHard);
 
-            return platform;
+            tempPlatform = new Platform(game, spriteBatch, availablePlatforms[randomPlatform]);
+            tempPlatform.Initialize();
+            tempPlatform.position.X = posX;
+
+            return tempPlatform;
         }
 
         public void Terminate()
         {
+            //game.Content.Unload();
+
             foreach (Entity e in entityList)
             {
                 e.Terminate();
@@ -262,26 +304,78 @@ namespace Bombageddon.Code.Entities
             foreach (PlatformData p in availablePlatforms)
             {
                 p.Terminate();
-            } 
+            }
             foreach (CivilianData c in civilianData)
             {
                 c.Terminate();
-            } 
+            }
+            //foreach (Texture2D p in pointTextures.Values)
+            //{
+            //    p.Dispose();
+            //    //p = null;
+            //}
+            pointTextures.Clear();
             entityList.Clear();
             availablePlatforms.Clear();
             civilianData.Clear();
             pointTextures.Clear();
-            player = null;
+            //player = null;
+            backgroundManager.Terminate();
         }
 
         public void Update(GameTime gameTime)
         {
-            backgroundManager.Update(gameTime, (int)player.position.X);
+            backgroundManager.Update(gameTime);
+            int multiplier = 7;
+            if (player.points > 200)
+            {
+                //multiplier--;
+                currentBuildingLevel = 50;
+            }
+            if (player.points > 400)
+            {
+                multiplier--;
+            }
+            if (player.points > 600)
+            {
+                //multiplier--;
+            }
+            if (player.points > 900)
+            {
+                multiplier--;
+                currentBuildingLevel = 75;
+            }
+            if (player.points > 1300)
+            {
+                multiplier--;
+            }
+            if (player.points > 2000)
+            {
+                multiplier--;
+                currentBuildingLevel = 100;
+            }
+            if (player.points > 3000)
+            {
+                multiplier--;
+            }
+            if (player.points > 4500)
+            {
+                multiplier--;
+            }
 
-            List<Entity> removeList = new List<Entity>();
+            platformRandomInterval = startingIntervals * multiplier * 1f;
+            sheepleRandomInterval = startingIntervals * multiplier * 0.2f;
+            if (player.points < 1000)
+            {
+                sheepleRandomInterval = startingIntervals * multiplier * 0.1f;
+            }
+            playerKineticMultiplier = 1f + player.points * 0.0007f;
+            MathHelper.Clamp(playerKineticMultiplier, 1f, 4f);
+
             foreach (Entity entity in entityList)
             {
                 entity.Update(gameTime);
+
                 if (entity.KillMe)
                 {
                     removeList.Add(entity);
@@ -292,6 +386,7 @@ namespace Bombageddon.Code.Entities
             {
                 foreach (Entity e in removeList)
                 {
+                    e.Terminate();
                     entityList.Remove(e);
                     if (e.GetType().ToString().Equals("Platform"))
                     {
@@ -303,14 +398,25 @@ namespace Bombageddon.Code.Entities
                         {
                             entityList.AddLast(addSheeple());
                         }
-                        Sheeple temp = (Sheeple)e;
-                        if (temp.data.type == "Bird")
+                        tempSheeple = (Sheeple)e;
+                        if (tempSheeple.data.type == "Bird")
                         {
                             birdsInTheAir--;
                         }
-                        temp = null;
                     }
                 }
+
+                if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.9f)
+                {
+                    entityList.AddLast(addSheeple());
+                } 
+                
+                if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.9f)
+                {
+                    entityList.AddLast(addPlatform());
+                }
+
+                removeList.Clear();
 
                 if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
                 {
@@ -325,13 +431,13 @@ namespace Bombageddon.Code.Entities
                     addThisManySheeples = 0;
                 }
 
-                Platform tempPlatform = (Platform)findFirstOfType("Platform").Value;
+                tempPlatform = (Platform)findFirstOfType("Platform").Value;
                 if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
                 {
                     refreshPlatforms();
                 }
 
-                Sheeple tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
+                tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
                 if (tempSheeple.position.X < player.position.X - Bombageddon.WIDTH)
                 {
                     refreshSheeples();
@@ -347,7 +453,8 @@ namespace Bombageddon.Code.Entities
                 entityList.AddLast(explosion);
 
                 blazeOfGloryStarted = true;
-                player.KillMe = true;
+                //player.Terminate();
+                entityList.Remove(player);
             }
             else if (player.end && blazeOfGloryStarted)
             {
@@ -356,16 +463,28 @@ namespace Bombageddon.Code.Entities
                 {
                     foreach (Entity e in entityList)
                     {
-                        e.ghost = true;
-                        if (e.GetType().Name == "Platform")
+                        if (e.position.X > player.position.X - 500f && e.position.X < player.position.X + 500f)
                         {
-                            Platform p = (Platform)e;
-                            p.pause = false;
-                        }
-                        else if (e.GetType().Name == "Sheeple")
-                        {
-                            Sheeple s = (Sheeple)e;
-                            s.IsKilled(false);
+                            Boolean points = false;
+                            if (e.GetType().Name == "Platform")
+                            {
+                                tempPlatform = (Platform)e;
+                                tempPlatform.pause = false;
+                                points = true;
+                            }
+                            else if (e.GetType().Name == "Sheeple")
+                            {
+                                tempSheeple = (Sheeple)e;
+                                tempSheeple.IsKilled(false);
+                                points = true;
+                            }
+                            if (points && !e.ghost && e.pointsWorth != -1)
+                            {
+                                player.points += e.pointsWorth * 5;
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(e.pointsWorth, e.position));
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(-5, e.position + new Vector2(-20, 20)));
+                            }
+                            e.ghost = true;
                         }
                     }
                     explosion.killEverything = false;
@@ -375,6 +494,12 @@ namespace Bombageddon.Code.Entities
                     blazeOfGloryDone = true;
                 }
             }
+            
+            foreach (KeyValuePair<int, Vector2> p in addThesePoints)
+            {
+                entityList.AddLast(new FlyingPoint(spriteBatch, game, pointTextures[p.Key], p.Value));
+            }
+            addThesePoints.Clear();
         }
 
         public void Draw(GameTime gameTime)
@@ -396,31 +521,44 @@ namespace Bombageddon.Code.Entities
 
         private void CollisionCheck()
         {
-            List<KeyValuePair<int, Vector2>> addThesePoints = new List<KeyValuePair<int, Vector2>>();
-
             foreach (Entity entity in entityList)
             {
                 if (entity.GetType().Name == "Platform")
                 {
-                    Platform tmpPlat = (Platform)entity;
-                    if(!tmpPlat.ghost)
+                    tempPlatform = (Platform)entity;
+                    if (!tempPlatform.ghost)
                     {
-                        if (collision.BasicCheck(player, tmpPlat))
+                        if (collision.BasicCheck(player, tempPlatform))
                         {
-                            if (tmpPlat.pointsWorth > 0)
+                            if (tempPlatform.pointsWorth > 0)
                             {
-                                tmpPlat.pause = false;
-                                tmpPlat.ghost = true;
-                                player.kinetics *= 0.2f;
-                                player.points += tmpPlat.pointsWorth;
-                                game.AudioManager.PlayEffect("Crash");
-                                addThesePoints.Add(new KeyValuePair<int, Vector2>(tmpPlat.pointsWorth, tmpPlat.position));
+                                if (tempPlatform.life < 0)
+                                {
+                                    tempPlatform.pause = false;
+                                    tempPlatform.ghost = true;
+                                    player.kinetics *= 0.2f;
+                                    player.points += tempPlatform.pointsWorth;
+                                    game.AudioManager.PlayEffect("Crash");
+                                    addThesePoints.Add(new KeyValuePair<int, Vector2>(tempPlatform.pointsWorth, tempPlatform.position));
+                                }
+                                else
+                                {
+                                    tempPlatform.life -= (int)Math.Abs(player.kinetics.X * playerKineticMultiplier);
+                                    tempPlatform.life -= (int)Math.Abs(player.kinetics.Y * playerKineticMultiplier);
+                                    player.kinetics *= -0.3f;
+                                    float move = 3f;
+                                    if (player.kinetics.X > 0)
+                                    {
+                                        move *= -1f;
+                                    }
+                                    player.position += new Vector2(move);
+                                }
                             }
                             else
                             {
-                                //player.FuseTimer -= 5000;
-                                tmpPlat.ghost = true;
-                                player.kinetics *= 0f;
+                                player.FuseTimer -= 1000;
+                                tempPlatform.ghost = true;
+                                player.kinetics *= -0.3f;
                             }
                         }
                         //return;
@@ -428,34 +566,33 @@ namespace Bombageddon.Code.Entities
                 }
                 if (entity.GetType().Name == "Sheeple")
                 {
-                    Sheeple tmpCiv = (Sheeple)entity;
-                    if (!tmpCiv.ghost)
+                    tempSheeple = (Sheeple)entity;
+                    if (!tempSheeple.ghost)
                     {
-                        if (collision.BasicCheck(player, tmpCiv))
+                        if (collision.BasicCheck(player, tempSheeple))
                         {
-                            if (collision.GetSidesCollided(player, tmpCiv) == Side.Top)
+                            if (collision.GetSidesCollided(player, tempSheeple) == Side.Top)
                             {
-                                tmpCiv.IsKilled(true);
-                                //addThesePoints.Add(new KeyValuePair<int, Vector2>(5, tmpCiv.position - new Vector2(20f)));    //BONUS
+                                tempSheeple.IsKilled(true);
+                                //addThesePoints.Add(new KeyValuePair<int, Vector2>(5, tempSheeple.position - new Vector2(20f)));    //BONUS
                             }
                             else
                             {
-                                tmpCiv.IsKilled(false);
+                                tempSheeple.IsKilled(false);
                             }
 
-                            player.points += tmpCiv.pointsWorth;
-                            tmpCiv.ghost = true;
+                            player.points += tempSheeple.pointsWorth;
+                            tempSheeple.ghost = true;
                             addThisManySheeples++;
-                            addThesePoints.Add(new KeyValuePair<int, Vector2>(tmpCiv.pointsWorth, tmpCiv.position));
+                            addThesePoints.Add(new KeyValuePair<int, Vector2>(tempSheeple.pointsWorth, tempSheeple.position));
+                            if (tempSheeple.data.type == "Bird")
+                            {
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(-10, tempSheeple.position + new Vector2(-10, 30)));
+                            }
                         }
                     }
                 }
             }
-            foreach (KeyValuePair<int, Vector2> p in addThesePoints)
-            {
-                entityList.AddLast(new FlyingPoint(spriteBatch, game, pointTextures[p.Key], p.Value));
-            }
-            addThesePoints.Clear();
 
             if (player.position.Y + 64 > Bombageddon.GROUND)
             {

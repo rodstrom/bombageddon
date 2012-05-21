@@ -73,28 +73,16 @@ namespace Bombageddon.Code.Entities
 
         protected override void LoadContent()
         {
-            ////AnimationStrip _runningAnim = new AnimationStrip();            
-            //Texture2D _tmpSource = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
-            //Texture2D _tmpCol = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
-            
-            //for (int x = 0; x < 14; x++)
-            //{
-            //    _runningAnim.AddFrame(new AnimationFrame(_tmpSource, new Rectangle(64 * x, 0, 64, 64), _tmpCol));
-            //}
-            
-            //_runningAnim.TimeOnChange = 50;
-            //this.AddAnimation("Running", _runningAnim);
-
-            bloodCover.Add(0, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\1"));
-            bloodCover.Add(1, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\2"));
-            bloodCover.Add(2, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\3"));
-            bloodCover.Add(3, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\4"));
-            bloodCover.Add(4, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\5"));
-            bloodCover.Add(5, Game.Content.Load<Texture2D>(@"Graphics\BombBlood\6"));
+            bloodCover.Add(0, game.Content.Load<Texture2D>(@"Graphics\BombBlood\1"));
+            bloodCover.Add(1, game.Content.Load<Texture2D>(@"Graphics\BombBlood\2"));
+            bloodCover.Add(2, game.Content.Load<Texture2D>(@"Graphics\BombBlood\3"));
+            bloodCover.Add(3, game.Content.Load<Texture2D>(@"Graphics\BombBlood\4"));
+            bloodCover.Add(4, game.Content.Load<Texture2D>(@"Graphics\BombBlood\5"));
+            bloodCover.Add(5, game.Content.Load<Texture2D>(@"Graphics\BombBlood\6"));
 
             SourceTexture = bloodCover[0];
             //SourceTexture = Game.Content.Load<Texture2D>(@"Graphics\Bomb");
-            hitTexture = Game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
+            hitTexture = game.Content.Load<Texture2D>(@"Graphics\Collision\Bomb_collision");
             GetColorData(hitTexture);
             CollisionRectangle = SourceRectangle;
             GetHeight();
@@ -106,6 +94,12 @@ namespace Bombageddon.Code.Entities
 
         public override void Terminate()
         {
+            //foreach (Texture2D b in bloodCover.Values)
+            //{
+            //    //b.Dispose();
+            //    b = null;
+            //}
+            bloodCover.Clear();
             kineticVector.Terminate();
             kinetics = Vector2.Zero;
             base.Terminate();
@@ -113,16 +107,12 @@ namespace Bombageddon.Code.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (currentBloodSpatter < 6 && points - pointsSinceUpgrade > 150)
+            if (currentBloodSpatter < 6 && points - pointsSinceUpgrade > 300)
             {
                 SourceTexture = bloodCover[currentBloodSpatter++];
                 pointsSinceUpgrade = points;
             }
 
-            //if (this.AnimationName != "Running")
-            //{
-            //    this.AnimationName = "Running";
-            //}
             FuseTimer -= gameTime.ElapsedGameTime.Milliseconds;
             if (FuseTimer < 0)
             {
@@ -144,8 +134,10 @@ namespace Bombageddon.Code.Entities
                     }
                     else
                     {
-                        kinetics.Y += kineticVector.FinalVector.Y * 2f;
-                        kinetics.X += kineticVector.FinalVector.X * 1f;
+                        float multiplier = 1f + points * 0.0001f;
+                        MathHelper.Clamp(multiplier, 1f, 2f);
+                        kinetics.Y += kineticVector.FinalVector.Y * 2f * multiplier;
+                        kinetics.X += kineticVector.FinalVector.X * 1f * multiplier;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;
@@ -184,13 +176,17 @@ namespace Bombageddon.Code.Entities
             position.Y += (kinetics.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
             Rotation += (kinetics.X * (float)gameTime.ElapsedGameTime.TotalSeconds) / 100;
 
+            if (bool.Parse(game.config.getValue("Debug", "Memtest")))
+            {
+                position.X += 10;
+            }
             if(position.X > furthestPointReached)
             {
                 furthestPointReached = (int)position.X;
             }
             else if (position.X < furthestPointReached - Bombageddon.WIDTH / 2)
             {
-                position.X = furthestPointReached - Bombageddon.WIDTH / 2;
+                position.X = furthestPointReached - Bombageddon.WIDTH / 2 + 5;
                 kinetics = Vector2.Zero;
                 //play sound too perhaps?
             }

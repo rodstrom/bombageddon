@@ -30,16 +30,17 @@ namespace Bombageddon.Code.Entities
             this.AddAnimation("Explosion", explosion);
             this.AnimationName = "Explosion";
             position = game.Camera.Focus.position;
-            position.Y += 224f;
+            position.Y += 190f;
             Scale *= 4;
 
-            game.AudioManager.LoadNewEffect("Explosion", @"Audio\Sound\Explosion\Explosion");
+            game.AudioManager.LoadNewEffect("Explosion", @"Audio\Sound\Explosion\Explosion2");
             game.AudioManager.PlayEffect("Explosion");
+            game.AudioManager.StopMusic();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (CurrentIndex == 8)
+            if (CurrentIndex == 4)
             {
                 killEverything = true;
             } 
