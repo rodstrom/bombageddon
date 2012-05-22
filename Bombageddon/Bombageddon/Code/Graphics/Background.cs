@@ -13,24 +13,24 @@ namespace Bombageddon.Code.Graphics
         public int velocityX = 0;
         public bool stuck = false;
 
-        public Background(String filename, SpriteBatch spriteBatch, Bombageddon game, Vector2 position)
+        public Background(Texture2D texture, SpriteBatch spriteBatch, Bombageddon game, Vector2 position)
             : base(spriteBatch, game)
         {
-            _filename = filename;
+            SourceTexture = texture;
             base.position = position;
         }
 
-        public Background(String filename, SpriteBatch spriteBatch, Bombageddon game, Vector2 position, int velocityX)
+        public Background(Texture2D texture, SpriteBatch spriteBatch, Bombageddon game, Vector2 position, int velocityX)
             : base(spriteBatch, game)
         {
-            _filename = filename;
+            SourceTexture = texture;
             this.velocityX = velocityX;
             base.position = position;
         }
 
         protected override void LoadContent()
         {
-            SourceTexture = game.Content.Load<Texture2D>(_filename);
+            //SourceTexture = game.Content.Load<Texture2D>(_filename);
             Origin = new Vector2(SourceRectangle.Left, SourceRectangle.Bottom);
         }
 

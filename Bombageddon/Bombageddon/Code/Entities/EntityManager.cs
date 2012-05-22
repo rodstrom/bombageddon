@@ -183,6 +183,8 @@ namespace Bombageddon.Code.Entities
             civilianData.Add(civilian);
             civilian = new CivilianData(game, "Sheep", 10, "Sheep");
             civilianData.Add(civilian);
+            civilian = new CivilianData(game, "Horse", 10, "Sheep");
+            civilianData.Add(civilian);
 
             civilian = new CivilianData(game, "Bird1", 25, "Bird");
             civilianData.Add(civilian); 
@@ -255,7 +257,7 @@ namespace Bombageddon.Code.Entities
             }
             tempSheeple.Terminate();
             entityList.Remove(tempSheeple);
-            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
+            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.7f)
             {
                 entityList.AddLast(addSheeple());
             }
@@ -265,7 +267,10 @@ namespace Bombageddon.Code.Entities
         {
             findFirstOfType("Platform").Value.Terminate();
             entityList.Remove(findFirstOfType("Platform").Value);
-            entityList.AddLast(addPlatform());
+            if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.5f)
+            {
+                entityList.AddLast(addPlatform());
+            }
         }
 
         private Platform addPlatform()
@@ -325,7 +330,6 @@ namespace Bombageddon.Code.Entities
 
         public void Update(GameTime gameTime)
         {
-            backgroundManager.Update(gameTime);
             int multiplier = 7;
             if (player.points > 200)
             {
@@ -384,17 +388,19 @@ namespace Bombageddon.Code.Entities
 
             if (!blazeOfGloryStarted)
             {
+                backgroundManager.Update(gameTime);
+
                 foreach (Entity e in removeList)
                 {
                     e.Terminate();
                     entityList.Remove(e);
-                    if (e.GetType().ToString().Equals("Platform"))
+                    //if (e.GetType().ToString().Equals("Platform"))
+                    //{
+                    //    entityList.AddLast(addPlatform());
+                    //}
+                    if (e.GetType().ToString().Equals("Sheeple"))
                     {
-                        entityList.AddLast(addPlatform());
-                    }
-                    else if (e.GetType().ToString().Equals("Sheeple"))
-                    {
-                        if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH)
+                        if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.7f)
                         {
                             entityList.AddLast(addSheeple());
                         }
@@ -404,16 +410,6 @@ namespace Bombageddon.Code.Entities
                             birdsInTheAir--;
                         }
                     }
-                }
-
-                if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.9f)
-                {
-                    entityList.AddLast(addSheeple());
-                } 
-                
-                if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.9f)
-                {
-                    entityList.AddLast(addPlatform());
                 }
 
                 removeList.Clear();
@@ -431,16 +427,24 @@ namespace Bombageddon.Code.Entities
                     addThisManySheeples = 0;
                 }
 
-                tempPlatform = (Platform)findFirstOfType("Platform").Value;
-                if (tempPlatform.position.X < player.position.X - Bombageddon.WIDTH)
+                if (findFirstOfType("Platform").Value.position.X < player.position.X - Bombageddon.WIDTH)
                 {
                     refreshPlatforms();
                 }
 
-                tempSheeple = (Sheeple)findFirstOfType("Sheeple").Value;
-                if (tempSheeple.position.X < player.position.X - Bombageddon.WIDTH)
+                if (findFirstOfType("Sheeple").Value.position.X < player.position.X - Bombageddon.WIDTH)
                 {
                     refreshSheeples();
+                }                
+
+                if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.7f)
+                {
+                    entityList.AddLast(addSheeple());
+                } 
+                
+                if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.5f)
+                {
+                    entityList.AddLast(addPlatform());
                 }
 
                 CollisionCheck();
