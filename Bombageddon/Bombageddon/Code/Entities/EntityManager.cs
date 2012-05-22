@@ -257,7 +257,7 @@ namespace Bombageddon.Code.Entities
             }
             tempSheeple.Terminate();
             entityList.Remove(tempSheeple);
-            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.7f)
+            if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 1f)
             {
                 entityList.AddLast(addSheeple());
             }
@@ -267,7 +267,7 @@ namespace Bombageddon.Code.Entities
         {
             findFirstOfType("Platform").Value.Terminate();
             entityList.Remove(findFirstOfType("Platform").Value);
-            if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.5f)
+            if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 1f)
             {
                 entityList.AddLast(addPlatform());
             }
@@ -437,12 +437,12 @@ namespace Bombageddon.Code.Entities
                     refreshSheeples();
                 }                
 
-                if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.7f)
+                if (findLastOfType("Sheeple").Value.position.X < player.position.X + Bombageddon.WIDTH * 1f)
                 {
                     entityList.AddLast(addSheeple());
                 } 
                 
-                if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 0.5f)
+                if (findLastOfType("Platform").Value.position.X < player.position.X + Bombageddon.WIDTH * 1f)
                 {
                     entityList.AddLast(addPlatform());
                 }

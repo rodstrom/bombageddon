@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Bombageddon.Code.Physics;
 
 namespace Bombageddon.Code.Input
 {
     class InputManager
     {
         Bombageddon Game;
-
+        
         KeyboardState lastKey;
         KeyboardState currentKey;
 
@@ -191,6 +192,36 @@ namespace Bombageddon.Code.Input
                 }
                 return false;
             }
+        }
+
+        public enum Trackball
+        {
+            Left = -2,
+            Up = -1,
+            None = 0,
+            Down = 1,
+            Right = 2
+        };
+
+        public Trackball Navigation()
+        {
+            Trackball direction = Trackball.None;
+
+            if (CurrentMouse != MouseOriginal)
+            {
+                float R = MathHelper.ToDegrees((float)Math.Atan2(MouseOriginal.X - CurrentMouse.X, MouseOriginal.Y - MouseOriginal.X));
+
+                if (R > 315 && R < 45)
+                    direction = Trackball.Up;
+                if (R > 45 && R < 135)
+                    direction = Trackball.Right;
+                if (R > 135 && R < 225)
+                    direction = Trackball.Down;
+                if (R > 225 && R < 315)
+                    direction = Trackball.Left;
+            }
+
+            return direction;
         }
     }
 }
