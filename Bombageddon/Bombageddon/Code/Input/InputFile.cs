@@ -98,16 +98,19 @@ namespace Bombageddon.Code.Input
         public void save()
         {
             TextWriter iniFile = new StreamWriter(_filename);
+            String writeThis = "";
 
             foreach (KeyValuePair<string, Dictionary<string, string>> group in _options)
             {
-                iniFile.WriteLine("[" + group.Key + "]");
-
+                //iniFile.WriteLine("[" + group.Key + "]");
+                writeThis = writeThis + "[" + group.Key + "]\n";
                 foreach(KeyValuePair<string, string> key in group.Value)
                 {
-                    iniFile.WriteLine(key.Key + "=" + key.Value);
+                //    iniFile.WriteLine(key.Key + "=" + key.Value);
+                    writeThis = writeThis + key.Key + "=" + key.Value + "\n";
                 }
             }
+            iniFile.Write(writeThis);
 
             iniFile.Close();
         }

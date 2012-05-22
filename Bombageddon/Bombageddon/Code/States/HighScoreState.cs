@@ -81,9 +81,9 @@ namespace Bombageddon.Code.States
             highScoreList.Clear();
             for (int i = 0; i < 10; i++)
             {
-                string name = scoreFile.getValue("Player" + i.ToString(), "Name");
-                int score = int.Parse(scoreFile.getValue("Player" + i.ToString(), "Score"));
-                highScoreList.Add(new KeyValuePair<int, string>(score, name));
+                highScoreList.Add(new KeyValuePair<int, string>(
+                    int.Parse(scoreFile.getValue("Player" + i.ToString(), "Score")), 
+                    scoreFile.getValue("Player" + i.ToString(), "Name")));
             }
             SortHighScore();
         }
@@ -94,8 +94,8 @@ namespace Bombageddon.Code.States
             {
                 scoreFile.addModify("Player" + i.ToString(), "Score", highScoreList[i].Key.ToString());
                 scoreFile.addModify("Player" + i.ToString(), "Name", highScoreList[i].Value.ToString());
-                scoreFile.save();
             }
+            scoreFile.save();
         }
 
         private void SortHighScore()
