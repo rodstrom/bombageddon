@@ -41,7 +41,8 @@ namespace Bombageddon.Code.Physics
         {
             if (entity1.SourceRectangle.Intersects(entity2.SourceRectangle))
             {
-                return AdvancedCheck(entity1, entity2);
+                return true;
+                //return AdvancedCheck(entity1, entity2);
             }
             return false;
         }

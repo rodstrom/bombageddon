@@ -125,9 +125,11 @@
     <Compile Include="Code\Graphics\BackgroundManager.cs" />
     <Compile Include="Code\Graphics\FlyingPoint.cs" />
     <Compile Include="Code\Input\InputFile.cs" />
+    <Compile Include="Code\Input\LetterInput.cs" />
     <Compile Include="Code\Physics\Collision.cs" />
     <Compile Include="Code\Physics\KineticVector.cs" />
     <Compile Include="Code\States\HighScoreState.cs" />
+    <Compile Include="Code\States\NameInputState.cs" />
     <Compile Include="Code\States\PlayState.cs" />
     <Compile Include="Code\States\State.cs" />
     <Compile Include="Code\States\StateManager.cs" />
