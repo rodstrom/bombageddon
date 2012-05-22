@@ -336,7 +336,7 @@ namespace Bombageddon.Code.Entities
                 //multiplier--;
                 currentBuildingLevel = 50;
             }
-            if (player.points > 400)
+            if (player.points > 500)
             {
                 multiplier--;
             }
@@ -344,21 +344,21 @@ namespace Bombageddon.Code.Entities
             {
                 //multiplier--;
             }
-            if (player.points > 900)
+            if (player.points > 1000)
             {
                 multiplier--;
                 currentBuildingLevel = 75;
             }
-            if (player.points > 1300)
+            if (player.points > 1500)
             {
                 multiplier--;
             }
             if (player.points > 2000)
             {
-                multiplier--;
+                //multiplier--;
                 currentBuildingLevel = 100;
             }
-            if (player.points > 3000)
+            if (player.points > 2500)
             {
                 multiplier--;
             }
