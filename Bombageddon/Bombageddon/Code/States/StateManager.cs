@@ -28,6 +28,7 @@ namespace Bombageddon.Code.States
             states = new List<State>();
             states.Add(new PlayState(game, "PlayState"));
             states.Add(new HighScoreState(game, "HighScoreState"));
+            states.Add(new NameInputState(game, "NameInputState"));
 
             currentState = SelectState(game.config.getValue("General", "StartState"));
         }

@@ -84,16 +84,16 @@ namespace Bombageddon.Code.Input
             }
         }
 
-        public void EraseGroup(String _group)
-        {
-            TextWriter iniFile = new StreamWriter(_filename);
+        //public void EraseGroup(String _group)
+        //{
+        //    TextWriter iniFile = new StreamWriter(_filename);
 
-            _options.Remove(_group);
+        //    _options.Remove(_group);
 
-            iniFile.Close();
+        //    iniFile.Close();
 
-            save();
-        }
+        //    save();
+        //}
 
         public void save()
         {

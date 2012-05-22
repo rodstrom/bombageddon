@@ -8,6 +8,15 @@ using Bombageddon.Code.Physics;
 
 namespace Bombageddon.Code.Input
 {
+    public enum Track
+    {
+        Left = -2,
+        Up = -1,
+        None = 0,
+        Down = 1,
+        Right = 2
+    };
+
     class InputManager
     {
         Bombageddon Game;
@@ -194,34 +203,23 @@ namespace Bombageddon.Code.Input
             }
         }
 
-        public enum Trackball
+        public Track Trackball
         {
-            Left = -2,
-            Up = -1,
-            None = 0,
-            Down = 1,
-            Right = 2
-        };
-
-        public Trackball Navigation()
-        {
-            Trackball direction = Trackball.None;
-
-            if (CurrentMouse != MouseOriginal)
+            get
             {
-                float R = MathHelper.ToDegrees((float)Math.Atan2(MouseOriginal.X - CurrentMouse.X, MouseOriginal.Y - MouseOriginal.X));
+                float R = MathHelper.ToDegrees((float)Math.Atan2(currentMouseState.Y - lastMouseState.Y, currentMouseState.X - lastMouseState.X));
 
                 if (R > 315 && R < 45)
-                    direction = Trackball.Up;
+                    return Track.Up;
                 if (R > 45 && R < 135)
-                    direction = Trackball.Right;
+                    return Track.Right;
                 if (R > 135 && R < 225)
-                    direction = Trackball.Down;
+                    return Track.Down;
                 if (R > 225 && R < 315)
-                    direction = Trackball.Left;
-            }
+                    return Track.Left;
 
-            return direction;
+                return Track.None;
+            }
         }
     }
 }

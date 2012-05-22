@@ -18,7 +18,7 @@ namespace Bombageddon.Code.Entities
 
         Dictionary<int, Texture2D> bloodCover = new Dictionary<int, Texture2D>();
 
-        public int StartTime = 60000;
+        public int StartTime = 1000;
 
         public int FuseTimer
         {

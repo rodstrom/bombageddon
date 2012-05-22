@@ -42,7 +42,7 @@ namespace Bombageddon.Code.States
             entityManager.Initialize();
             game.Camera.Focus = entityManager.player;
 
-            nextState = "HighScoreState";
+            nextState = "NameInputState";
 
             game.Timer.StartTimer();
 

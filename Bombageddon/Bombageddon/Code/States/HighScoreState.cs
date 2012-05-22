@@ -110,17 +110,7 @@ namespace Bombageddon.Code.States
 
         private string GetCharacterInput()
         {
-            string[] nameAr = new string[3];
-            do
-            {
-                nameAr[0] = "A";
-                nameAr[1] = "B";
-                nameAr[2] = "C";
-            } while (nameAr[2] == "");
-
-            string name = nameAr[0] + nameAr[1] + nameAr[2];
-
-            return name;
+            return "ABC";
         }
 
         private void WriteNameToHighScore()
