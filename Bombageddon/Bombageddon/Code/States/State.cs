@@ -14,8 +14,8 @@ namespace Bombageddon.Code.States
         protected Bombageddon game;
         protected InputManager inputManager;
 
-        public int inputCode = 0;
-        public virtual int InputCode
+        public String inputCode = "";
+        public virtual String InputCode
         {
             get
             {
@@ -26,7 +26,7 @@ namespace Bombageddon.Code.States
                 inputCode = value;
             }
         }
-        public int outputCode = 0;
+        public String outputCode = "";
 
         protected SpriteBatch spriteBatch;
         protected SpriteFont font;

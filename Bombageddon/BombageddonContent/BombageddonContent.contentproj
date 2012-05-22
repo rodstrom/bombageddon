@@ -850,13 +850,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Graphics\Backgrounds\NewBack.png">
-      <Name>NewBack</Name>
+    <Compile Include="Graphics\Backgrounds\NewFront.png">
+      <Name>NewFront</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Graphics\Backgrounds\NewFront.png">
-      <Name>NewFront</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphics\Backgrounds\NewBack.png">
+      <Name>NewBack</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -39,6 +39,8 @@ namespace Bombageddon.Code.Input
         Keys pause;
         Keys space;
 
+        int wait = 0;
+
         public Vector2 MouseAbsolute
         {
             get { return mouseAbsolute; }
@@ -203,20 +205,72 @@ namespace Bombageddon.Code.Input
             }
         }
 
+        public bool LongTrackBallSwing
+        {
+            get
+            {
+                if (LooseRulesTrackball != Track.None)
+                {
+                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 20)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public Track LooseRulesTrackball
+        {
+            get
+            {
+                wait++;
+
+                if (wait > 10)
+                {
+                    wait = 0;
+
+                    Vector2 diff = new Vector2(lastMouseState.Y - currentMouseState.Y, lastMouseState.X - currentMouseState.X);
+                    diff.Normalize();
+                    float R = MathHelper.ToDegrees((float)Math.Atan2(-diff.X, diff.Y));
+
+                    if (R < 45 && R > -45)
+                        return Track.Left;
+                    if (R < 135 && R > 45)
+                        return Track.Down;
+                    if (R > -225 && R < -135)
+                        return Track.Right;
+                    if (R > -135 && R < -45)
+                        return Track.Up;
+                }
+
+                return Track.None;
+            }
+        }
+
         public Track Trackball
         {
             get
             {
-                float R = MathHelper.ToDegrees((float)Math.Atan2(currentMouseState.Y - lastMouseState.Y, currentMouseState.X - lastMouseState.X));
+                wait++;
 
-                if (R > 315 && R < 45)
-                    return Track.Up;
-                if (R > 45 && R < 135)
-                    return Track.Right;
-                if (R > 135 && R < 225)
-                    return Track.Down;
-                if (R > 225 && R < 315)
-                    return Track.Left;
+                if (wait > 10)
+                {
+                    wait = 0;
+
+                    Vector2 diff = new Vector2(lastMouseState.Y - currentMouseState.Y, lastMouseState.X - currentMouseState.X);
+                    diff.Normalize();
+                    float R = MathHelper.ToDegrees((float)Math.Atan2(-diff.X, diff.Y));
+
+                    if (R < 10 && R > -10)
+                        return Track.Left;
+                    if (R < 100 && R > 80)
+                        return Track.Down;
+                    if (R > -190 && R < -170)
+                        return Track.Right;
+                    if (R > -100 && R < -80)
+                        return Track.Up;
+                }
 
                 return Track.None;
             }

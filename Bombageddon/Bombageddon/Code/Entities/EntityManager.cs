@@ -159,7 +159,7 @@ namespace Bombageddon.Code.Entities
             availablePlatforms.Add(platform);
 
             platform = new PlatformData(game, @"Graphics\Spritesheets\Hus6_sheet", @"Graphics\Collision\Hus6_collision",
-                new Vector2(100f, Bombageddon.GROUND - 10f), 25, 500);
+                new Vector2(200f, Bombageddon.GROUND - 10f), 25, 500);
             availablePlatforms.Add(platform);
 
             //platform = new PlatformData(game, @"Graphics\Buildings\Sten", @"Graphics\Buildings\Stencollision",

@@ -14,11 +14,12 @@ namespace Bombageddon.Code.States
         int latestScore = 0;
         string hiscore = "";
         string congrats = "";
+        string name = "";
         List<KeyValuePair<int, string>> highScoreList = new List<KeyValuePair<int, string>>(10);
 
         InputFile scoreFile;
 
-        public override int InputCode
+        public override String InputCode
         {
             get
             {
@@ -27,7 +28,8 @@ namespace Bombageddon.Code.States
             set
             {
                 inputCode = value;
-                latestScore = inputCode;
+                latestScore = int.Parse(inputCode.Split(':')[0]);
+                name = inputCode.Split(':')[1];
                 WriteNameToHighScore();
             }
         }
@@ -47,6 +49,7 @@ namespace Bombageddon.Code.States
             latestScore = 0;
             hiscore = "";
             congrats = "";
+            nextState = "PlayState";
             highScoreList.Clear();
         }
 
@@ -59,7 +62,7 @@ namespace Bombageddon.Code.States
                 game.Exit();
             }
 
-            if (inputManager.Pause || bool.Parse(game.config.getValue("Debug", "Memtest")))
+            if (inputManager.Pause || inputManager.LongTrackBallSwing || bool.Parse(game.config.getValue("Debug", "Memtest")))
             {
                 changeState = true;
             }
@@ -110,7 +113,13 @@ namespace Bombageddon.Code.States
 
         private string GetCharacterInput()
         {
-            return "ABC";
+            if (name == "noname")
+            {
+                nextState = "NameInputState";
+                outputCode = latestScore.ToString();
+                changeState = true;
+            }
+            return name;
         }
 
         private void WriteNameToHighScore()
@@ -120,10 +129,13 @@ namespace Bombageddon.Code.States
             {
                 congrats = "Congratulations, you made the highscore with your " + latestScore + " points!";
                 string name = GetCharacterInput();
-                highScoreList.RemoveAt(9);
-                highScoreList.Add(new KeyValuePair<int, string>(latestScore, name));
-                SortHighScore();
-                WriteHighScoreList();
+                if (name != "noname")
+                {
+                    highScoreList.RemoveAt(9);
+                    highScoreList.Add(new KeyValuePair<int, string>(latestScore, name));
+                    SortHighScore();
+                    WriteHighScoreList();
+                }
             }
             else
             {

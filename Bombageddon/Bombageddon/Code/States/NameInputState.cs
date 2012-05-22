@@ -37,11 +37,20 @@ namespace Bombageddon.Code.States
             {
                 case Track.Left:
                     if (choice > 0)
+                    {
                         choice--;
+                    }
                     break;
                 case Track.Right:
                     if (choice < 2)
+                    {
                         choice++;
+                    }
+                    else
+                    {
+                        changeState = true;
+                        outputCode = inputCode + ":" + nameAr[0] + nameAr[1] + nameAr[2];
+                    }
                     break;
                 case Track.Up:
                     letters.NextLetter();
@@ -62,6 +71,7 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
+            
             NameInput();
         }
 

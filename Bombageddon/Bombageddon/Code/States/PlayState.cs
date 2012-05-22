@@ -42,7 +42,7 @@ namespace Bombageddon.Code.States
             entityManager.Initialize();
             game.Camera.Focus = entityManager.player;
 
-            nextState = "NameInputState";
+            nextState = "HighScoreState";
 
             game.Timer.StartTimer();
 
@@ -101,7 +101,7 @@ namespace Bombageddon.Code.States
             //}
             else if (entityManager.blazeOfGloryDone)
             {
-                outputCode = score;
+                outputCode = score.ToString() + ":noname";
                 changeState = true;
             }
 

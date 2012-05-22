@@ -9,7 +9,7 @@ namespace Bombageddon.Code.Graphics
 {
     class Background : Sprite
     {
-        string _filename;
+        //string _filename;
         public int velocityX = 0;
         public bool stuck = false;
 

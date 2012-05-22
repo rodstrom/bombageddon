@@ -52,19 +52,23 @@ namespace Bombageddon.Code.States
             if (currentState.changeState)
             {
                 String nextState = currentState.nextState;
-                int score = -1;
+                String input = "";
 
                 if (currentState.ID == "PlayState")
                 {
                     states[0] = null;
                     states[0] = new PlayState(game, "PlayState");
-                    score = currentState.outputCode;
+                } 
+                if (currentState.ID == "NameInputState")
+                {
+                    states[2] = null;
+                    states[2] = new NameInputState(game, "NameInputState");
                 }
-
+                input = currentState.outputCode;
                 currentState.Terminate();
 
                 currentState = SelectState(nextState);
-                currentState.InputCode = score;
+                currentState.InputCode = input;
 
             }
         }
