@@ -70,7 +70,7 @@ namespace Bombageddon.Code.States
             guiPosition.X = game.Camera.Position.X - game.Camera.Center.X + 20;
             guiPosition.Y = game.Camera.Position.Y - game.Camera.Center.Y + 10;
 
-            if (inputManager.Pause || inputManager.LeftButton)
+            if (inputManager.Escape || inputManager.LeftButton)
             {
                 pause = !pause;
             }
@@ -123,28 +123,28 @@ namespace Bombageddon.Code.States
 
         private void SelectionScreen()
         {
-            if (inputManager.LeftOnce || inputManager.RightOnce)
-            {
-                if (pauseSelectedItem == 0)
-                {
-                    pauseSelectedItem = 1;
-                }
-                else
-                {
-                    pauseSelectedItem = 0;
-                }
-            }
-            if (inputManager.Select)
-            {
-                if (pauseSelectedItem == 0)
-                {
-                    pause = false;
-                }
-                else
-                {
-                    changeState = true;
-                }
-            }
+            //if (inputManager.LeftOnce || inputManager.RightOnce)
+            //{
+            //    if (pauseSelectedItem == 0)
+            //    {
+            //        pauseSelectedItem = 1;
+            //    }
+            //    else
+            //    {
+            //        pauseSelectedItem = 0;
+            //    }
+            //}
+            //if (inputManager.Select)
+            //{
+            //    if (pauseSelectedItem == 0)
+            //    {
+            //        pause = false;
+            //    }
+            //    else
+            //    {
+            //        changeState = true;
+            //    }
+            //}
         }
 
         public override void Draw(GameTime gameTime)

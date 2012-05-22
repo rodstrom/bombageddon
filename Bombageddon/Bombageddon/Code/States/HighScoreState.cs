@@ -57,12 +57,12 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
-            if (inputManager.Space)
+            if (inputManager.Exit)
             {
                 game.Exit();
             }
 
-            if (inputManager.Pause || inputManager.LongTrackBallSwing || bool.Parse(game.config.getValue("Debug", "Memtest")))
+            if (inputManager.Escape || inputManager.LongTrackBallSwing || bool.Parse(game.config.getValue("Debug", "Memtest")))
             {
                 changeState = true;
             }
