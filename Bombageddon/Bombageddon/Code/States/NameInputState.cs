@@ -15,7 +15,7 @@ namespace Bombageddon.Code.States
 
         private int choice = 0;
 
-        private char[] nameAr = new char[3] { '_', '_', '_' };
+        private char[] nameAr = new char[3] { 'A', 'A', 'A' };
 
         public string Name
         {
@@ -37,12 +37,14 @@ namespace Bombageddon.Code.States
                 case Track.Left:
                     if (choice > 0)
                     {
+                        letters.PreviousSlot();
                         choice--;
                     }
                     break;
                 case Track.Right:
                     if (choice < 2)
                     {
+                        letters.NextSlot();
                         choice++;
                     }
                     else
@@ -70,7 +72,6 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
-            
             NameInput();
         }
 

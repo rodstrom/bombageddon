@@ -560,7 +560,7 @@ namespace Bombageddon.Code.Entities
                             }
                             else
                             {
-                                player.FuseTimer -= 1000;
+                                //player.FuseTimer -= 1000;
                                 tempPlatform.ghost = true;
                                 player.kinetics *= -0.3f;
                             }
