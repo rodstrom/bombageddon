@@ -18,7 +18,7 @@ namespace Bombageddon.Code.Entities
 
         Dictionary<int, Texture2D> bloodCover = new Dictionary<int, Texture2D>();
 
-        public int StartTime = 10000;
+        public int StartTime;
 
         public int FuseTimer
         {
@@ -63,6 +63,7 @@ namespace Bombageddon.Code.Entities
         public Player(Bombageddon game, SpriteBatch spriteBatch, Vector2 position)
             : base(spriteBatch, game)
         {
+            StartTime = int.Parse(game.config.getValue("Debug", "LevelTime")) * 1000;
             this.input = new InputManager(game);
             kineticVector = new KineticVector();
             this.fallTime = 0f;
