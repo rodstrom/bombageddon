@@ -11,12 +11,19 @@ namespace Bombageddon.Code.States
 {
     class NameInputState : State
     {
+        Texture2D background;
+
         LetterInput letters;
 
-        private bool finished = false;
         private int choice = 0;
 
-        private char[] nameAr = new char[3] { '_', '_', '_' };
+        private char[] nameAr = new char[3] { 'A', 'A', 'A' };
+
+        private string explanatoryText =    "Type your name by rolling the ball up or down\n" + 
+                                            "\tSelect a character by rolling right\n" + 
+                                            "\t\tGo back by rolling left\n" + 
+                                            "\tWhen you are done, roll right once more";
+        private string congrats;
 
         public string Name
         {
@@ -29,6 +36,8 @@ namespace Bombageddon.Code.States
         {
             nextState = "HighScoreState";
             letters = new LetterInput();
+            background = game.Content.Load<Texture2D>(@"Graphics\Backgrounds\ScoreBackground"); 
+            congrats = "You win! " + inputCode + " points gets you into the highscore!";
         }
 
         private void NameInput()
@@ -38,12 +47,14 @@ namespace Bombageddon.Code.States
                 case Track.Left:
                     if (choice > 0)
                     {
+                        letters.PreviousSlot();
                         choice--;
                     }
                     break;
                 case Track.Right:
                     if (choice < 2)
                     {
+                        letters.NextSlot();
                         choice++;
                     }
                     else
@@ -71,7 +82,6 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
-            
             NameInput();
         }
 
@@ -79,18 +89,28 @@ namespace Bombageddon.Code.States
         {
             if (choice == index)
             {
-                return Color.Green;
+                return Color.SaddleBrown;
             }
-            return Color.Red;
+            return Color.Chocolate;
         }
 
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Resolution.getTransformationMatrix());
 
-            spriteBatch.DrawString(font, nameAr[0].ToString(), new Vector2(100, 100), FocusColor(0), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
-            spriteBatch.DrawString(font, nameAr[1].ToString(), new Vector2(200, 100), FocusColor(1), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
-            spriteBatch.DrawString(font, nameAr[2].ToString(), new Vector2(300, 100), FocusColor(2), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.White);
+
+            spriteBatch.DrawString(font, congrats, new Vector2(Bombageddon.WIDTH / 2, Bombageddon.HEIGHT / 4), Color.SaddleBrown, 0f, font.MeasureString(congrats) * 0.5f, 0.5f, SpriteEffects.None, 1f);
+            for (int i = 0; i < 3; i++)
+            {
+                spriteBatch.DrawString(font, nameAr[i].ToString(), new Vector2(Bombageddon.WIDTH / 2 - 100 + i * 100, Bombageddon.HEIGHT / 2), FocusColor(i), 0f, font.MeasureString(nameAr[i].ToString()) * 0.5f, 1f, SpriteEffects.None, 1f);
+            }
+            spriteBatch.DrawString(font, explanatoryText, new Vector2(Bombageddon.WIDTH / 2, Bombageddon.HEIGHT * 0.75f), Color.SaddleBrown, 0f, font.MeasureString(explanatoryText) * 0.5f, 0.3f, SpriteEffects.None, 1f);
+            
+
+            //spriteBatch.DrawString(font, nameAr[0].ToString(), new Vector2(game.Window.ClientBounds.Center.X - 100, game.Window.ClientBounds.Center.Y), FocusColor(0), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            //spriteBatch.DrawString(font, nameAr[1].ToString(), new Vector2(game.Window.ClientBounds.Center.X, game.Window.ClientBounds.Center.Y), FocusColor(1), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            //spriteBatch.DrawString(font, nameAr[2].ToString(), new Vector2(game.Window.ClientBounds.Center.X + 100, game.Window.ClientBounds.Center.Y), FocusColor(2), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
 
             spriteBatch.End();
         }

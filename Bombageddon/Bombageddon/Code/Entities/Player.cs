@@ -117,7 +117,9 @@ namespace Bombageddon.Code.Entities
             FuseTimer -= gameTime.ElapsedGameTime.Milliseconds;
             if (FuseTimer < 0)
             {
-                end = true;
+                FuseTimer = -1;
+                if(position.Y > Bombageddon.GROUND - 100)
+                    end = true;
             }
 
             if (input.CurrentMouse != input.MouseOriginal)
