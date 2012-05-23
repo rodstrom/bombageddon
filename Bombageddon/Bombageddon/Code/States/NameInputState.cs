@@ -11,6 +11,8 @@ namespace Bombageddon.Code.States
 {
     class NameInputState : State
     {
+        Texture2D background;
+
         LetterInput letters;
 
         private int choice = 0;
@@ -28,6 +30,7 @@ namespace Bombageddon.Code.States
         {
             nextState = "HighScoreState";
             letters = new LetterInput();
+            background = game.Content.Load<Texture2D>(@"Graphics\Backgrounds\ScoreBackground");
         }
 
         private void NameInput()
@@ -88,9 +91,11 @@ namespace Bombageddon.Code.States
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Resolution.getTransformationMatrix());
 
-            spriteBatch.DrawString(font, nameAr[0].ToString(), new Vector2(100, 100), FocusColor(0), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
-            spriteBatch.DrawString(font, nameAr[1].ToString(), new Vector2(200, 100), FocusColor(1), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
-            spriteBatch.DrawString(font, nameAr[2].ToString(), new Vector2(300, 100), FocusColor(2), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.White);
+
+            spriteBatch.DrawString(font, nameAr[0].ToString(), new Vector2(game.Window.ClientBounds.Center.X - 100, game.Window.ClientBounds.Center.Y), FocusColor(0), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, nameAr[1].ToString(), new Vector2(game.Window.ClientBounds.Center.X, game.Window.ClientBounds.Center.Y), FocusColor(1), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, nameAr[2].ToString(), new Vector2(game.Window.ClientBounds.Center.X + 100, game.Window.ClientBounds.Center.Y), FocusColor(2), 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
 
             spriteBatch.End();
         }
