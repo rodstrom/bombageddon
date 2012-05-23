@@ -257,23 +257,7 @@ namespace Bombageddon.Code.Input
                     diff.Normalize();
                     float R = MathHelper.ToDegrees((float)Math.Atan2(-diff.X, diff.Y));
 
-                    if(Math.Abs(currentMouseState.X - lastMouseState.X) > 10)
-                    {
-                        if (R < 10 && R > -10)
-                        {
-                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-                            wait = 0;
-                            return Track.Left;
-                        }
-                        if (R > -190 && R < -170)
-                        {
-                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-                            wait = 0;
-                            return Track.Right;
-                        }
-                    }
-
-                    if (Math.Abs(currentMouseState.Y - lastMouseState.Y) > 10)
+                    if (Math.Abs(currentMouseState.Y - lastMouseState.Y) > 5)
                     {
                         if (R < 100 && R > 80)
                         {
@@ -286,6 +270,22 @@ namespace Bombageddon.Code.Input
                             Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                             wait = 0;
                             return Track.Up;
+                        }
+                    }
+
+                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 5)
+                    {
+                        if (R < 10 && R > -10)
+                        {
+                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+                            wait = 0;
+                            return Track.Left;
+                        }
+                        if (R > -190 && R < -170)
+                        {
+                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+                            wait = 0;
+                            return Track.Right;
                         }
                     }
                 }
