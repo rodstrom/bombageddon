@@ -13,7 +13,6 @@ namespace Bombageddon.Code.States
     {
         LetterInput letters;
 
-        private bool finished = false;
         private int choice = 0;
 
         private char[] nameAr = new char[3] { '_', '_', '_' };
