@@ -20,9 +20,9 @@ namespace Bombageddon.Code.States
         private char[] nameAr = new char[3] { 'A', 'A', 'A' };
 
         private string explanatoryText =    "Type your name by rolling the ball up or down\n" + 
-                                            "\tSelect a character by rolling right\n" + 
-                                            "\t\tGo back by rolling left\n" + 
-                                            "\tWhen you are done, roll right once more";
+                                            "Select a character by rolling right\n" + 
+                                            "Go back by rolling left\n" + 
+                                            "When you are done, roll right once more";
         private string congrats;
 
         public string Name

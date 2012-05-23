@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Bombageddon.Code.Graphics;
 using Bombageddon.Code.Input;
+using System.Threading;
 
 namespace Bombageddon.Code.States
 {
@@ -20,6 +21,8 @@ namespace Bombageddon.Code.States
         Texture2D background;
 
         InputFile scoreFile;
+
+        bool waited = false;
 
         public override String InputCode
         {
@@ -49,6 +52,7 @@ namespace Bombageddon.Code.States
         public override void Terminate()
         {
             changeState = false;
+            waited = false;
             latestScore = 0;
             hiscore = "";
             congrats = "";
@@ -59,6 +63,13 @@ namespace Bombageddon.Code.States
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
+
+            if (!waited && hiscore != null && name != "noname")
+            {
+                inputManager.ClearMouse();
+                Thread.Sleep(2000);
+                waited = true;
+            }
 
             if (inputManager.Exit)
             {

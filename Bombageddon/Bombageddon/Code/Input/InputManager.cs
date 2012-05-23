@@ -107,6 +107,13 @@ namespace Bombageddon.Code.Input
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
         }
+
+        public void ClearMouse()
+        {
+            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+            currentMouseState = Mouse.GetState();
+            lastMouseState = currentMouseState;
+        }
         
         //public bool Up
         //{
@@ -215,7 +222,7 @@ namespace Bombageddon.Code.Input
             {
                 if (LooseRulesTrackball != Track.None)
                 {
-                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 30 || Math.Abs(currentMouseState.Y - lastMouseState.Y) > 30)
+                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 5 || Math.Abs(currentMouseState.Y - lastMouseState.Y) > 5)
                     {
                         return true;
                     }
