@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Bombageddon.Code.Graphics;
 using Bombageddon.Code.Input;
+using System.Threading;
 
 namespace Bombageddon.Code.States
 {
@@ -20,6 +21,8 @@ namespace Bombageddon.Code.States
         Texture2D background;
 
         InputFile scoreFile;
+
+        bool waited = false;
 
         public override String InputCode
         {
@@ -49,6 +52,7 @@ namespace Bombageddon.Code.States
         public override void Terminate()
         {
             changeState = false;
+            waited = false;
             latestScore = 0;
             hiscore = "";
             congrats = "";
@@ -59,6 +63,13 @@ namespace Bombageddon.Code.States
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
+
+            if (!waited && hiscore != null && name != "noname")
+            {
+                inputManager.ClearMouse();
+                Thread.Sleep(2000);
+                waited = true;
+            }
 
             if (inputManager.Exit)
             {
@@ -78,8 +89,8 @@ namespace Bombageddon.Code.States
             spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.White);
 
             //spriteBatch.DrawString(font, "Bombageddon: Highscore", new Vector2(100, 100), Color.Red, 0f, Vector2.Zero, 3f, SpriteEffects.None, 1f);
-            spriteBatch.DrawString(font, congrats, new Vector2(100, 250), Color.Red, 0f, Vector2.Zero, 1.2f, SpriteEffects.None, 1f);
-            spriteBatch.DrawString(font, hiscore, new Vector2(100, 400), Color.Red, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, congrats, new Vector2(100, 250), Color.SaddleBrown, 0f, Vector2.Zero, 0.7f, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, hiscore, new Vector2(100, 400), Color.SaddleBrown, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 1f);
 
             spriteBatch.End();
         }
@@ -132,7 +143,7 @@ namespace Bombageddon.Code.States
             ReadHighScoreList();
             if (latestScore > highScoreList.ElementAt(9).Key)
             {
-                congrats = "Congratulations, you made the highscore with your " + latestScore + " points!";
+                congrats = "You win! " + latestScore + " points gets you into the highscore!";
                 string name = GetCharacterInput();
                 if (name != "noname")
                 {
@@ -144,7 +155,7 @@ namespace Bombageddon.Code.States
             }
             else
             {
-                congrats = "Sorry, you didn't make the highscore with your " + latestScore + " points...";
+                congrats = "You lose! " + latestScore + " points aren't enough...";
             }
         }
     }

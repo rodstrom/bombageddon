@@ -183,7 +183,7 @@ namespace Bombageddon.Code.Entities
             civilianData.Add(civilian);
             civilian = new CivilianData(game, "Sheep", 10, "Sheep");
             civilianData.Add(civilian);
-            civilian = new CivilianData(game, "Horse", 10, "Sheep");
+            civilian = new CivilianData(game, "Horse", 10, "Horse");
             civilianData.Add(civilian);
 
             civilian = new CivilianData(game, "Bird1", 25, "Bird");
@@ -214,6 +214,7 @@ namespace Bombageddon.Code.Entities
             game.AudioManager.LoadNewEffect("Cow", @"Audio\Sound\Animals\ko");
             game.AudioManager.LoadNewEffect("Sheep", @"Audio\Sound\Animals\sheep");
             game.AudioManager.LoadNewEffect("Bird", @"Audio\Sound\Animals\bird");
+            game.AudioManager.LoadNewEffect("Horse", @"Audio\Sound\Animals\horse");
         }
 
         private LinkedListNode<Entity> findFirstOfType(String type)
@@ -540,7 +541,11 @@ namespace Bombageddon.Code.Entities
                                 {
                                     tempPlatform.pause = false;
                                     tempPlatform.ghost = true;
-                                    player.kinetics *= 0.2f;
+                                    player.kinetics *= 0.9f;
+                                    if ((tempPlatform.pointsWorth > 50 && currentBuildingLevel >= 75) || currentBuildingLevel < 75)
+                                    {
+                                        player.kinetics *= 0.3f;
+                                    }
                                     player.points += tempPlatform.pointsWorth;
                                     game.AudioManager.PlayEffect("Crash");
                                     addThesePoints.Add(new KeyValuePair<int, Vector2>(tempPlatform.pointsWorth, tempPlatform.position));

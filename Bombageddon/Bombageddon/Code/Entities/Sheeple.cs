@@ -128,7 +128,7 @@ namespace Bombageddon.Code.Entities
                 if (position.X > (originalPosition.X + movement))
                 {
                     direction = -1;
-                    if (data.type == "Cow" || data.type == "Sheep")
+                    if (data.type == "Cow" || data.type == "Sheep" || data.type == "Horse")
                     {
                         effect = SpriteEffects.FlipHorizontally;
                     }
@@ -140,7 +140,7 @@ namespace Bombageddon.Code.Entities
                 else if (position.X < (originalPosition.X - movement))
                 {
                     direction = 1;
-                    if (data.type == "Cow" || data.type == "Sheep")
+                    if (data.type == "Cow" || data.type == "Sheep" || data.type == "Horse")
                     {
                         effect = SpriteEffects.None;
                     }

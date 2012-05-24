@@ -107,6 +107,13 @@ namespace Bombageddon.Code.Input
             lastMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
         }
+
+        public void ClearMouse()
+        {
+            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+            currentMouseState = Mouse.GetState();
+            lastMouseState = currentMouseState;
+        }
         
         //public bool Up
         //{
@@ -215,7 +222,7 @@ namespace Bombageddon.Code.Input
             {
                 if (LooseRulesTrackball != Track.None)
                 {
-                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 20 || Math.Abs(currentMouseState.Y - lastMouseState.Y) > 20)
+                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 5 || Math.Abs(currentMouseState.Y - lastMouseState.Y) > 5)
                     {
                         return true;
                     }
@@ -251,36 +258,42 @@ namespace Bombageddon.Code.Input
             {
                 wait++;
 
-                if (wait > 10)
+                if (wait > 5)
                 {
                     Vector2 diff = new Vector2(lastMouseState.Y - currentMouseState.Y, lastMouseState.X - currentMouseState.X);
                     diff.Normalize();
                     float R = MathHelper.ToDegrees((float)Math.Atan2(-diff.X, diff.Y));
 
+                    if (Math.Abs(currentMouseState.Y - lastMouseState.Y) > 5)
+                    {
+                        if (R < 100 && R > 80)
+                        {
+                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+                            wait = 0;
+                            return Track.Down;
+                        }
+                        if (R > -100 && R < -80)
+                        {
+                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+                            wait = 0;
+                            return Track.Up;
+                        }
+                    }
 
-                    if (R < 10 && R > -10)
+                    if (Math.Abs(currentMouseState.X - lastMouseState.X) > 5)
                     {
-                        Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-                        wait = 0;
-                        return Track.Left;
-                    }
-                    if (R < 100 && R > 80)
-                    {
-                        Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-                        wait = 0;
-                        return Track.Down;
-                    }
-                    if (R > -190 && R < -170)
-                    {
-                        Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-                        wait = 0;
-                        return Track.Right;
-                    }
-                    if (R > -100 && R < -80)
-                    {
-                        Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-                        wait = 0;
-                        return Track.Up;
+                        if (R < 10 && R > -10)
+                        {
+                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+                            wait = 0;
+                            return Track.Left;
+                        }
+                        if (R > -190 && R < -170)
+                        {
+                            Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
+                            wait = 0;
+                            return Track.Right;
+                        }
                     }
                 }
 
