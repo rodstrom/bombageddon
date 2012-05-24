@@ -42,13 +42,13 @@ namespace Bombageddon.Code.Graphics
             //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.FBACK, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\ForestBack")));
             //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.FFRONT, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\ForestFront")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.GRASS, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\NewFront")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedskelett")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedsten")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedjolt")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedlizardswanguy")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\Badanka")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\Jordmedboll")));
-            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\JordmedLaptop")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedskelett")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedsten")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedjolt")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedlizardswanguy")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\Badanka")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\Jordmedboll")));
+            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\JordmedLaptop")));
 
             KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.SKY,
                 new Background(game.Content.Load<Texture2D>(@"Graphics\Backgrounds\NewBack"), spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
@@ -90,11 +90,11 @@ namespace Bombageddon.Code.Graphics
                 backgroundList.AddLast(addBackground((int)Layers.GRASS));
             }
 
-            //background = new KeyValuePair<int, Background>((int)Layers.RANDOM,
-            //    new Background(game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedjolt"), spriteBatch, game, new Vector2(700f, Bombageddon.HEIGHT)));
-            //background.Value.Initialize();
-            //backgroundList.AddLast(background);
-            //backgroundList.AddLast(addBackground((int)Layers.RANDOM));
+            background = new KeyValuePair<int, Background>((int)Layers.RANDOM,
+                new Background(game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedjolt"), spriteBatch, game, new Vector2(700f, Bombageddon.HEIGHT)));
+            background.Value.Initialize();
+            backgroundList.AddLast(background);
+            backgroundList.AddLast(addBackground((int)Layers.RANDOM));
 
             rand = new Random();
         }
