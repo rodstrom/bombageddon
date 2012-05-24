@@ -18,15 +18,15 @@ namespace Bombageddon.Code.Graphics
         private LinkedList<KeyValuePair<int, Background>> backgroundList = new LinkedList<KeyValuePair<int, Background>>();
         private List<KeyValuePair<int, Texture2D>> backgroundFilenames = new List<KeyValuePair<int, Texture2D>>();
 
-        private List<KeyValuePair<int, Background>> removeBackgrounds = new List<KeyValuePair<int, Background>>();
+        //private List<KeyValuePair<int, Background>> removeBackgrounds = new List<KeyValuePair<int, Background>>();
 
         private enum Layers
         {
             SKY = 0,
-            FBACK,
-            FFRONT,
+            //FBACK,
+            //FFRONT,
             GRASS,
-            CLOUDS,
+            //CLOUDS,
             RANDOM
         }
 
@@ -43,12 +43,12 @@ namespace Bombageddon.Code.Graphics
             //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.FFRONT, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\ForestFront")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.GRASS, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\NewFront")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedskelett")));
-            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedsten")));
+            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedsten")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedjolt")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedlizardswanguy")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\Badanka")));
             backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\Jordmedboll")));
-            backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\JordmedLaptop")));
+            //backgroundFilenames.Add(new KeyValuePair<int, Texture2D>((int)Layers.RANDOM, game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\JordmedLaptop")));
 
             KeyValuePair<int, Background> background = new KeyValuePair<int, Background>((int)Layers.SKY,
                 new Background(game.Content.Load<Texture2D>(@"Graphics\Backgrounds\NewBack"), spriteBatch, game, new Vector2(-Bombageddon.WIDTH, Bombageddon.HEIGHT)));
@@ -56,7 +56,7 @@ namespace Bombageddon.Code.Graphics
             //background.Value.stuck = true;
             background.Value.velocityX = -1;
             backgroundList.AddLast(background);
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 backgroundList.AddLast(addBackground((int)Layers.SKY));
             }
@@ -89,12 +89,14 @@ namespace Bombageddon.Code.Graphics
             {
                 backgroundList.AddLast(addBackground((int)Layers.GRASS));
             }
-
-            background = new KeyValuePair<int, Background>((int)Layers.RANDOM,
-                new Background(game.Content.Load<Texture2D>(@"Graphics\Backgrounds\Random\jordmedjolt"), spriteBatch, game, new Vector2(700f, Bombageddon.HEIGHT)));
-            background.Value.Initialize();
-            backgroundList.AddLast(background);
-            backgroundList.AddLast(addBackground((int)Layers.RANDOM));
+ 
+            for (int i = 2; i < backgroundFilenames.Count; i++)
+            {
+                background = new KeyValuePair<int, Background>((int)Layers.RANDOM,
+                new Background(backgroundFilenames.ElementAt(i).Value, spriteBatch, game, new Vector2(findExtremeBackground((int)Layers.RANDOM, false).position.X + rand.Next(2500, 5000), Bombageddon.HEIGHT)));
+                background.Value.Initialize();
+                backgroundList.AddLast(background);5
+            }
 
             rand = new Random();
         }
@@ -126,7 +128,7 @@ namespace Bombageddon.Code.Graphics
                 b.Value.Terminate();
             }
             backgroundList.Clear();
-            removeBackgrounds.Clear();
+            //removeBackgrounds.Clear();
             backgroundFilenames.Clear();
         }
 
@@ -135,19 +137,19 @@ namespace Bombageddon.Code.Graphics
             foreach (KeyValuePair<int, Background> background in backgroundList)
             {
                 background.Value.Update(gameTime);
-                if (background.Value.KillMe)
-                {
-                    removeBackgrounds.Add(background);
-                }
+                //if (background.Value.KillMe)
+                //{
+                //    removeBackgrounds.Add(background);
+                //}
             }
 
-            foreach (KeyValuePair<int, Background> b in removeBackgrounds)
-            {
-                b.Value.Terminate();
-                backgroundList.Remove(b);
-            }
+            //foreach (KeyValuePair<int, Background> b in removeBackgrounds)
+            //{
+            //    b.Value.Terminate();
+            //    backgroundList.Remove(b);
+            //}
 
-            removeBackgrounds.Clear();
+            //removeBackgrounds.Clear();
 
             refreshBackgrounds();
         }
@@ -155,11 +157,11 @@ namespace Bombageddon.Code.Graphics
         public void Draw(GameTime gameTime, bool front)
         {
             int start = 0;
-            int end = 3;
+            int end = 1;
             if (front)
             {
-                start = 3;
-                end = 6;
+                start = 1;
+                end = 3;
             }
 
             for (int i = start; i < end; i++)
@@ -173,19 +175,44 @@ namespace Bombageddon.Code.Graphics
         
         private void refreshBackgrounds()
         {
-            List<int> newBackgrounds = new List<int>();
-            foreach (KeyValuePair<int, Background> background in backgroundList)
+            //List<int> newBackgrounds = new List<int>();
+            for (int i = 0; i < 3; i++)
             {
-                if (background.Value.SourceRectangle.Right < game.Camera.Focus.position.X - Bombageddon.WIDTH)
+                if (findExtremeBackground(i, true).SourceRectangle.Right < game.Camera.Focus.position.X - Bombageddon.WIDTH)
                 {
-                    background.Value.KillMe = true;
-                    newBackgrounds.Add(background.Key);
+                    //background.Value.KillMe = true;
+                    findExtremeBackground(i, true).position.X = findExtremeBackground(i, false).SourceRectangle.Right;
+                    if (i == (int)Layers.RANDOM)
+                    {
+                        findExtremeBackground(i, false).position.X += rand.Next(1600, 3500);
+                    }
+                    //newBackgrounds.Add(background.Key);
                 }
             }
-            foreach (int i in newBackgrounds)
+            //foreach (int i in newBackgrounds)
+            //{
+            //    backgroundList.AddLast(addBackground(i));
+            //}
+        }
+
+        private Background findExtremeBackground(int key, bool findLeftMost)
+        {
+            Background extreme = backgroundList.First.Value.Value;
+            float leftMost = -13370;
+            foreach (Background b in getBackgroundsByLayer(key))
             {
-                backgroundList.AddLast(addBackground(i));
+                if (findLeftMost && (b.position.X < leftMost || leftMost == -13370))
+                {
+                    leftMost = b.position.X;
+                    extreme = b;
+                }
+                if (!findLeftMost && (b.position.X + b.SourceRectangle.Right > leftMost || leftMost == -13370))
+                {
+                    leftMost = b.position.X + b.SourceRectangle.Right;
+                    extreme = b;
+                }
             }
+            return extreme;
         }
 
         private KeyValuePair<int, Background> addBackground(int layer)
@@ -195,7 +222,7 @@ namespace Bombageddon.Code.Graphics
             {
                 offset = rand.Next(1600, 3500);
             }
-            Vector2 position = new Vector2(getBackgroundsByLayer(layer).Last().position.X + getBackgroundsByLayer(layer).Last().SourceRectangle.Width + offset, Bombageddon.HEIGHT);
+            Vector2 position = new Vector2(findExtremeBackground(layer, false).position.X + findExtremeBackground(layer, false).SourceRectangle.Right + offset, Bombageddon.HEIGHT);
 
             bool keepTrying = true;
             do{

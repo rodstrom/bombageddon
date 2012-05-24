@@ -597,7 +597,7 @@ namespace Bombageddon.Code.Entities
                             if (tempSheeple.data.type == "Bird")
                             {
                                 addThesePoints.Add(new KeyValuePair<int, Vector2>(-10, tempSheeple.position + new Vector2(-10, 30)));
-                                player.FuseTimer += 5000;
+                                player.FuseTimer += 1000;
                             }
                         }
                     }
