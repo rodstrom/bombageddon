@@ -106,6 +106,8 @@ namespace Bombageddon.Code.Entities
 
             pointTextures.Add(-10, game.Content.Load<Texture2D>(@"Graphics\Points\+10"));
 
+            pointTextures.Add(-1, game.Content.Load<Texture2D>(@"Graphics\Points\+1s"));
+
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point1");
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point2");
             game.AudioManager.LoadNewEffect("Point", @"Audio\Sound\Points\point3");
@@ -123,7 +125,7 @@ namespace Bombageddon.Code.Entities
                 CivilianData r = civilianData[random.Next(civilianData.Count)];
                 tempSheeple = new Sheeple(spriteBatch, game, pos, r);
                 tempSheeple.Initialize();
-                if (tempSheeple.data.type == "Bird" && birdsInTheAir > 2)
+                if (tempSheeple.data.type == "Bird" && birdsInTheAir > 3)
                 {
                     tryAgain = true;
                 }
@@ -597,7 +599,8 @@ namespace Bombageddon.Code.Entities
                             if (tempSheeple.data.type == "Bird")
                             {
                                 addThesePoints.Add(new KeyValuePair<int, Vector2>(-10, tempSheeple.position + new Vector2(-10, 30)));
-                                player.FuseTimer += 1000;
+                                addThesePoints.Add(new KeyValuePair<int, Vector2>(-1, tempSheeple.position + new Vector2(-10, -30)));
+                                player.FuseTimer += 2000;
                             }
                         }
                     }

@@ -53,7 +53,7 @@ namespace Bombageddon.Code.Entities
             fuseOrigin = new Vector2(fuse.Bounds.Center.Y, fuse.Bounds.Left);
             burntFuseOrigin = new Vector2(burntFuse.Bounds.Center.Y, burntFuse.Bounds.Left);
 
-            position = new Vector2(-200f, 1050f);
+            position = new Vector2(-200f, 1020f);
             fuseLineStart = position;
             position.Y += 38;
 

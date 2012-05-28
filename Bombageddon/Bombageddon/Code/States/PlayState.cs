@@ -66,11 +66,16 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
+            if (inputManager.Exit)
+            {
+                game.Exit();
+            }
+
             game.Camera.Update(gameTime);
             guiPosition.X = game.Camera.Position.X - game.Camera.Center.X + 20;
             guiPosition.Y = game.Camera.Position.Y - game.Camera.Center.Y + 10;
 
-            if (inputManager.Escape || inputManager.LeftButton)
+            if (inputManager.Escape)
             {
                 pause = !pause;
             }

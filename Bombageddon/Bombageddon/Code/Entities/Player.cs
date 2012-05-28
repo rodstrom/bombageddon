@@ -139,8 +139,8 @@ namespace Bombageddon.Code.Entities
                     {
                         float multiplier = 1f + points * 0.0001f;
                         MathHelper.Clamp(multiplier, 1f, 2f);
-                        kinetics.Y += kineticVector.FinalVector.Y * 2f * multiplier;
-                        kinetics.X += kineticVector.FinalVector.X * 1f * multiplier;
+                        kinetics.Y += kineticVector.FinalVector.Y * float.Parse(game.config.getValue("Debug", "KineticMultiplier")) * multiplier;
+                        kinetics.X += kineticVector.FinalVector.X * float.Parse(game.config.getValue("Debug", "KineticMultiplier")) * multiplier;
                         snapShotIndex = 0;
                         Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
                         input.CurrentMouse = input.MouseOriginal;

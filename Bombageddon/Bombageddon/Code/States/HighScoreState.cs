@@ -64,7 +64,7 @@ namespace Bombageddon.Code.States
         {
             inputManager.Update();
 
-            if (!waited && hiscore != null && name != "noname")
+            if (!waited && hiscore != null && (name != "noname" || name == "youfailed"))
             {
                 inputManager.ClearMouse();
                 Thread.Sleep(2000);
@@ -156,6 +156,7 @@ namespace Bombageddon.Code.States
             else
             {
                 congrats = "You lose! " + latestScore + " points aren't enough...";
+                name = "youfailed";
             }
         }
     }

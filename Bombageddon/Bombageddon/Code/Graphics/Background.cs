@@ -10,7 +10,7 @@ namespace Bombageddon.Code.Graphics
     class Background : Sprite
     {
         //string _filename;
-        public int velocityX = 0;
+        public float velocityX = 0f;
         public bool stuck = false;
 
         public Background(Texture2D texture, SpriteBatch spriteBatch, Bombageddon game, Vector2 position)
