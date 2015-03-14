@@ -1,0 +1,1 @@
+You are a bomb rolling down a hill, in a quest to destroy as many buildings as possible and create mayhem by killing people before you explode in a blaze of glory.
